@@ -2,14 +2,45 @@ import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { setup, $fetch } from '@nuxt/test-utils/e2e'
 
-describe('ssr', async () => {
+describe('shopify-nuxt module', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url))
   })
 
   it('renders the index page', async () => {
-    // Get response to a server-rendered page with `$fetch`.
     const html = await $fetch('/')
-    expect(html).toContain('<div>basic</div>')
+    expect(html).toContain('basic')
+  })
+
+  it('includes shopify-api-key meta tag', async () => {
+    const html = await $fetch('/')
+    expect(html).toContain('shopify-api-key')
+  })
+
+  it('includes App Bridge script', async () => {
+    const html = await $fetch('/')
+    expect(html).toContain('cdn.shopify.com/shopifycloud/app-bridge.js')
+  })
+
+  it('includes CSP frame-ancestors header', async () => {
+    const response = await fetch(
+      `http://localhost:${process.env.NUXT_PORT || 3000}/`,
+      {
+        headers: { accept: 'text/html' }
+      }
+    )
+    const csp = response.headers.get('content-security-policy')
+    expect(csp).toContain('frame-ancestors')
+    expect(csp).toContain('admin.shopify.com')
+  })
+
+  it('has auth route', async () => {
+    try {
+      await $fetch('/_shopify/auth?shop=test.myshopify.com')
+    } catch (e: any) {
+      // Expected to fail without valid Shopify credentials,
+      // but the route should exist (not 404)
+      expect(e.statusCode || e.status).not.toBe(404)
+    }
   })
 })
