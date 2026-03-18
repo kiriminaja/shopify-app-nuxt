@@ -1,5 +1,5 @@
 import { useNuxtApp } from '#app'
-import { getSessionToken } from '@shopify/app-bridge/utilities'
+import type { ShopifyGlobal } from '@shopify/app-bridge-types'
 
 export function useShopifyFetch() {
   if (import.meta.server) {
@@ -9,15 +9,15 @@ export function useShopifyFetch() {
   const nuxtApp = useNuxtApp()
 
   return async (url: string, options: RequestInit = {}) => {
-    const app = nuxtApp.$shopifyBridge
+    const shopify = nuxtApp.$shopifyBridge as ShopifyGlobal | undefined
 
-    if (!app) {
+    if (!shopify) {
       throw new Error(
         'Shopify App Bridge is not available. Make sure the app is loaded within the Shopify Admin.'
       )
     }
 
-    const token = await getSessionToken(app)
+    const token = await shopify.idToken()
 
     const headers = new Headers(options.headers || {})
     headers.set('Authorization', `Bearer ${token}`)

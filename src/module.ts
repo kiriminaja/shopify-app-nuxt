@@ -128,7 +128,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
-    nuxt.options.build.transpile.push('@shopify/app-bridge')
 
     // ─── Type Declarations ─────────────────────────────────────────────
     nuxt.hook('prepare:types', ({ references }) => {

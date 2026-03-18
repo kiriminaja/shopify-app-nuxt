@@ -1,22 +1,22 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#app'
-import createApp from '@shopify/app-bridge'
+import { defineNuxtPlugin } from '#app'
+import type { ShopifyGlobal } from '@shopify/app-bridge-types'
 
-export default defineNuxtPlugin((_nuxtApp) => {
-  const config = useRuntimeConfig()
-  const apiKey = (config.public as any).shopify?.apiKey
+declare global {
+  interface Window {
+    shopify: ShopifyGlobal
+  }
+}
 
-  if (!apiKey) {
+export default defineNuxtPlugin(() => {
+  // The CDN script (injected via module head tags) exposes window.shopify.
+  // This plugin provides typed access to it via $shopifyBridge.
+  if (import.meta.server || typeof window === 'undefined') {
     return
   }
 
-  // The host param is provided by Shopify as a base64-encoded value in the URL
-  const host = new URLSearchParams(window.location.search).get('host') || ''
-
-  const app = createApp({ apiKey, host })
-
   return {
     provide: {
-      shopifyBridge: app
+      shopifyBridge: window.shopify
     }
   }
 })
