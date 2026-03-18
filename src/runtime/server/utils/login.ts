@@ -31,7 +31,7 @@ export async function useShopifyLogin(
 
   let shop: string | undefined
 
-  if (event.req.method === 'POST') {
+  if (event.method === 'POST') {
     const body = await readBody<{ shop?: string }>(event)
     shop = body?.shop
   } else {
