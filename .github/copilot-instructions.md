@@ -8,13 +8,13 @@
 
 ## Commands
 
-| Command              | Purpose                                       |
-|----------------------|-----------------------------------------------|
-| `bun run dev:prepare`| Stub module + generate types for dev          |
-| `bun run dev`        | Start playground dev server                   |
-| `bun run lint`       | ESLint (flat config)                          |
-| `bun run test`       | Vitest e2e tests                              |
-| `bun run prepack`    | Build for publish                             |
+| Command               | Purpose                              |
+| --------------------- | ------------------------------------ |
+| `bun run dev:prepare` | Stub module + generate types for dev |
+| `bun run dev`         | Start playground dev server          |
+| `bun run lint`        | ESLint (flat config)                 |
+| `bun run test`        | Vitest e2e tests                     |
+| `bun run prepack`     | Build for publish                    |
 
 Always run `bun run dev:prepare` after changing module options, routes, or auto-imports.
 
@@ -31,6 +31,7 @@ Always run `bun run dev:prepare` after changing module options, routes, or auto-
 ### App Bridge (CDN-based)
 
 The module uses Shopify's **CDN-based App Bridge** (not the deprecated npm package):
+
 - Meta tag `<meta name="shopify-api-key">` and CDN script are injected via SSR head in `module.ts`
 - Client plugin (`src/runtime/plugins/app-bridge.ts`) exposes `window.shopify` as `$shopifyBridge`
 - Types come from `@shopify/app-bridge-types` (declares `ShopifyGlobal` on `window.shopify`)
@@ -60,23 +61,23 @@ export default defineNitroPlugin(() => {
 
 ### Server Utilities (auto-imported in server/)
 
-| Utility                              | Purpose                                    |
-|--------------------------------------|--------------------------------------------|
-| `useShopifyAdmin(event)`             | Authenticate admin requests (token exchange, session) |
-| `useShopifyWebhook(event)`           | Validate webhook HMAC + parse payload      |
-| `useShopifyFlow(event)`              | Authenticate Shopify Flow extension requests |
-| `useShopifyPublic(event)`            | Authenticate public/checkout requests      |
-| `useShopifyPos(event)`               | Authenticate POS extension requests        |
-| `useShopifyFulfillmentService(event)` | Authenticate fulfillment service callbacks |
-| `useShopifyLogin(event)`             | Handle merchant login (non-embedded apps)  |
-| `useShopifyUnauthenticatedAdmin(shop)` | Offline session admin API access         |
-| `useShopifyUnauthenticatedStorefront(shop)` | Offline session storefront API access |
-| `registerShopifyWebhooks(session)`   | Register webhooks for a shop               |
+| Utility                                     | Purpose                                               |
+| ------------------------------------------- | ----------------------------------------------------- |
+| `useShopifyAdmin(event)`                    | Authenticate admin requests (token exchange, session) |
+| `useShopifyWebhook(event)`                  | Validate webhook HMAC + parse payload                 |
+| `useShopifyFlow(event)`                     | Authenticate Shopify Flow extension requests          |
+| `useShopifyPublic(event)`                   | Authenticate public/checkout requests                 |
+| `useShopifyPos(event)`                      | Authenticate POS extension requests                   |
+| `useShopifyFulfillmentService(event)`       | Authenticate fulfillment service callbacks            |
+| `useShopifyLogin(event)`                    | Handle merchant login (non-embedded apps)             |
+| `useShopifyUnauthenticatedAdmin(shop)`      | Offline session admin API access                      |
+| `useShopifyUnauthenticatedStorefront(shop)` | Offline session storefront API access                 |
+| `registerShopifyWebhooks(session)`          | Register webhooks for a shop                          |
 
 ### Client Composables (auto-imported)
 
 | Composable          | Purpose                                                |
-|---------------------|--------------------------------------------------------|
+| ------------------- | ------------------------------------------------------ |
 | `useAppBridge()`    | Returns typed `ShopifyGlobal` from App Bridge CDN      |
 | `useShopifyFetch()` | Fetch wrapper with automatic session token auth header |
 
@@ -87,36 +88,36 @@ export default defineNitroPlugin(() => {
 
 ### OAuth Routes (auto-registered)
 
-| Route                           | Purpose                         |
-|---------------------------------|---------------------------------|
-| `GET /_shopify/auth`            | Start OAuth flow                |
-| `GET /_shopify/auth/callback`   | Handle OAuth callback           |
-| `GET /_shopify/auth/exit-iframe`| App Bridge iframe escape page   |
-| `GET /_shopify/auth/session-token` | Session token bounce page    |
+| Route                              | Purpose                       |
+| ---------------------------------- | ----------------------------- |
+| `GET /_shopify/auth`               | Start OAuth flow              |
+| `GET /_shopify/auth/callback`      | Handle OAuth callback         |
+| `GET /_shopify/auth/exit-iframe`   | App Bridge iframe escape page |
+| `GET /_shopify/auth/session-token` | Session token bounce page     |
 
 The prefix `/_shopify/auth` is configurable via `authPathPrefix`.
 
 ## Key Dependencies
 
-| Package                              | Purpose                                  |
-|--------------------------------------|------------------------------------------|
-| `@shopify/shopify-api`               | Core Shopify API (OAuth, sessions, GraphQL, REST) |
-| `@shopify/shopify-app-session-storage` | Session storage interface              |
-| `@shopify/app-bridge-types`          | TypeScript types for CDN App Bridge      |
-| `isbot`                              | Bot detection for admin auth             |
+| Package                                | Purpose                                           |
+| -------------------------------------- | ------------------------------------------------- |
+| `@shopify/shopify-api`                 | Core Shopify API (OAuth, sessions, GraphQL, REST) |
+| `@shopify/shopify-app-session-storage` | Session storage interface                         |
+| `@shopify/app-bridge-types`            | TypeScript types for CDN App Bridge               |
+| `isbot`                                | Bot detection for admin auth                      |
 
 ## h3 API Rules (Critical)
 
 The server runs on h3 (Nitro). Always use these h3 functions — **never** access `event.req`/`event.res` directly:
 
-| Do                                          | Don't                                   |
-|---------------------------------------------|------------------------------------------|
-| `getHeader(event, 'name')`                  | `event.req.headers.get('name')`          |
-| `setResponseHeader(event, 'name', 'value')` | `event.res.headers.set('name', 'value')` |
-| `readRawBody(event)`                        | `event.req.text()`                       |
-| `getQuery(event)`                           | `event.req.url` parsing                  |
+| Do                                          | Don't                                       |
+| ------------------------------------------- | ------------------------------------------- |
+| `getHeader(event, 'name')`                  | `event.req.headers.get('name')`             |
+| `setResponseHeader(event, 'name', 'value')` | `event.res.headers.set('name', 'value')`    |
+| `readRawBody(event)`                        | `event.req.text()`                          |
+| `getQuery(event)`                           | `event.req.url` parsing                     |
 | `sendRedirect(event, url, 302)`             | `event.res.redirect(url)` (3 args required) |
-| Return HTML string directly                 | `send(event, html)` (may not exist)      |
+| Return HTML string directly                 | `send(event, html)` (may not exist)         |
 
 ## Shopify API Rules
 
