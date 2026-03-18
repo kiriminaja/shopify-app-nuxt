@@ -1,21 +1,22 @@
-import { defineNuxtPlugin, useHead, useRuntimeConfig } from '#app'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
+import createApp from '@shopify/app-bridge'
 
 export default defineNuxtPlugin((_nuxtApp) => {
   const config = useRuntimeConfig()
-  const shopifyConfig = (config.public as any).shopify || {}
-  const apiKey = shopifyConfig.apiKey
+  const apiKey = (config.public as any).shopify?.apiKey
 
   if (!apiKey) {
     return
   }
 
-  useHead({
-    meta: [{ name: 'shopify-api-key', content: apiKey }],
-    script: [
-      {
-        src: 'https://cdn.shopify.com/shopifycloud/app-bridge.js',
-        tagPosition: 'head'
-      }
-    ]
-  })
+  // The host param is provided by Shopify as a base64-encoded value in the URL
+  const host = new URLSearchParams(window.location.search).get('host') || ''
+
+  const app = createApp({ apiKey, host })
+
+  return {
+    provide: {
+      shopifyBridge: app
+    }
+  }
 })

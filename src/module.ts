@@ -66,11 +66,26 @@ export default defineNuxtModule<ModuleOptions>({
       path: resolver.resolve('./runtime/components')
     })
 
+    // ─── App Bridge Head Tags (SSR) ─────────────────────────────────
+    // Inject meta tag and CDN script during SSR so they appear in the initial HTML
+    nuxt.hook('app:resolve', () => {
+      nuxt.options.app.head = nuxt.options.app.head || {}
+      nuxt.options.app.head.meta = nuxt.options.app.head.meta || []
+      nuxt.options.app.head.script = nuxt.options.app.head.script || []
+      nuxt.options.app.head.meta.push({
+        name: 'shopify-api-key',
+        content: options.apiKey
+      })
+      nuxt.options.app.head.script.push({
+        src: 'https://cdn.shopify.com/shopifycloud/app-bridge.js'
+      })
+    })
+
     // ─── Client Plugin ─────────────────────────────────────────────────
-    // App Bridge initialization (runs on both server and client for SSR head injection)
+    // App Bridge npm package initialization (client-side only)
     addPlugin({
       src: resolver.resolve('./runtime/plugins/app-bridge'),
-      mode: 'all'
+      mode: 'client'
     })
 
     // ─── Server Routes ─────────────────────────────────────────────────
@@ -113,6 +128,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
+    nuxt.options.build.transpile.push('@shopify/app-bridge')
 
     // ─── Type Declarations ─────────────────────────────────────────────
     nuxt.hook('prepare:types', ({ references }) => {

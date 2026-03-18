@@ -1,33 +1,23 @@
-/**
- * Composable for making authenticated fetch calls to your app's server.
- *
- * Automatically includes the Shopify session token in the Authorization header,
- * so your server-side `useShopifyAdmin()` can authenticate the request.
- *
- * ```vue
- * <script setup>
- * const shopifyFetch = useShopifyFetch()
- *
- * const { data } = await shopifyFetch('/api/products')
- * </script>
- * ```
- */
+import { useNuxtApp } from '#app'
+import { getSessionToken } from '@shopify/app-bridge/utilities'
+
 export function useShopifyFetch() {
   if (import.meta.server) {
     throw new Error('useShopifyFetch() can only be used on the client side')
   }
 
-  return async (url: string, options: RequestInit = {}) => {
-    const shopify = (window as any).shopify
+  const nuxtApp = useNuxtApp()
 
-    if (!shopify) {
+  return async (url: string, options: RequestInit = {}) => {
+    const app = nuxtApp.$shopifyBridge
+
+    if (!app) {
       throw new Error(
         'Shopify App Bridge is not available. Make sure the app is loaded within the Shopify Admin.'
       )
     }
 
-    // Get a fresh session token
-    const token = await shopify.idToken()
+    const token = await getSessionToken(app)
 
     const headers = new Headers(options.headers || {})
     headers.set('Authorization', `Bearer ${token}`)
