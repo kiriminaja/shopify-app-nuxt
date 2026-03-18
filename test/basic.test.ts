@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
-import { setup, $fetch } from '@nuxt/test-utils/e2e'
+import { setup, $fetch, url } from '@nuxt/test-utils/e2e'
 
 describe('shopify-nuxt module', async () => {
   await setup({
@@ -23,12 +23,9 @@ describe('shopify-nuxt module', async () => {
   })
 
   it('includes CSP frame-ancestors header', async () => {
-    const response = await fetch(
-      `http://localhost:${process.env.NUXT_PORT || 3000}/`,
-      {
-        headers: { accept: 'text/html' }
-      }
-    )
+    const response = await fetch(url('/'), {
+      headers: { accept: 'text/html' }
+    })
     const csp = response.headers.get('content-security-policy')
     expect(csp).toContain('frame-ancestors')
     expect(csp).toContain('admin.shopify.com')

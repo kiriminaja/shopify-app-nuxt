@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   // Example: handle incoming webhooks from Shopify
-  const { topic, shop, session, payload } = await useShopifyWebhook(event)
+  const { topic, shop, payload } = await useShopifyWebhook(event)
 
   console.log(`Received webhook: ${topic} from ${shop}`)
 

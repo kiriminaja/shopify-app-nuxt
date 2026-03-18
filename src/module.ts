@@ -8,6 +8,7 @@ import {
   addServerImportsDir
 } from '@nuxt/kit'
 import type { ModuleOptions } from './runtime/types'
+import { ApiVersion } from '@shopify/shopify-api'
 
 export type { ModuleOptions }
 
@@ -21,7 +22,7 @@ export default defineNuxtModule<ModuleOptions>({
     apiSecretKey: '',
     scopes: [],
     appUrl: '',
-    apiVersion: '2025-01',
+    apiVersion: ApiVersion.January26,
     authPathPrefix: '/_shopify/auth',
     distribution: 'app_store' as any,
     useOnlineTokens: false
@@ -36,7 +37,7 @@ export default defineNuxtModule<ModuleOptions>({
       apiSecretKey: options.apiSecretKey,
       scopes: options.scopes,
       appUrl: options.appUrl,
-      apiVersion: options.apiVersion || '2025-01',
+      apiVersion: options.apiVersion || ApiVersion.January26,
       authPathPrefix: options.authPathPrefix || '/_shopify/auth',
       distribution: options.distribution || 'app_store',
       useOnlineTokens: options.useOnlineTokens || false
@@ -66,10 +67,10 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // ─── Client Plugin ─────────────────────────────────────────────────
-    // App Bridge initialization (client-side only)
+    // App Bridge initialization (runs on both server and client for SSR head injection)
     addPlugin({
-      src: resolver.resolve('./runtime/plugins/app-bridge.client'),
-      mode: 'client'
+      src: resolver.resolve('./runtime/plugins/app-bridge'),
+      mode: 'all'
     })
 
     // ─── Server Routes ─────────────────────────────────────────────────

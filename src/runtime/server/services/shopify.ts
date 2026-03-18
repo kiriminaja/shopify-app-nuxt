@@ -1,4 +1,4 @@
-import '@shopify/shopify-api/adapters/web-api'
+import '@shopify/shopify-api/adapters/node'
 import { shopifyApi, type Shopify } from '@shopify/shopify-api'
 import type { SessionStorage } from '@shopify/shopify-app-session-storage'
 import { useRuntimeConfig } from '#imports'

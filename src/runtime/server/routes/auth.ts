@@ -1,18 +1,5 @@
-import {
-  defineEventHandler,
-  getQuery,
-  sendRedirect,
-  setResponseHeader,
-  send,
-  createError
-} from 'h3'
-import {
-  getShopifyApi,
-  getResolvedConfig,
-  getSessionStorage
-} from '../services/shopify'
-import { renderAppBridgePage } from '../utils/helpers'
-import { createAdminApiContext } from '../utils/clients'
+import { defineEventHandler, getQuery, sendRedirect, createError } from 'h3'
+import { getShopifyApi, getResolvedConfig } from '../services/shopify'
 
 /**
  * Handle the initial auth request.
