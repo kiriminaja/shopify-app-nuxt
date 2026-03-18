@@ -37,7 +37,10 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.4.2"
+    "@nuxt/kit": "^4.4.2",
+    "@shopify/generate-docs": "^1.0.0",
+    "@shopify/shopify-api": "^13.0.0",
+    "@shopify/shopify-app-session-storage": "^5.0.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.2.3",
