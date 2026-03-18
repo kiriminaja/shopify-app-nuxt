@@ -1,9 +1,4 @@
-import {
-  defineEventHandler,
-  getHeader,
-  getRequestURL,
-  setResponseHeader
-} from 'h3'
+import { defineEventHandler, getRequestURL } from 'h3'
 
 /**
  * Server middleware that adds Content-Security-Policy headers for Shopify embedded apps.
@@ -11,7 +6,7 @@ import {
  */
 export default defineEventHandler((event) => {
   // Only add CSP headers for HTML document requests
-  const accept = getHeader(event, 'accept') || ''
+  const accept = event.req.headers.get('accept') || ''
   if (!accept.includes('text/html')) {
     return
   }
@@ -27,8 +22,7 @@ export default defineEventHandler((event) => {
     frameAncestors.push(`https://${shop}`)
   }
 
-  setResponseHeader(
-    event,
+  event.res.headers.set(
     'content-security-policy',
     `frame-ancestors ${frameAncestors.join(' ')};`
   )

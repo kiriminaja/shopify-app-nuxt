@@ -7,4 +7,10 @@
   </ShopifyAppProvider>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+const { $shopifyBridge } = useNuxtApp()
+
+onMounted(() => {
+  $shopifyBridge.saveBar.show('Hello from the Shopify Nuxt Playground!')
+})
+</script>
