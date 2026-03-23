@@ -18,9 +18,8 @@ export default defineEventHandler(async (event) => {
 
   try {
     const callbackResponse = await api.auth.callback({
-      rawRequest: new Request(
-        `${config.appUrl}${event.path}?${new URLSearchParams(query as Record<string, string>)}`
-      )
+      rawRequest: event.node.req,
+      rawResponse: event.node.res
     })
 
     const { session } = callbackResponse

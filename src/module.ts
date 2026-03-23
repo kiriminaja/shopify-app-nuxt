@@ -129,6 +129,16 @@ export default defineNuxtModule<ModuleOptions>({
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
 
+    // Ensure @shopify/shopify-api adapter side-effects are preserved in the Nitro bundle
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.externals = nitroConfig.externals || {}
+      nitroConfig.externals.inline = nitroConfig.externals.inline || []
+      ;(nitroConfig.externals.inline as string[]).push(
+        '@shopify/shopify-api',
+        '@shopify/shopify-api/adapters/node'
+      )
+    })
+
     // ─── Type Declarations ─────────────────────────────────────────────
     nuxt.hook('prepare:types', ({ references }) => {
       references.push({

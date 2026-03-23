@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { readBody, getQuery, HTTPError } from 'h3'
+import { readBody, getQuery, createError } from 'h3'
 import { getResolvedConfig } from '../services/shopify'
 import { AppDistribution, type LoginError, LoginErrorType } from '../../types'
 
@@ -23,7 +23,7 @@ export async function useShopifyLogin(
   const config = getResolvedConfig()
 
   if (config.distribution === AppDistribution.ShopifyAdmin) {
-    throw new HTTPError({
+    throw createError({
       statusCode: 400,
       statusMessage: 'Login is not available for ShopifyAdmin apps'
     })

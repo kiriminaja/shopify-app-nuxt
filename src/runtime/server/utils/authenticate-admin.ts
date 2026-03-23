@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { getQuery, getHeader, createError } from 'h3'
+import { getQuery, createError } from 'h3'
 import {
   getShopifyApi,
   getResolvedConfig,
@@ -105,11 +105,11 @@ export async function useShopifyAdmin(event: H3Event): Promise<AdminContext> {
   } else {
     // ShopifyAdmin apps - get shop from request
     shop = getShopFromEvent(event) || ''
-    const request = new Request(getRequestUrl(event))
     sessionId =
       (await api.session.getCurrentId({
         isOnline: config.useOnlineTokens,
-        rawRequest: request
+        rawRequest: event.node.req,
+        rawResponse: event.node.res
       })) || ''
   }
 
@@ -184,12 +184,6 @@ export async function useShopifyAdmin(event: H3Event): Promise<AdminContext> {
     cors,
     redirect
   }
-}
-
-function getRequestUrl(event: H3Event): string {
-  const proto = getHeader(event, 'x-forwarded-proto') || 'http'
-  const host = getHeader(event, 'host') || 'localhost'
-  return `${proto}://${host}${event.path}`
 }
 
 async function performTokenExchange(

@@ -1,4 +1,4 @@
-import '@shopify/shopify-api/adapters/node'
+import { nodeAdapterInitialized } from '@shopify/shopify-api/adapters/node'
 import { shopifyApi, type Shopify } from '@shopify/shopify-api'
 import type { SessionStorage } from '@shopify/shopify-app-session-storage'
 import { useRuntimeConfig } from '#imports'
@@ -8,6 +8,11 @@ import type {
   AuthConfig
 } from '../../types'
 import { AppDistribution } from '../../types'
+
+// Ensure the adapter is not tree-shaken by referencing the export
+if (!nodeAdapterInitialized) {
+  throw new Error('Shopify Node adapter failed to initialize')
+}
 
 let _shopifyApi: Shopify | null = null
 let _resolvedConfig: ResolvedConfig | null = null

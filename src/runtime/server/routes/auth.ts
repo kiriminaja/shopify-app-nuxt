@@ -25,9 +25,8 @@ export default defineEventHandler(async (event) => {
     shop,
     callbackPath: callbackUrl,
     isOnline: false,
-    rawRequest: new Request(
-      `${config.appUrl}${event.path}?${new URLSearchParams(query as Record<string, string>)}`
-    )
+    rawRequest: event.node.req,
+    rawResponse: event.node.res
   })
 
   return sendRedirect(event, authUrl)
