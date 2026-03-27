@@ -3,4 +3,5 @@ roles = ["frontend", "backend"]
 webhooks_path = "/api/webhooks"
 
 [commands]
-dev = "bun run dev"
+install = "bun install"
+dev = "bunx nuxi dev"

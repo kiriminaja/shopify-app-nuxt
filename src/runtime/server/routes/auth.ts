@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
     shop,
     callbackPath: callbackUrl,
     isOnline: false,
-    rawRequest: event.node.req,
-    rawResponse: event.node.res
+    rawRequest: event.req,
+    rawResponse: event.res
   })
 
   return sendRedirect(event, authUrl)

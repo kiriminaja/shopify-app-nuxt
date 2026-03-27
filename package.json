@@ -11,8 +11,8 @@
       "import": "./dist/module.mjs"
     },
     "./test-helpers": {
-      "types": "./dist/runtime/server/test-helpers/index.d.mts",
-      "import": "./dist/runtime/server/test-helpers/index.mjs"
+      "types": "./dist/runtime/server/test-helpers/index.d.ts",
+      "import": "./dist/runtime/server/test-helpers/index.js"
     }
   },
   "main": "./dist/module.mjs",

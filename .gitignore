@@ -54,3 +54,7 @@ coverage
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+playground/.shopify
+playground/*.app.toml

@@ -108,8 +108,8 @@ export async function useShopifyAdmin(event: H3Event): Promise<AdminContext> {
     sessionId =
       (await api.session.getCurrentId({
         isOnline: config.useOnlineTokens,
-        rawRequest: event.node.req,
-        rawResponse: event.node.res
+        rawRequest: event.req,
+        rawResponse: event.res
       })) || ''
   }
 

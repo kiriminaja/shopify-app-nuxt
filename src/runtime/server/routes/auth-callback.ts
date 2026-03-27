@@ -18,8 +18,8 @@ export default defineEventHandler(async (event) => {
 
   try {
     const callbackResponse = await api.auth.callback({
-      rawRequest: event.node.req,
-      rawResponse: event.node.res
+      rawRequest: event.req,
+      rawResponse: event.res
     })
 
     const { session } = callbackResponse

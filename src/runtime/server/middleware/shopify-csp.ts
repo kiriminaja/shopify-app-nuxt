@@ -7,6 +7,7 @@ import { defineEventHandler, getHeader, getQuery, setResponseHeader } from 'h3'
 export default defineEventHandler((event) => {
   // Only add CSP headers for HTML document requests
   const accept = getHeader(event, 'accept') || ''
+
   if (!accept.includes('text/html')) {
     return
   }

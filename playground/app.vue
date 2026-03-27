@@ -11,6 +11,6 @@
 const { $shopifyBridge } = useNuxtApp()
 
 onMounted(() => {
-  $shopifyBridge.saveBar.show('Hello from the Shopify Nuxt Playground!')
+  $shopifyBridge?.saveBar.show('Hello from the Shopify Nuxt Playground!')
 })
 </script>
