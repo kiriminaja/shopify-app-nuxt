@@ -9,14 +9,36 @@ declare global {
 
 export default defineNuxtPlugin(() => {
   // The CDN script (injected via module head tags) exposes window.shopify.
-  // This plugin provides typed access to it via $shopifyBridge.
+  // This plugin provides typed access to it via $shopify.
   if (import.meta.server || typeof window === 'undefined') {
     return
   }
 
+  console.log(
+    '[shopify-nuxt] App Bridge plugin initializing, window.shopify available:',
+    !!window.shopify
+  )
+
+  // Use a Proxy so that property access is deferred to call time,
+  // avoiding a race condition where window.shopify is not yet set
+  // when the plugin initialises.
+  const bridge = new Proxy({} as ShopifyGlobal, {
+    get(_target, prop, receiver) {
+      if (!window.shopify) {
+        console.warn(
+          '[shopify-nuxt] window.shopify is not available yet. The CDN script may not have loaded.'
+        )
+        throw new Error(
+          'Shopify App Bridge is not available. Ensure the app is loaded inside the Shopify Admin.'
+        )
+      }
+      return Reflect.get(window.shopify, prop, receiver)
+    }
+  })
+
   return {
     provide: {
-      shopifyBridge: window.shopify
+      shopify: bridge
     }
   }
 })

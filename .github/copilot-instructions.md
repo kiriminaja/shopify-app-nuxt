@@ -33,7 +33,7 @@ Always run `bun run dev:prepare` after changing module options, routes, or auto-
 The module uses Shopify's **CDN-based App Bridge** (not the deprecated npm package):
 
 - Meta tag `<meta name="shopify-api-key">` and CDN script are injected via SSR head in `module.ts`
-- Client plugin (`src/runtime/plugins/app-bridge.ts`) exposes `window.shopify` as `$shopifyBridge`
+- Client plugin (`src/runtime/plugins/app-bridge.ts`) exposes `window.shopify` as `$shopify`
 - Types come from `@shopify/app-bridge-types` (declares `ShopifyGlobal` on `window.shopify`)
 
 **Do NOT use `@shopify/app-bridge` npm package** — it is deprecated. Always use the CDN approach.
@@ -162,8 +162,6 @@ src/
 │       │   ├── auth-callback.ts      # OAuth callback
 │       │   ├── auth-exit-iframe.ts   # Exit iframe page
 │       │   └── auth-session-token.ts # Session token bounce
-│       ├── middleware/
-│       │   └── shopify-csp.ts        # CSP frame-ancestors
 │       └── test-helpers/
 │           └── index.ts              # testConfig(), testSession()
 ```

@@ -5,7 +5,8 @@ import {
   addImportsDir,
   addComponentsDir,
   createResolver,
-  addServerImportsDir
+  addServerImportsDir,
+  addRouteMiddleware
 } from '@nuxt/kit'
 import type { ModuleOptions } from './runtime/types'
 import { ApiVersion } from '@shopify/shopify-api'
@@ -70,12 +71,18 @@ export default defineNuxtModule<ModuleOptions>({
     // Inject meta tag and CDN script during SSR so they appear in the initial HTML
     nuxt.hook('app:resolve', () => {
       nuxt.options.app.head = nuxt.options.app.head || {}
-      nuxt.options.app.head.meta = nuxt.options.app.head.meta || []
+      nuxt.options.app.head.meta = [
+        ...(nuxt.options.app.head.meta || []),
+        {
+          name: 'shopify-api-key',
+          content: options.apiKey
+        },
+        {
+          name: 'content-security-policy',
+          content: "frame-ancestors 'self' *.myshopify.com *.shopify.com"
+        }
+      ]
       nuxt.options.app.head.script = nuxt.options.app.head.script || []
-      nuxt.options.app.head.meta.push({
-        name: 'shopify-api-key',
-        content: options.apiKey
-      })
       nuxt.options.app.head.script.push({
         src: 'https://cdn.shopify.com/shopifycloud/app-bridge.js'
       })
@@ -119,12 +126,10 @@ export default defineNuxtModule<ModuleOptions>({
       handler: resolver.resolve('./runtime/server/routes/auth-session-token')
     })
 
-    // ─── Server Middleware ─────────────────────────────────────────────
-    // CSP headers for embedded apps
-    addServerHandler({
-      handler: resolver.resolve('./runtime/server/middleware/shopify-csp'),
-      middleware: true
-    })
+    addRouteMiddleware(
+      'shopify-auth',
+      resolver.resolve('./runtime/middleware/shopify-auth')
+    )
 
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))

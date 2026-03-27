@@ -9,7 +9,7 @@ export function useShopifyFetch() {
   const nuxtApp = useNuxtApp()
 
   return async (url: string, options: RequestInit = {}) => {
-    const shopify = nuxtApp.$shopifyBridge as ShopifyGlobal | undefined
+    const shopify = nuxtApp.$shopify as ShopifyGlobal | undefined
 
     if (!shopify) {
       throw new Error(

@@ -1,4 +1,4 @@
-name = "remix"
+name = "nuxt-shopify-app"
 roles = ["frontend", "backend"]
 webhooks_path = "/api/webhooks"
 

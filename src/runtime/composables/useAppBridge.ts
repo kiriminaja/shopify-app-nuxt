@@ -1,15 +1,14 @@
-import { useNuxtApp } from '#app'
 import type { ShopifyGlobal } from '@shopify/app-bridge-types'
 
 export function useAppBridge(): ShopifyGlobal {
-  const nuxtApp = useNuxtApp()
-  const bridge = nuxtApp.$shopifyBridge as ShopifyGlobal | undefined
-
-  if (!bridge) {
+  if (typeof window === 'undefined' || !window.shopify) {
+    console.warn(
+      '[shopify-nuxt] useAppBridge() called but window.shopify is not available.'
+    )
     throw new Error(
-      'Shopify App Bridge is not available. Make sure the app is loaded within the Shopify Admin.'
+      'Shopify App Bridge is not available. Ensure the app is loaded inside the Shopify Admin.'
     )
   }
-
-  return bridge
+  console.log('[shopify-nuxt] useAppBridge() returning window.shopify')
+  return window.shopify
 }
