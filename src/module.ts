@@ -6,8 +6,10 @@ import {
   addComponentsDir,
   createResolver,
   addServerImportsDir,
-  addRouteMiddleware
+  addRouteMiddleware,
+  addTypeTemplate
 } from '@nuxt/kit'
+import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from './runtime/types'
 import { ApiVersion } from '@shopify/shopify-api'
 
@@ -28,7 +30,7 @@ export default defineNuxtModule<ModuleOptions>({
     distribution: 'app_store' as any,
     useOnlineTokens: false
   },
-  setup(options, nuxt) {
+  setup(options, nuxt: Nuxt) {
     const resolver = createResolver(import.meta.url)
 
     // ─── Runtime Config ────────────────────────────────────────────────
@@ -68,24 +70,55 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // ─── App Bridge Head Tags (SSR) ─────────────────────────────────
-    // Inject meta tag and CDN script during SSR so they appear in the initial HTML
+    // Inject meta tag and CDN script during SSR so they appear in the initial HTML.
+    // The meta tag MUST appear before the App Bridge script — it reads the API key on load.
     nuxt.hook('app:resolve', () => {
       nuxt.options.app.head = nuxt.options.app.head || {}
       nuxt.options.app.head.meta = [
-        ...(nuxt.options.app.head.meta || []),
-        {
-          name: 'shopify-api-key',
-          content: options.apiKey
-        },
         {
           name: 'content-security-policy',
           content: "frame-ancestors 'self' *.myshopify.com *.shopify.com"
-        }
+        },
+        ...(nuxt.options.app.head.meta || [])
       ]
-      nuxt.options.app.head.script = nuxt.options.app.head.script || []
-      nuxt.options.app.head.script.push({
-        src: 'https://cdn.shopify.com/shopifycloud/app-bridge.js'
-      })
+      nuxt.options.app.head.script = [
+        // 1. Inline script to create the meta tag imperatively — guarantees it
+        //    exists in the DOM before the CDN script executes.
+        {
+          key: 'shopify-api-key-meta',
+          innerHTML: `var m=document.createElement('meta');m.name='shopify-api-key';m.content='${options.apiKey}';document.head.appendChild(m);`,
+          tagPosition: 'head'
+        },
+        // 2. App Bridge CDN — reads the meta tag on load
+        {
+          src: 'https://cdn.shopify.com/shopifycloud/app-bridge.js',
+          tagPosition: 'head'
+        },
+        // 3. Polaris CDN
+        {
+          src: 'https://cdn.shopify.com/shopifycloud/polaris.js',
+          tagPosition: 'head'
+        },
+        ...(nuxt.options.app.head.script || [])
+      ]
+      nuxt.options.vue.compilerOptions.isCustomElement = (tag) => {
+        // Match all Shopify Polaris web component tags (s-*)
+        return tag.startsWith('s-')
+      }
+    })
+
+    // 3. Inject the type declarations into the Nuxt TS environment
+    addTypeTemplate({
+      filename: 'types/polaris.d.ts',
+      getContents: () => `
+/// <reference types="@shopify/polaris-types" />
+
+declare module '@vue/runtime-dom' {
+  interface IntrinsicElements extends PolarisIntrinsicElements {}
+}
+
+export {}
+`
     })
 
     // ─── Client Plugin ─────────────────────────────────────────────────
@@ -126,10 +159,11 @@ export default defineNuxtModule<ModuleOptions>({
       handler: resolver.resolve('./runtime/server/routes/auth-session-token')
     })
 
-    addRouteMiddleware(
-      'shopify-auth',
-      resolver.resolve('./runtime/middleware/shopify-auth')
-    )
+    addRouteMiddleware({
+      name: 'shopify-auth',
+      path: resolver.resolve('./runtime/middleware/shopify-auth'),
+      global: false
+    })
 
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))

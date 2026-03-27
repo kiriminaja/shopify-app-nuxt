@@ -1,27 +1,27 @@
 <template>
-  <ShopifyAppProvider>
+  <s-page title="Edit Product">
     <div>
-      <h1>Shopify Nuxt Playground</h1>
-      <p>This app is loaded inside the Shopify Admin.</p>
+      <s-heading>Shopify Nuxt Playground</s-heading>
+      <s-paragraph>This app is loaded inside the Shopify Admin.</s-paragraph>
     </div>
-    <button @click="openToast">Try Button</button>
-  </ShopifyAppProvider>
+    <button variant="primary" @click="test">Save</button>
+    <button>Discard</button>
+
+    <s-app-nav>
+      <s-link href="/" rel="home">Home</s-link>
+      <s-link href="/templates">Templates</s-link>
+      <s-link href="/settings">Settings</s-link>
+    </s-app-nav>
+  </s-page>
 </template>
 
 <script setup lang="ts">
-import { useAppBridge } from '#imports'
+const shopify = useAppBridge()
 
-const openToast = () => {
-  const shopify = useAppBridge()
-
-  const isEmbedded = window.self !== window.top
-  console.info('Shopify App Bridge instance:', shopify.config.shop)
-  console.info('App is embedded in iframe:', isEmbedded)
-
-  if (!isEmbedded) {
-    console.warn('Toast requires the app to be loaded inside the Shopify Admin iframe.')
-  }
-
-  shopify.toast.show('Hello from Shopify App Bridge!')
+const test = () => {
+  console.info(
+    'TOAST TRIGGERED',
+    shopify?.toast.show('Hello from the playground app!')
+  )
 }
 </script>
