@@ -113,8 +113,89 @@ export default defineNuxtModule<ModuleOptions>({
       getContents: () => `
 /// <reference types="@shopify/polaris-types" />
 
+// Vue type bridge for Shopify Polaris web components.
+// @shopify/polaris-types augments HTMLElementTagNameMap with s-* elements.
+// This declaration maps them into Vue's IntrinsicElements so templates get
+// proper type-checking and autocomplete.
+
+type PolarisElementProps<T> = {
+  [K in keyof T as K extends \`on\${string}\` ? never : K]?: T[K]
+} & {
+  [K in keyof T as K extends \`on\${infer E}\` ? \`on\${Capitalize<E>}\` : never]?: (event: Event) => void
+} & {
+  slot?: string
+  class?: string
+  style?: string | Record<string, string>
+}
+
+declare module 'vue' {
+  interface HTMLAttributes {
+    slot?: string
+  }
+}
+
 declare module '@vue/runtime-dom' {
-  interface IntrinsicElements extends PolarisIntrinsicElements {}
+  interface IntrinsicElements {
+    's-avatar': PolarisElementProps<HTMLElementTagNameMap['s-avatar']>
+    's-badge': PolarisElementProps<HTMLElementTagNameMap['s-badge']>
+    's-banner': PolarisElementProps<HTMLElementTagNameMap['s-banner']>
+    's-box': PolarisElementProps<HTMLElementTagNameMap['s-box']>
+    's-button': PolarisElementProps<HTMLElementTagNameMap['s-button']>
+    's-button-group': PolarisElementProps<HTMLElementTagNameMap['s-button-group']>
+    's-checkbox': PolarisElementProps<HTMLElementTagNameMap['s-checkbox']>
+    's-chip': PolarisElementProps<HTMLElementTagNameMap['s-chip']>
+    's-choice': PolarisElementProps<HTMLElementTagNameMap['s-choice']>
+    's-choice-list': PolarisElementProps<HTMLElementTagNameMap['s-choice-list']>
+    's-clickable': PolarisElementProps<HTMLElementTagNameMap['s-clickable']>
+    's-clickable-chip': PolarisElementProps<HTMLElementTagNameMap['s-clickable-chip']>
+    's-color-field': PolarisElementProps<HTMLElementTagNameMap['s-color-field']>
+    's-color-picker': PolarisElementProps<HTMLElementTagNameMap['s-color-picker']>
+    's-date-field': PolarisElementProps<HTMLElementTagNameMap['s-date-field']>
+    's-date-picker': PolarisElementProps<HTMLElementTagNameMap['s-date-picker']>
+    's-divider': PolarisElementProps<HTMLElementTagNameMap['s-divider']>
+    's-drop-zone': PolarisElementProps<HTMLElementTagNameMap['s-drop-zone']>
+    's-email-field': PolarisElementProps<HTMLElementTagNameMap['s-email-field']>
+    's-grid': PolarisElementProps<HTMLElementTagNameMap['s-grid']>
+    's-grid-item': PolarisElementProps<HTMLElementTagNameMap['s-grid-item']>
+    's-heading': PolarisElementProps<HTMLElementTagNameMap['s-heading']>
+    's-icon': PolarisElementProps<HTMLElementTagNameMap['s-icon']>
+    's-image': PolarisElementProps<HTMLElementTagNameMap['s-image']>
+    's-link': PolarisElementProps<HTMLElementTagNameMap['s-link']>
+    's-list-item': PolarisElementProps<HTMLElementTagNameMap['s-list-item']>
+    's-menu': PolarisElementProps<HTMLElementTagNameMap['s-menu']>
+    's-modal': PolarisElementProps<HTMLElementTagNameMap['s-modal']>
+    's-money-field': PolarisElementProps<HTMLElementTagNameMap['s-money-field']>
+    's-number-field': PolarisElementProps<HTMLElementTagNameMap['s-number-field']>
+    's-option': PolarisElementProps<HTMLElementTagNameMap['s-option']>
+    's-option-group': PolarisElementProps<HTMLElementTagNameMap['s-option-group']>
+    's-ordered-list': PolarisElementProps<HTMLElementTagNameMap['s-ordered-list']>
+    's-page': PolarisElementProps<HTMLElementTagNameMap['s-page']>
+    's-paragraph': PolarisElementProps<HTMLElementTagNameMap['s-paragraph']>
+    's-password-field': PolarisElementProps<HTMLElementTagNameMap['s-password-field']>
+    's-popover': PolarisElementProps<HTMLElementTagNameMap['s-popover']>
+    's-query-container': PolarisElementProps<HTMLElementTagNameMap['s-query-container']>
+    's-search-field': PolarisElementProps<HTMLElementTagNameMap['s-search-field']>
+    's-section': PolarisElementProps<HTMLElementTagNameMap['s-section']>
+    's-select': PolarisElementProps<HTMLElementTagNameMap['s-select']>
+    's-spinner': PolarisElementProps<HTMLElementTagNameMap['s-spinner']>
+    's-stack': PolarisElementProps<HTMLElementTagNameMap['s-stack']>
+    's-switch': PolarisElementProps<HTMLElementTagNameMap['s-switch']>
+    's-table': PolarisElementProps<HTMLElementTagNameMap['s-table']>
+    's-table-body': PolarisElementProps<HTMLElementTagNameMap['s-table-body']>
+    's-table-cell': PolarisElementProps<HTMLElementTagNameMap['s-table-cell']>
+    's-table-header': PolarisElementProps<HTMLElementTagNameMap['s-table-header']>
+    's-table-header-row': PolarisElementProps<HTMLElementTagNameMap['s-table-header-row']>
+    's-table-row': PolarisElementProps<HTMLElementTagNameMap['s-table-row']>
+    's-text': PolarisElementProps<HTMLElementTagNameMap['s-text']>
+    's-text-area': PolarisElementProps<HTMLElementTagNameMap['s-text-area']>
+    's-text-field': PolarisElementProps<HTMLElementTagNameMap['s-text-field']>
+    's-thumbnail': PolarisElementProps<HTMLElementTagNameMap['s-thumbnail']>
+    's-tooltip': PolarisElementProps<HTMLElementTagNameMap['s-tooltip']>
+    's-url-field': PolarisElementProps<HTMLElementTagNameMap['s-url-field']>
+    's-unordered-list': PolarisElementProps<HTMLElementTagNameMap['s-unordered-list']>
+    // App-level components (not in @shopify/polaris-types)
+    's-app-nav': { class?: string; style?: string | Record<string, string>; slot?: string }
+  }
 }
 
 export {}

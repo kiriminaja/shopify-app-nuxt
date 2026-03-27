@@ -7,6 +7,7 @@
       "dependencies": {
         "@nuxt/kit": "^4.4.2",
         "@shopify/app-bridge-types": "^0.7.0",
+        "@shopify/polaris-types": "^1.0.1",
         "@shopify/shopify-api": "^13.0.0",
         "@shopify/shopify-app-session-storage": "^5.0.0",
         "isbot": "^5.1.34",

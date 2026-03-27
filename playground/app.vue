@@ -1,5 +1,6 @@
 <template>
-  <s-page title="Edit Product">
+  <s-page heading="App Playground Product">
+    <s-button slot="primary-action" variant="primary">Primary</s-button>
     <div>
       <s-heading>Shopify Nuxt Playground</s-heading>
       <s-paragraph>This app is loaded inside the Shopify Admin.</s-paragraph>
