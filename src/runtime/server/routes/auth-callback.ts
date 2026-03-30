@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
       try {
         await api.webhooks.register({ session })
       } catch (e) {
-        console.warn('[shopify-nuxt] Failed to register webhooks:', e)
+        console.debug('[shopify-nuxt] Failed to register webhooks:', e)
       }
     }
 
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
     const redirectUrl = `${config.appUrl}?shop=${shop}&host=${host}`
     return sendRedirect(event, redirectUrl, 302)
   } catch (error: any) {
-    console.error('[shopify-nuxt] Auth callback error:', error)
+    console.debug('[shopify-nuxt] Auth callback error:', error.message)
     throw createError({
       statusCode: 500,
       statusMessage: 'Authentication failed',
