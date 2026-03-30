@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.5
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.4...v0.0.5)
+
+### 🚀 Enhancements
+
+- Add support for Cloudflare in content security policy ([a82c1b9](https://github.com/kiriminaja/shopify-nuxt/commit/a82c1b9))
+
+### 💅 Refactors
+
+- Change error logging from console.error to console.debug in auth callback and token exchange ([9a61a5e](https://github.com/kiriminaja/shopify-nuxt/commit/9a61a5e))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.4
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.3...v0.0.4)
