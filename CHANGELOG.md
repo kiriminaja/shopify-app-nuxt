@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.11
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.10...v0.0.11)
+
+### 🚀 Enhancements
+
+- Add App Bridge UI components (ShUiModal, ShUiNavMenu, ShUiSaveBar, ShUiTitleBar) for enhanced Shopify integration ([b5bd90d](https://github.com/kiriminaja/shopify-nuxt/commit/b5bd90d))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.10
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.9...v0.0.10)
