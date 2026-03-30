@@ -6,6 +6,7 @@ import {
   readRawBody,
 } from 'h3'
 import type { JwtPayload } from '@shopify/shopify-api'
+import { isbot } from 'isbot'
 import { getShopifyApi, getResolvedConfig } from '../services/shopify'
 
 export function getSessionTokenHeader(event: H3Event): string | undefined {
@@ -52,10 +53,7 @@ export function ensureCORSHeaders(event: H3Event): void {
 export function isBotRequest(event: H3Event): boolean {
   const ua = getHeader(event, 'user-agent') || ''
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const isbotModule = require('isbot')
-    const isbotFn = isbotModule.isbot || isbotModule.default || isbotModule
-    return typeof isbotFn === 'function' ? isbotFn(ua) : false
+    return isbot(ua)
   } catch {
     return false
   }

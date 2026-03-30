@@ -177,7 +177,8 @@ export {}
       nitroConfig.externals.inline = nitroConfig.externals.inline || []
       ;(nitroConfig.externals.inline as string[]).push(
         '@shopify/shopify-api',
-        '@shopify/shopify-api/adapters/node'
+        '@shopify/shopify-api/adapters/node',
+        'isbot'
       )
     })
 

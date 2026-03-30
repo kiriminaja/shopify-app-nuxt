@@ -20,6 +20,7 @@
         "@nuxt/module-builder": "^1.0.2",
         "@nuxt/schema": "^4.4.2",
         "@nuxt/test-utils": "^4.0.0",
+        "@shopify/shopify-app-session-storage-memory": "^6.0.0",
         "@types/node": "^25.5.0",
         "changelogen": "^0.6.2",
         "eslint": "^10.1.0",
