@@ -55,19 +55,10 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // ─── Vite: Allow Tunnel Hosts ──────────────────────────────────────
-    // Shopify dev uses Cloudflare tunnels — allow those hosts in Vite's dev server
+    // Shopify dev uses Cloudflare tunnels with random subdomains — allow all hosts
     nuxt.options.vite = nuxt.options.vite || {}
     nuxt.options.vite.server = nuxt.options.vite.server || {}
-    const existing = nuxt.options.vite.server.allowedHosts
-    if (existing === true) {
-      // Already allows all hosts — nothing to do
-    } else if (Array.isArray(existing)) {
-      if (!existing.includes('.trycloudflare.com')) {
-        existing.push('.trycloudflare.com')
-      }
-    } else {
-      nuxt.options.vite.server.allowedHosts = ['.trycloudflare.com']
-    }
+    nuxt.options.vite.server.allowedHosts = true
 
     // ─── Aliases ───────────────────────────────────────────────────────
     // Allow importing from '#shopify/server' in server code
