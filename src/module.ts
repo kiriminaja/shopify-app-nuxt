@@ -50,7 +50,8 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.shopify = {
       apiKey: options.apiKey,
       authPagePath: options.authPage !== false ? '/auth' : '',
-      authPathPrefix: options.authPathPrefix || '/_shopify/auth'
+      authPathPrefix: options.authPathPrefix || '/_shopify/auth',
+      navLinks: options.navLinks || []
     }
 
     // ─── Aliases ───────────────────────────────────────────────────────

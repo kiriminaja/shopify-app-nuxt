@@ -71,6 +71,22 @@ export interface ModuleOptions {
    * @default undefined (uses built-in page)
    */
   authPage?: string | false
+
+  /**
+   * Navigation links for the app sidebar (`<ShAppNav>`).
+   * Used by `<ShopifyAppProvider>` to render the App Bridge nav menu.
+   * Each link has a `label`, `href`, and optionally `rel: 'home'` for the default landing page.
+   */
+  navLinks?: NavLink[]
+}
+
+export interface NavLink {
+  /** The visible label text for the navigation item */
+  label: string
+  /** The URL path for the navigation item (e.g., `/products`) */
+  href: string
+  /** Set to `'home'` to designate this link as the app's default landing page */
+  rel?: 'home'
 }
 
 // ─── Runtime Config (configureShopify) ───────────────────────────────────────
@@ -185,6 +201,7 @@ export interface ShopifyPublicConfig {
   apiKey: string
   authPagePath: string
   authPathPrefix: string
+  navLinks: NavLink[]
 }
 
 declare module 'nuxt/schema' {

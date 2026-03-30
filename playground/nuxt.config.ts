@@ -16,6 +16,11 @@ export default defineNuxtConfig({
     appUrl:
       process.env.SHOPIFY_APP_URL ||
       process.env.HOST ||
-      'https://localhost:3000'
+      'https://localhost:3000',
+    navLinks: [
+      { label: 'Home', href: '/', rel: 'home' },
+      { label: 'Products', href: '/products' },
+      { label: 'Settings', href: '/settings' }
+    ]
   }
 })

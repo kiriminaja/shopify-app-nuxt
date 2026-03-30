@@ -99,6 +99,7 @@ Any config passed to `configureShopify()` is merged with the defaults — you on
 | `distribution`    | `AppDistribution` | `app_store`      | App distribution type (`app_store`, `single_merchant`, `shopify_admin`) |
 | `useOnlineTokens` | `boolean`         | `false`          | Use online (per-user) tokens in addition to offline (per-shop) tokens   |
 | `authPage`        | `string \| false` | built-in page    | Custom auth page component path, or `false` to disable                  |
+| `navLinks`        | `NavLink[]`       | `[]`             | Navigation links for the app sidebar (used by `<ShopifyAppProvider>`)   |
 
 ## Authenticating admin requests
 
@@ -297,6 +298,46 @@ const { data: products } = await useAsyncData(
 > **Important**: Always use `server: false` with `useShopifyFetch()` — session tokens are only available on the client side within the Shopify admin iframe.
 
 ## Using Polaris components
+
+### `<ShopifyAppProvider>`
+
+Wrap your app pages with `<ShopifyAppProvider>` to automatically render the [App Bridge navigation menu](https://shopify.dev/docs/api/app-home/app-bridge-web-components/app-nav) from your module config:
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['shopify-nuxt'],
+  shopify: {
+    // ...
+    navLinks: [
+      { label: 'Home', href: '/', rel: 'home' },
+      { label: 'Products', href: '/products' },
+      { label: 'Settings', href: '/settings' }
+    ]
+  }
+})
+```
+
+```vue
+<!-- layouts/default.vue -->
+<template>
+  <ShopifyAppProvider>
+    <slot />
+  </ShopifyAppProvider>
+</template>
+```
+
+You can also override the links per-component via the `links` prop:
+
+```vue
+<ShopifyAppProvider :links="[{ label: 'Home', href: '/', rel: 'home' }]">
+  <slot />
+</ShopifyAppProvider>
+```
+
+Each `NavLink` has: `label` (string), `href` (string), and optionally `rel: 'home'` to set the default landing page.
+
+### Polaris web components
 
 This module provides Vue wrapper components for [Shopify Polaris web components](https://shopify.dev/docs/api/app-home/web-components). Use the `Sh`-prefixed wrappers instead of the raw `s-*` web components — they provide typed props with autocomplete, v-model support for form components, and work seamlessly with Vue's reactivity system.
 
