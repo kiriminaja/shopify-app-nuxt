@@ -115,7 +115,7 @@ export function getResolvedConfig(): ResolvedConfig {
   _resolvedConfig = {
     apiKey: moduleOpts.apiKey || '',
     apiSecretKey: moduleOpts.apiSecretKey || '',
-    scopes: moduleOpts.scopes || [],
+    scopes: moduleOpts.scopes,
     appUrl: moduleOpts.appUrl || '',
     apiVersion: moduleOpts.apiVersion || '2025-01',
     authPathPrefix,

@@ -1,12 +1,7 @@
 import { getShopifyApi, getSessionStorage } from '../services/shopify'
+import { createStorefrontApiContext } from './clients'
+import type { StorefrontApiContext } from './clients'
 import type { Session } from '@shopify/shopify-api'
-
-export interface StorefrontApiContext {
-  graphql: (
-    query: string,
-    options?: { variables?: Record<string, any> }
-  ) => Promise<any>
-}
 
 /**
  * Get an unauthenticated Storefront API context for a given shop.
@@ -40,17 +35,7 @@ export async function useShopifyUnauthenticatedStorefront(
     )
   }
 
-  const storefront: StorefrontApiContext = {
-    graphql: async (
-      query: string,
-      options?: { variables?: Record<string, any> }
-    ) => {
-      const client = new api.clients.Storefront({ session })
-      return client.request(query, {
-        variables: options?.variables
-      })
-    }
-  }
+  const storefront = createStorefrontApiContext(api, session)
 
   return { storefront, session }
 }

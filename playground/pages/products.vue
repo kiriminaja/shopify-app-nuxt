@@ -43,4 +43,8 @@ const example = ref('')
 const openModal = () => {
   shopify?.modal.show('example-modal')
 }
+
+definePageMeta({
+  middleware: 'shopify-auth'
+})
 </script>

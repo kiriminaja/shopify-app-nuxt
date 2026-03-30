@@ -30,8 +30,9 @@ export interface ModuleOptions {
 
   /**
    * The scopes your app needs from the Shopify API.
+   * Optional — Shopify reads scopes from `shopify.app.toml` with managed install.
    */
-  scopes: string[]
+  scopes?: string[]
 
   /**
    * The URL your app is running on. In development, this is typically a tunnel URL.
@@ -162,7 +163,7 @@ export interface AuthConfig {
 export interface ResolvedConfig {
   apiKey: string
   apiSecretKey: string
-  scopes: string[]
+  scopes?: string[]
   appUrl: string
   apiVersion: string
   authPathPrefix: string

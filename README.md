@@ -47,22 +47,34 @@ export default defineNuxtConfig({
   shopify: {
     apiKey: 'ApiKeyFromPartnersDashboard',
     apiSecretKey: 'ApiSecretKeyFromPartnersDashboard',
-    scopes: ['read_products', 'write_products'],
     appUrl: 'https://your-app-url.com'
   }
 })
 ```
 
-For session storage and post-auth hooks, create a Nitro server plugin:
+All values can also be set via environment variables:
+
+| Option         | Env Variable                  |
+| -------------- | ----------------------------- |
+| `apiKey`       | `NUXT_SHOPIFY_API_KEY`        |
+| `apiSecretKey` | `NUXT_SHOPIFY_API_SECRET_KEY` |
+| `appUrl`       | `NUXT_SHOPIFY_APP_URL`        |
+
+### Session storage
+
+By default, the module provides an in-memory session storage (`MemorySessionStorage`) that works out of the box — no configuration needed. For production use, you should use a persistent session storage adapter.
+
+To override the default session storage or configure lifecycle hooks, create a Nitro server plugin:
 
 ```ts
 // server/plugins/shopify.ts
 import { configureShopify } from '#shopify/server'
-import { MemorySessionStorage } from '@shopify/shopify-app-session-storage-memory'
+import { PrismaSessionStorage } from '@shopify/shopify-app-session-storage-prisma'
+import { prisma } from '~/server/utils/prisma'
 
 export default defineNitroPlugin(() => {
   configureShopify({
-    sessionStorage: new MemorySessionStorage(),
+    sessionStorage: new PrismaSessionStorage(prisma),
     hooks: {
       afterAuth: async ({ session, admin }) => {
         // Register webhooks, seed data, etc.
@@ -72,14 +84,29 @@ export default defineNitroPlugin(() => {
 })
 ```
 
-### Authenticating admin requests
+Any config passed to `configureShopify()` is merged with the defaults — you only need to specify what you want to override.
 
-Use `useShopifyAdmin()` in your server API routes to authenticate requests from the Shopify admin:
+### Module options
+
+| Option            | Type              | Default          | Description                                                             |
+| ----------------- | ----------------- | ---------------- | ----------------------------------------------------------------------- |
+| `apiKey`          | `string`          | —                | Your Shopify API key from the Partners dashboard                        |
+| `apiSecretKey`    | `string`          | —                | Your Shopify API secret key                                             |
+| `scopes`          | `string[]`        | `[]`             | OAuth scopes (optional — Shopify reads from `shopify.app.toml`)         |
+| `appUrl`          | `string`          | —                | Your app's public URL (tunnel URL in development)                       |
+| `apiVersion`      | `ApiVersion`      | Latest stable    | The Shopify API version to use                                          |
+| `authPathPrefix`  | `string`          | `/_shopify/auth` | URL prefix for OAuth endpoints                                          |
+| `distribution`    | `AppDistribution` | `app_store`      | App distribution type (`app_store`, `single_merchant`, `shopify_admin`) |
+| `useOnlineTokens` | `boolean`         | `false`          | Use online (per-user) tokens in addition to offline (per-shop) tokens   |
+
+## Authenticating admin requests
+
+Use `useShopifyAdmin()` in your server API routes to authenticate requests from the Shopify admin. The returned `admin` object provides **typed GraphQL** and REST clients powered by `@shopify/admin-api-client`:
 
 ```ts
 // server/api/products.ts
 export default defineEventHandler(async (event) => {
-  const { admin } = await useShopifyAdmin(event)
+  const { admin, session } = await useShopifyAdmin(event)
 
   const response = await admin.graphql(`{
     products(first: 5) {
@@ -92,13 +119,57 @@ export default defineEventHandler(async (event) => {
     }
   }`)
 
-  return response
+  return await response.json()
 })
 ```
 
-### Handling webhooks
+#### GraphQL with variables
 
-Use `useShopifyWebhook()` to validate and process incoming webhooks:
+```ts
+const response = await admin.graphql(
+  `#graphql
+  mutation populateProduct($input: ProductInput!) {
+    productCreate(input: $input) {
+      product {
+        id
+        title
+      }
+    }
+  }`,
+  {
+    variables: {
+      input: { title: 'New Product' }
+    }
+  }
+)
+
+const { data } = await response.json()
+```
+
+#### REST API
+
+```ts
+const products = await admin.rest.get({ path: 'products' })
+await admin.rest.post({
+  path: 'products',
+  data: { product: { title: 'New Product' } }
+})
+```
+
+#### Full `AdminContext` return type
+
+| Property       | Type                       | Description                                        |
+| -------------- | -------------------------- | -------------------------------------------------- |
+| `session`      | `Session`                  | The authenticated Shopify session                  |
+| `admin`        | `AdminApiContext`          | GraphQL and REST API clients                       |
+| `sessionToken` | `JwtPayload \| undefined`  | Decoded session token (embedded apps only)         |
+| `billing`      | `BillingContext`           | Helpers for `require()`, `check()`, `request()`    |
+| `cors`         | `(response) => Response`   | Add CORS headers to a response                     |
+| `redirect`     | `(url, init?) => Response` | Redirect helper that works inside embedded iframes |
+
+## Handling webhooks
+
+Use `useShopifyWebhook()` to validate and process incoming webhooks. HMAC verification is handled automatically:
 
 ```ts
 // server/api/webhooks.ts
@@ -118,7 +189,81 @@ export default defineEventHandler(async (event) => {
 })
 ```
 
-### Using App Bridge on the client
+#### Registering webhooks programmatically
+
+```ts
+// server/plugins/shopify.ts
+import { configureShopify, registerShopifyWebhooks } from '#shopify/server'
+
+export default defineNitroPlugin(() => {
+  configureShopify({
+    hooks: {
+      afterAuth: async ({ session }) => {
+        await registerShopifyWebhooks(session)
+      }
+    }
+  })
+})
+```
+
+> **Tip**: For most apps, registering webhooks via `shopify.app.toml` is sufficient. Use `registerShopifyWebhooks()` only when you need dynamic, per-shop webhook registration.
+
+## Authenticating other request types
+
+### Shopify Flow
+
+```ts
+// server/api/flow.ts
+export default defineEventHandler(async (event) => {
+  const { session, admin, payload } = await useShopifyFlow(event)
+  // Handle Flow trigger/action
+})
+```
+
+### Public requests (checkout extensions, etc.)
+
+```ts
+// server/api/public/widget.ts
+export default defineEventHandler(async (event) => {
+  const { sessionToken, cors } = await useShopifyPublic(event)
+  // sessionToken contains the decoded JWT payload
+  // Use cors() to wrap your response with CORS headers
+})
+```
+
+### Unauthenticated access (background jobs)
+
+For accessing the Shopify API without an incoming request (cron jobs, background tasks):
+
+```ts
+// server/api/cron/sync.ts
+export default defineEventHandler(async () => {
+  const { admin } = await useShopifyUnauthenticatedAdmin(
+    'my-shop.myshopify.com'
+  )
+
+  const response = await admin.graphql(`{
+    products(first: 10) { edges { node { id title } } }
+  }`)
+
+  return await response.json()
+})
+```
+
+```ts
+// Storefront API access
+const { storefront } = await useShopifyUnauthenticatedStorefront(
+  'my-shop.myshopify.com'
+)
+
+const response = await storefront.graphql(`{
+  products(first: 10) { edges { node { id title } } }
+}`)
+```
+
+Both the admin and storefront GraphQL clients are typed via `@shopify/admin-api-client` and `@shopify/storefront-api-client` respectively.
+
+## Using App Bridge on the client
 
 The module automatically injects the Shopify App Bridge CDN script and provides typed access via composables:
 
@@ -127,15 +272,32 @@ The module automatically injects the Shopify App Bridge CDN script and provides 
 // Access the App Bridge instance (typed as ShopifyGlobal)
 const shopify = useAppBridge()
 
-// Or use the authenticated fetch wrapper
-const shopifyFetch = useShopifyFetch()
-const { data } = await shopifyFetch('/api/products')
+// Get the current shop
+const shop = shopify.config.shop
 </script>
 ```
 
-### Using Polaris components
+### Authenticated fetch
 
-This module provides Vue wrapper components for [Shopify Polaris web components](https://shopify.dev/docs/api/app-home/web-components). Use the `Sh`-prefixed wrappers instead of the raw `s-*` web components — they provide typed props with autocomplete and work seamlessly with Vue's reactivity system.
+Use `useShopifyFetch()` for client-side API calls that automatically include the session token:
+
+```vue
+<script setup>
+const shopifyFetch = useShopifyFetch()
+
+const { data: products } = await useAsyncData(
+  'products',
+  () => shopifyFetch('/api/products'),
+  { server: false }
+)
+</script>
+```
+
+> **Important**: Always use `server: false` with `useShopifyFetch()` — session tokens are only available on the client side within the Shopify admin iframe.
+
+## Using Polaris components
+
+This module provides Vue wrapper components for [Shopify Polaris web components](https://shopify.dev/docs/api/app-home/web-components). Use the `Sh`-prefixed wrappers instead of the raw `s-*` web components — they provide typed props with autocomplete, v-model support for form components, and work seamlessly with Vue's reactivity system.
 
 ```vue
 <template>
@@ -150,9 +312,18 @@ This module provides Vue wrapper components for [Shopify Polaris web components]
     </ShBanner>
 
     <ShTextField
+      v-model="title"
       label="Product title"
-      :value="title"
       placeholder="Enter product title"
+    />
+
+    <ShSelect
+      v-model="status"
+      label="Status"
+      :options="[
+        { label: 'Active', value: 'active' },
+        { label: 'Draft', value: 'draft' }
+      ]"
     />
   </ShPage>
 </template>
@@ -160,7 +331,38 @@ This module provides Vue wrapper components for [Shopify Polaris web components]
 
 All `Sh*` components are auto-imported — no manual imports needed. Each component maps directly to its Polaris web component counterpart (e.g., `<ShButton>` → `<s-button>`, `<ShTextField>` → `<s-text-field>`).
 
-### Loading your app in Shopify Admin
+### Available components
+
+Layout & structure: `ShPage`, `ShBox`, `ShStack`, `ShGrid`, `ShGridItem`, `ShSection`, `ShDivider`
+
+Actions: `ShButton`, `ShButtonGroup`, `ShClickable`, `ShLink`
+
+Forms: `ShTextField`, `ShNumberField`, `ShEmailField`, `ShPasswordField`, `ShUrlField`, `ShMoneyField`, `ShColorField`, `ShDateField`, `ShTextArea`, `ShSelect`, `ShCheckbox`, `ShSwitch`, `ShChoiceList`, `ShChoice`, `ShSearchField`, `ShDropZone`, `ShColorPicker`, `ShDatePicker`
+
+Feedback: `ShBanner`, `ShBadge`, `ShSpinner`, `ShTooltip`
+
+Navigation: `ShAppNav`, `ShMenu`, `ShOption`, `ShOptionGroup`, `ShPopover`
+
+Data: `ShTable`, `ShTableHeader`, `ShTableHeaderRow`, `ShTableBody`, `ShTableRow`, `ShTableCell`
+
+Content: `ShText`, `ShHeading`, `ShParagraph`, `ShIcon`, `ShImage`, `ShThumbnail`, `ShAvatar`, `ShChip`, `ShClickableChip`, `ShListItem`, `ShOrderedList`, `ShUnorderedList`
+
+Other: `ShModal`, `ShQueryContainer`
+
+## OAuth routes
+
+The module automatically registers these routes:
+
+| Route                              | Purpose                                |
+| ---------------------------------- | -------------------------------------- |
+| `GET /_shopify/auth`               | Start the OAuth flow                   |
+| `GET /_shopify/auth/callback`      | Handle the OAuth callback from Shopify |
+| `GET /_shopify/auth/exit-iframe`   | App Bridge iframe escape page          |
+| `GET /_shopify/auth/session-token` | Session token bounce page              |
+
+The prefix `/_shopify/auth` is configurable via the `authPathPrefix` option.
+
+## Loading your app in Shopify Admin
 
 To load your app within the Shopify Admin, you need to:
 
@@ -175,11 +377,15 @@ To load your app within the Shopify Admin, you need to:
 | **Authentication**  | OAuth flow, session tokens, token exchange — all handled automatically          |
 | **App Bridge**      | CDN-based App Bridge with full TypeScript types via `@shopify/app-bridge-types` |
 | **Polaris**         | Vue wrapper components (`Sh*`) for all Polaris web components with typed props  |
+| **Typed GraphQL**   | Admin and Storefront API clients typed via `@shopify/admin-api-client`          |
 | **Webhooks**        | HMAC validation, payload parsing, and webhook registration                      |
 | **Admin API**       | GraphQL and REST clients with automatic session management                      |
+| **Storefront API**  | Typed GraphQL client for Storefront API via `@shopify/storefront-api-client`    |
 | **Billing**         | Billing context for subscription and usage-based charges                        |
-| **Session storage** | Pluggable session storage via `@shopify/shopify-app-session-storage`            |
-| **Auto-imports**    | Server utilities and client composables are auto-imported                       |
+| **Session storage** | Built-in `MemorySessionStorage` default, pluggable via `configureShopify()`     |
+| **Auto-imports**    | Server utilities, client composables, and components are auto-imported          |
+| **Bot detection**   | Admin auth automatically detects bots and returns 410 to avoid unnecessary auth |
+| **CORS**            | Built-in CORS helpers for public/checkout extension endpoints                   |
 
 ## Server utilities
 
@@ -198,14 +404,39 @@ These are auto-imported in your `server/` directory:
 | `useShopifyUnauthenticatedStorefront(shop)` | Offline session storefront API access                 |
 | `registerShopifyWebhooks(session)`          | Register webhooks for a shop                          |
 
+### `#shopify/server` exports
+
+For use in Nitro plugins and advanced server-side configuration:
+
+```ts
+import {
+  configureShopify,
+  getShopifyApi,
+  getResolvedConfig,
+  getSessionStorage,
+  registerShopifyWebhooks,
+  createAdminApiContext,
+  createStorefrontApiContext
+} from '#shopify/server'
+
+// Types
+import type {
+  AdminApiContext,
+  StorefrontApiContext,
+  GraphQLClient,
+  GraphQLQueryOptions,
+  GraphQLResponse
+} from '#shopify/server'
+```
+
 ## Client composables
 
 These are auto-imported in your Vue components:
 
-| Composable          | Purpose                                           |
-| ------------------- | ------------------------------------------------- |
-| `useAppBridge()`    | Returns typed `ShopifyGlobal` from App Bridge CDN |
-| `useShopifyFetch()` | Fetch wrapper with automatic session token auth   |
+| Composable          | Purpose                                                              |
+| ------------------- | -------------------------------------------------------------------- |
+| `useAppBridge()`    | Returns typed `ShopifyGlobal` from App Bridge CDN                    |
+| `useShopifyFetch()` | Fetch wrapper with automatic session token in `Authorization` header |
 
 ## Testing your app
 
@@ -219,6 +450,10 @@ const config = testConfig()
 
 // testSession() returns a mock Shopify session
 const session = testSession()
+
+// Both accept overrides
+const customConfig = testConfig({ apiKey: 'custom-key' })
+const customSession = testSession({ shop: 'custom-shop.myshopify.com' })
 ```
 
 ## Resources
@@ -236,6 +471,14 @@ Shopify:
 - [Polaris Web Components](https://shopify.dev/docs/api/app-home/using-polaris-components)
 - [App extensions](https://shopify.dev/docs/apps/app-extensions/list)
 - [Shopify Functions](https://shopify.dev/docs/api/functions)
+
+Session storage adapters:
+
+- [`@shopify/shopify-app-session-storage-prisma`](https://www.npmjs.com/package/@shopify/shopify-app-session-storage-prisma)
+- [`@shopify/shopify-app-session-storage-drizzle`](https://www.npmjs.com/package/@shopify/shopify-app-session-storage-drizzle)
+- [`@shopify/shopify-app-session-storage-redis`](https://www.npmjs.com/package/@shopify/shopify-app-session-storage-redis)
+- [`@shopify/shopify-app-session-storage-mongodb`](https://www.npmjs.com/package/@shopify/shopify-app-session-storage-mongodb)
+- [`@shopify/shopify-app-session-storage-memory`](https://www.npmjs.com/package/@shopify/shopify-app-session-storage-memory) (default, not for production)
 
 ## Contributing
 

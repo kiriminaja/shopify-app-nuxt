@@ -13,7 +13,6 @@ export default defineNuxtConfig({
       process.env.SHOPIFY_API_SECRET ||
       process.env.SHOPIFY_API_SECRET_KEY ||
       'test-api-secret',
-    scopes: ['read_products', 'write_products'],
     appUrl:
       process.env.SHOPIFY_APP_URL ||
       process.env.HOST ||

@@ -23,7 +23,6 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     apiKey: '',
     apiSecretKey: '',
-    scopes: [],
     appUrl: '',
     apiVersion: ApiVersion.January26,
     authPathPrefix: '/_shopify/auth',
@@ -38,7 +37,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.shopify = {
       apiKey: options.apiKey,
       apiSecretKey: options.apiSecretKey,
-      scopes: options.scopes,
+      scopes: options.scopes || [],
       appUrl: options.appUrl,
       apiVersion: options.apiVersion || ApiVersion.January26,
       authPathPrefix: options.authPathPrefix || '/_shopify/auth',

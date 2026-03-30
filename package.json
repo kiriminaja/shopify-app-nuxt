@@ -5,6 +5,7 @@
   "repository": "kiriminaja/shopify-nuxt",
   "license": "MIT",
   "type": "module",
+  "author": "KiriminAja",
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
@@ -31,9 +32,9 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "bun run dev:prepare && nuxt dev playground",
-    "dev:build": "nuxt build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
+    "dev": "bun run dev:prepare && cd playground && shopify app dev",
+    "dev:build": "cd playground && nuxt build",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && cd playground && nuxt prepare",
     "release": "bun run lint && bun run test && bun run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
@@ -42,12 +43,14 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.4.2",
+    "@shopify/admin-api-client": "^1.1.2",
     "@shopify/app-bridge-types": "^0.7.0",
     "@shopify/cli": "^3.92.1",
     "@shopify/polaris-types": "^1.0.1",
     "@shopify/shopify-api": "^13.0.0",
     "@shopify/shopify-app-session-storage": "^5.0.0",
     "@shopify/shopify-app-session-storage-memory": "^6.0.0",
+    "@shopify/storefront-api-client": "^1.0.10",
     "h3": "^1.15.0",
     "isbot": "^5.1.36"
   },

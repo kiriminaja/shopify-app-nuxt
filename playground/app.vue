@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const router = useRouter()
+const shopify = useAppBridge()
+
+// trigger shopify.loading when router changed
+router.beforeEach(() => {
+  shopify.loading(true)
+})
+</script>
+
 <template>
   <NuxtPage />
   <ShAppNav>

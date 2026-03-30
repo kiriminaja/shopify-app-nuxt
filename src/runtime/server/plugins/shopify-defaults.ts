@@ -7,6 +7,7 @@ import { configureShopify, getResolvedConfig } from '../services/shopify'
  * If the user calls `configureShopify()` in their own server plugin,
  * it will override these defaults (configureShopify resets cached singletons).
  */
+/* @ts-expect-error Should be error, because it auto-import */
 export default defineNitroPlugin(() => {
   // Only set defaults if configureShopify() hasn't been called yet
   try {

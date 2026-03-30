@@ -5,9 +5,13 @@ const { data, error } = await useAsyncData(
   () => shopifyFetch('/api/shop'),
   { server: false }
 )
+
+definePageMeta({
+  middleware: 'shopify-auth'
+})
 </script>
 
 <template>
   <pre v-if="error">Error: {{ error }}</pre>
-  <pre v-else>{{ data }}</pre>
+  <pre v-else>{{ JSON.stringify(data, null, 2) }}</pre>
 </template>
