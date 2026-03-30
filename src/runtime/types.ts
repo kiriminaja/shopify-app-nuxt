@@ -118,13 +118,13 @@ export interface ShopifyRuntimeConfig {
 
 // ─── Auth Contexts ───────────────────────────────────────────────────────────
 
-export interface AdminContext {
+export interface AdminContext<T extends object = JwtPayload> {
   /** The authenticated session */
   session: Session
   /** Admin API client (graphql + rest) */
   admin: AdminApiContext
   /** The decoded session token (embedded apps only) */
-  sessionToken?: JwtPayload
+  sessionToken?: T
   /** Billing helpers */
   billing: BillingContext
   /** CORS header helper */

@@ -16,6 +16,7 @@ import {
   renderAppBridgePage
 } from './helpers'
 import type { AdminContext, BillingContext } from '../../types'
+import type { JwtPayload } from '@shopify/shopify-api'
 import { AppDistribution } from '../../types'
 
 const OnlineAccessToken =
@@ -37,7 +38,9 @@ const OfflineAccessToken =
  * })
  * ```
  */
-export async function useShopifyAdmin(event: H3Event): Promise<AdminContext> {
+export async function useShopifyAdmin<T extends object = JwtPayload>(
+  event: H3Event
+): Promise<AdminContext<T>> {
   const api = getShopifyApi()
   const config = getResolvedConfig()
   const sessionStorage = getSessionStorage()
