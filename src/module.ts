@@ -7,7 +7,8 @@ import {
   createResolver,
   addServerImportsDir,
   addRouteMiddleware,
-  addTypeTemplate
+  addTypeTemplate,
+  extendPages
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from './runtime/types'
@@ -43,12 +44,13 @@ export default defineNuxtModule<ModuleOptions>({
       authPathPrefix: options.authPathPrefix || '/_shopify/auth',
       distribution: options.distribution || 'app_store',
       useOnlineTokens: options.useOnlineTokens || false
-    } as any
+    }
 
     // Public config (safe to expose to client — only the API key)
     nuxt.options.runtimeConfig.public.shopify = {
-      apiKey: options.apiKey
-    } as any
+      apiKey: options.apiKey,
+      authPagePath: options.authPage !== false ? '/auth' : ''
+    }
 
     // ─── Aliases ───────────────────────────────────────────────────────
     // Allow importing from '#shopify/server' in server code
@@ -166,6 +168,21 @@ export {}
       path: resolver.resolve('./runtime/middleware/shopify-auth'),
       global: false
     })
+
+    // ─── Auth Login Page ───────────────────────────────────────────────
+    // Built-in /auth page with shop domain input for non-embedded flows.
+    // Set `authPage: false` to disable, or provide a custom component path.
+    if (options.authPage !== false) {
+      extendPages((pages) => {
+        pages.push({
+          name: 'shopify-auth-login',
+          path: '/auth',
+          file:
+            options.authPage ||
+            resolver.resolve('./runtime/pages/auth-login.vue')
+        })
+      })
+    }
 
     // ─── Built-in Nitro Plugin (default session storage) ───────────────
     // Provides MemorySessionStorage out of the box. Users can override

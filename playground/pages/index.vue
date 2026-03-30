@@ -45,6 +45,7 @@ const openModal = () => {
 }
 
 definePageMeta({
-  middleware: 'shopify-auth'
+  middleware: 'shopify-auth',
+  layout: 'auth'
 })
 </script>

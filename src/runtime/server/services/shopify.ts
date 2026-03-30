@@ -100,7 +100,7 @@ export function getResolvedConfig(): ResolvedConfig {
   if (_resolvedConfig) return _resolvedConfig
 
   const nuxtConfig = useRuntimeConfig()
-  const moduleOpts = (nuxtConfig as any).shopify || {}
+  const moduleOpts = nuxtConfig.shopify
   const runtime = _runtimeConfig || {}
 
   const authPathPrefix = moduleOpts.authPathPrefix || '/_shopify/auth'

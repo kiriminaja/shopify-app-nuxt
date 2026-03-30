@@ -7,7 +7,8 @@ const { data, error } = await useAsyncData(
 )
 
 definePageMeta({
-  middleware: 'shopify-auth'
+  middleware: 'shopify-auth',
+  layout: 'auth'
 })
 </script>
 

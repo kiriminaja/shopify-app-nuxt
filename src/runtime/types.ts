@@ -63,6 +63,14 @@ export interface ModuleOptions {
    * @default false
    */
   useOnlineTokens?: boolean
+
+  /**
+   * Path to a custom Vue page component for the `/auth` login page.
+   * Set to `false` to disable the built-in auth page entirely.
+   * When not set, a default login page with a shop domain input is provided.
+   * @default undefined (uses built-in page)
+   */
+  authPage?: string | false
 }
 
 // ─── Runtime Config (configureShopify) ───────────────────────────────────────
@@ -158,6 +166,33 @@ export interface AuthConfig {
   exitIframePath: string
   patchSessionTokenPath: string
   loginPath: string
+}
+
+// ─── Nuxt Runtime Config Types ───────────────────────────────────────────────
+
+export interface ShopifyServerConfig {
+  apiKey: string
+  apiSecretKey: string
+  scopes: string[]
+  appUrl: string
+  apiVersion: string
+  authPathPrefix: string
+  distribution: string
+  useOnlineTokens: boolean
+}
+
+export interface ShopifyPublicConfig {
+  apiKey: string
+  authPagePath: string
+}
+
+declare module 'nuxt/schema' {
+  interface RuntimeConfig {
+    shopify: ShopifyServerConfig
+  }
+  interface PublicRuntimeConfig {
+    shopify: ShopifyPublicConfig
+  }
 }
 
 export interface ResolvedConfig {

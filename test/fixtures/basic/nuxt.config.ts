@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     apiKey: 'test-api-key',
     apiSecretKey: 'test-api-secret',
     scopes: ['read_products'],
-    appUrl: 'https://test.example.com'
+    appUrl: 'https://test.example.com',
+    authPage: false
   }
 })
