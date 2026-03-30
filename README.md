@@ -16,6 +16,26 @@ It builds on the `@shopify/shopify-api` package and creates a Nuxt module layer 
 
 > **Note**: this package will enable your app's backend to work with Shopify APIs, and by default it will behave as an [embedded app](https://shopify.dev/docs/apps/auth/oauth/session-tokens). It uses the CDN-based [Shopify App Bridge](https://shopify.dev/docs/apps/tools/app-bridge) for frontend authentication.
 
+## How is this different from `@nuxtjs/shopify`?
+
+[`@nuxtjs/shopify`](https://shopify.nuxtjs.org) and `shopify-nuxt` solve completely different problems — you may even use both in the same project.
+
+|                               | [`@nuxtjs/shopify`](https://shopify.nuxtjs.org) | `shopify-nuxt` (this package)               |
+| ----------------------------- | ----------------------------------------------- | ------------------------------------------- |
+| **Use case**                  | Headless storefront                             | Shopify admin app (embedded)                |
+| **Who it's for**              | Merchants building custom storefronts           | Developers building Shopify apps            |
+| **Authentication**            | Static access token in config                   | OAuth + per-merchant session token exchange |
+| **Runs inside Shopify Admin** | No                                              | Yes (App Bridge iframe)                     |
+| **App Bridge**                | No                                              | Yes — CDN-based, auto-injected              |
+| **Webhooks**                  | No                                              | Yes — HMAC-verified                         |
+| **Billing API**               | No                                              | Yes                                         |
+| **Per-shop session storage**  | No                                              | Yes — pluggable adapters                    |
+| **Equivalent to**             | Shopify Hydrogen / storefront SDKs              | `@shopify/shopify-app-react-router`         |
+
+**Use `@nuxtjs/shopify`** if you want to build a custom Nuxt storefront that queries products, collections, and customer data from a Shopify store using the Storefront or Admin API with a static token.
+
+**Use `shopify-nuxt`** if you are building a Shopify app — something that runs inside the Shopify Admin, authenticates merchants via OAuth, handles session tokens, manages webhooks, and optionally charges merchants via the Billing API.
+
 ## Requirements
 
 To follow these usage guides, you will need to:
