@@ -15,6 +15,26 @@
     "./test-helpers": {
       "types": "./dist/runtime/server/test-helpers/index.d.ts",
       "import": "./dist/runtime/server/test-helpers/index.js"
+    },
+    "./shopify-api": {
+      "types": "./dist/runtime/shopify-api.d.ts",
+      "import": "./dist/runtime/shopify-api.js"
+    },
+    "./shopify-app-session-storage": {
+      "types": "./dist/runtime/shopify-app-session-storage.d.ts",
+      "import": "./dist/runtime/shopify-app-session-storage.js"
+    },
+    "./shopify-app-session-storage-memory": {
+      "types": "./dist/runtime/shopify-app-session-storage-memory.d.ts",
+      "import": "./dist/runtime/shopify-app-session-storage-memory.js"
+    },
+    "./admin-api-client": {
+      "types": "./dist/runtime/admin-api-client.d.ts",
+      "import": "./dist/runtime/admin-api-client.js"
+    },
+    "./storefront-api-client": {
+      "types": "./dist/runtime/storefront-api-client.d.ts",
+      "import": "./dist/runtime/storefront-api-client.js"
     }
   },
   "main": "./dist/module.mjs",
@@ -23,6 +43,21 @@
     "*": {
       ".": [
         "./dist/types.d.mts"
+      ],
+      "shopify-api": [
+        "./dist/runtime/shopify-api.d.ts"
+      ],
+      "shopify-app-session-storage": [
+        "./dist/runtime/shopify-app-session-storage.d.ts"
+      ],
+      "shopify-app-session-storage-memory": [
+        "./dist/runtime/shopify-app-session-storage-memory.d.ts"
+      ],
+      "admin-api-client": [
+        "./dist/runtime/admin-api-client.d.ts"
+      ],
+      "storefront-api-client": [
+        "./dist/runtime/storefront-api-client.d.ts"
       ]
     }
   },
@@ -53,7 +88,7 @@
     "@shopify/shopify-app-session-storage": "^5.0.0",
     "@shopify/shopify-app-session-storage-memory": "^6.0.0",
     "@shopify/storefront-api-client": "^1.0.10",
-    "h3": "^1.15.0",
+    "h3": "^2.0.0",
     "isbot": "^5.1.36"
   },
   "devDependencies": {
