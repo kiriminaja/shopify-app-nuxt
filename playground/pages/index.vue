@@ -1,7 +1,12 @@
 <template>
   <ShPage heading="App Playground Product">
     <ShLink slot="breadcrumb-actions" href="/">Home</ShLink>
-    <ShButton slot="primary-action" variant="primary" @click="openModal">
+    <ShButton
+      slot="primary-action"
+      variant="primary"
+      command-for="example-modal"
+      command="--show"
+    >
       Show Modal
     </ShButton>
     <form data-save-bar @submit.prevent="test()">
@@ -24,7 +29,17 @@
         <span>Typed: {{ example || '-' }}</span>
       </ShStack>
     </form>
-    <ShModal id="example-modal"> Title </ShModal>
+    <ShModal id="example-modal" heading="Example Modal">
+      <ShParagraph>This is a Polaris modal.</ShParagraph>
+      <ShButton
+        slot="primary-action"
+        variant="primary"
+        command-for="example-modal"
+        command="--hide"
+      >
+        Close
+      </ShButton>
+    </ShModal>
   </ShPage>
 </template>
 
@@ -39,10 +54,6 @@ const test = () => {
 }
 
 const example = ref('')
-
-const openModal = () => {
-  shopify?.modal.show('example-modal')
-}
 
 definePageMeta({
   middleware: 'shopify-auth',

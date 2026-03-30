@@ -105,8 +105,8 @@ export default defineNuxtModule<ModuleOptions>({
         ...(nuxt.options.app.head.script || [])
       ]
       nuxt.options.vue.compilerOptions.isCustomElement = (tag) => {
-        // Match all Shopify Polaris web component tags (s-*)
-        return tag.startsWith('s-')
+        // Match Shopify Polaris (s-*) and App Bridge (ui-*) web component tags
+        return tag.startsWith('s-') || tag.startsWith('ui-')
       }
     })
 

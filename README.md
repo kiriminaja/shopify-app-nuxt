@@ -350,6 +350,34 @@ Content: `ShText`, `ShHeading`, `ShParagraph`, `ShIcon`, `ShImage`, `ShThumbnail
 
 Other: `ShModal`, `ShQueryContainer`
 
+### Using `ShModal`
+
+`ShModal` wraps the [Polaris `<s-modal>`](https://shopify.dev/docs/api/app-home/web-components/overlays/modal) component — it renders **inside** your app's iframe. Open and close it using `commandFor` / `command` attributes:
+
+```vue
+<template>
+  <ShButton command-for="my-modal" command="--show">Open</ShButton>
+
+  <ShModal id="my-modal" heading="Confirm action">
+    <ShParagraph>Are you sure?</ShParagraph>
+
+    <ShButton slot="secondary-actions" command-for="my-modal" command="--hide">
+      Cancel
+    </ShButton>
+    <ShButton
+      slot="primary-action"
+      variant="primary"
+      command-for="my-modal"
+      command="--hide"
+    >
+      Confirm
+    </ShButton>
+  </ShModal>
+</template>
+```
+
+> **Note**: `ShModal` is **not** the same as the [App Bridge `<ui-modal>`](https://shopify.dev/docs/api/app-bridge-library/apis/modal) which renders outside the iframe and is controlled via `shopify.modal.show(id)`. If you need the App Bridge modal, use `<ui-modal>` directly.
+
 ## OAuth routes
 
 The module automatically registers these routes:
