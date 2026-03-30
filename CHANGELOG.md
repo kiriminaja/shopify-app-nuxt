@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.7
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.6...v0.0.7)
+
+### 🚀 Enhancements
+
+- Simplify Vite server configuration to allow all Cloudflare tunnel hosts ([697f96d](https://github.com/kiriminaja/shopify-nuxt/commit/697f96d))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.6
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.5...v0.0.6)
