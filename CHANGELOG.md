@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.10
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.9...v0.0.10)
+
+### 🚀 Enhancements
+
+- Add ShLoadingIndicator component to manage loading state in Shopify app ([584cb98](https://github.com/kiriminaja/shopify-nuxt/commit/584cb98))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.9
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.8...v0.0.9)
