@@ -139,6 +139,33 @@ const { data } = await shopifyFetch('/api/products')
 </template>
 ```
 
+### Using Polaris components
+
+This module provides Vue wrapper components for [Shopify Polaris web components](https://shopify.dev/docs/api/app-home/web-components). Use the `Sh`-prefixed wrappers instead of the raw `s-*` web components — they provide typed props with autocomplete and work seamlessly with Vue's reactivity system.
+
+```vue
+<template>
+  <ShPage heading="Products">
+    <ShStack gap="base">
+      <ShButton variant="primary" @click="save">Save</ShButton>
+      <ShButton @click="cancel">Cancel</ShButton>
+    </ShStack>
+
+    <ShBanner heading="Welcome" tone="info" dismissible>
+      Start by adding your first product.
+    </ShBanner>
+
+    <ShTextField
+      label="Product title"
+      :value="title"
+      placeholder="Enter product title"
+    />
+  </ShPage>
+</template>
+```
+
+All `Sh*` components are auto-imported — no manual imports needed. Each component maps directly to its Polaris web component counterpart (e.g., `<ShButton>` → `<s-button>`, `<ShTextField>` → `<s-text-field>`).
+
 ### Loading your app in Shopify Admin
 
 To load your app within the Shopify Admin, you need to:
