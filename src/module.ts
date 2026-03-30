@@ -168,6 +168,16 @@ export {}
       global: false
     })
 
+    // ─── Built-in Nitro Plugin (default session storage) ───────────────
+    // Provides MemorySessionStorage out of the box. Users can override
+    // by calling configureShopify() in their own server plugin.
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.plugins = nitroConfig.plugins || []
+      nitroConfig.plugins.push(
+        resolver.resolve('./runtime/server/plugins/shopify-defaults')
+      )
+    })
+
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
 
@@ -178,6 +188,7 @@ export {}
       ;(nitroConfig.externals.inline as string[]).push(
         '@shopify/shopify-api',
         '@shopify/shopify-api/adapters/node',
+        '@shopify/shopify-app-session-storage-memory',
         'isbot'
       )
     })

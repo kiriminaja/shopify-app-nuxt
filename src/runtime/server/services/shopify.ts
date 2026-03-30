@@ -41,7 +41,7 @@ const LIBRARY_VERSION = '1.0.0'
  * ```
  */
 export function configureShopify(config: ShopifyRuntimeConfig): void {
-  _runtimeConfig = config
+  _runtimeConfig = { ..._runtimeConfig, ...config }
   // Reset cached instances so they'll be re-created with new config
   _shopifyApi = null
   _resolvedConfig = null
