@@ -1,5 +1,5 @@
 <template>
-  <s-option v-bind="$attrs">
+  <s-option v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-option>
 </template>

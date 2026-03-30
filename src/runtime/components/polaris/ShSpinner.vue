@@ -1,5 +1,5 @@
 <template>
-  <s-spinner v-bind="$attrs">
+  <s-spinner v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-spinner>
 </template>

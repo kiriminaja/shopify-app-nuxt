@@ -1,5 +1,5 @@
 <template>
-  <s-chip v-bind="$attrs">
+  <s-chip v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-chip>
 </template>

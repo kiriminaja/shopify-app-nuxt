@@ -1,5 +1,5 @@
 <template>
-  <s-page v-bind="$attrs" :inline-size="inlineSize" :heading="heading">
+  <s-page v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-page>
 </template>
@@ -7,7 +7,7 @@
 <script setup lang="ts">
 defineOptions({ name: 'ShPage', inheritAttrs: false })
 
-const { inlineSize, heading } = defineProps<{
+defineProps<{
   inlineSize?: 'small' | 'base' | 'large'
   heading?: string
 }>()

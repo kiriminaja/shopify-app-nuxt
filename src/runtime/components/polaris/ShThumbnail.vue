@@ -1,5 +1,5 @@
 <template>
-  <s-thumbnail v-bind="$attrs">
+  <s-thumbnail v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-thumbnail>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <s-modal v-bind="$attrs">
+  <s-modal v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-modal>
 </template>

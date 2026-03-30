@@ -1,5 +1,5 @@
 <template>
-  <s-button v-bind="$attrs">
+  <s-button v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-button>
 </template>

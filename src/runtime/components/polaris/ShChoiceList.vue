@@ -1,6 +1,6 @@
 <template>
   <s-choice-list
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...$props }"
     :values="modelValue"
     @change="
       (evt: Event) => {

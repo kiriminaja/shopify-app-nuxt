@@ -1,5 +1,5 @@
 <template>
-  <s-clickable v-bind="$attrs">
+  <s-clickable v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-clickable>
 </template>

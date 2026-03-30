@@ -1,5 +1,5 @@
 <template>
-  <s-badge v-bind="$attrs">
+  <s-badge v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-badge>
 </template>

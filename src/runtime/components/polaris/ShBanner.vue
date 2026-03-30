@@ -1,5 +1,5 @@
 <template>
-  <s-banner v-bind="$attrs">
+  <s-banner v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-banner>
 </template>

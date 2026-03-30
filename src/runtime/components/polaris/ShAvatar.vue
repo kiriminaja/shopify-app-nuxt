@@ -1,5 +1,5 @@
 <template>
-  <s-avatar v-bind="$attrs">
+  <s-avatar v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-avatar>
 </template>

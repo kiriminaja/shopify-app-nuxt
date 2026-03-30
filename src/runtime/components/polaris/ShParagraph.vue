@@ -1,5 +1,5 @@
 <template>
-  <s-paragraph v-bind="$attrs">
+  <s-paragraph v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-paragraph>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <s-query-container v-bind="$attrs">
+  <s-query-container v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-query-container>
 </template>

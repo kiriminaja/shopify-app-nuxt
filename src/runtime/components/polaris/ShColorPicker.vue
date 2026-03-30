@@ -1,6 +1,6 @@
 <template>
   <s-color-picker
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...$props }"
     :value="modelValue"
     @change="
       (evt: Event) => {

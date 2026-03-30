@@ -1,5 +1,5 @@
 <template>
-  <s-popover v-bind="$attrs">
+  <s-popover v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-popover>
 </template>

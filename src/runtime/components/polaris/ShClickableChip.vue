@@ -1,5 +1,5 @@
 <template>
-  <s-clickable-chip v-bind="$attrs">
+  <s-clickable-chip v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-clickable-chip>
 </template>

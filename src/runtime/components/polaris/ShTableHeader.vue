@@ -1,5 +1,5 @@
 <template>
-  <s-table-header v-bind="$attrs">
+  <s-table-header v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-table-header>
 </template>

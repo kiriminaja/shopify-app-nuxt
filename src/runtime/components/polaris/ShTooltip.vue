@@ -1,5 +1,5 @@
 <template>
-  <s-tooltip v-bind="$attrs">
+  <s-tooltip v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-tooltip>
 </template>

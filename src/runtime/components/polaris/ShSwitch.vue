@@ -1,6 +1,6 @@
 <template>
   <s-switch
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...$props }"
     :checked="modelValue"
     @change="
       (evt: Event) => {

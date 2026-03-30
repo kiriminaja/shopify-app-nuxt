@@ -1,5 +1,5 @@
 <template>
-  <s-image v-bind="$attrs">
+  <s-image v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-image>
 </template>

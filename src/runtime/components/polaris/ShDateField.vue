@@ -1,6 +1,6 @@
 <template>
   <s-date-field
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...$props }"
     :value="modelValue"
     @blur="emit('blur', $event)"
     @change="

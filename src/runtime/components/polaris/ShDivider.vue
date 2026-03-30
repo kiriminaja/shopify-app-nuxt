@@ -1,5 +1,5 @@
 <template>
-  <s-divider v-bind="$attrs">
+  <s-divider v-bind="{ ...$attrs, ...$props }">
     <slot />
   </s-divider>
 </template>
