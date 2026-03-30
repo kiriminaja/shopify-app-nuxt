@@ -1,6 +1,6 @@
 <template>
   <s-date-picker
-    v-bind="{ ...$attrs, ...$props }"
+    v-bind="polarisAttrs"
     :value="modelValue"
     @blur="emit('blur', $event)"
     @change="
@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShDatePicker', inheritAttrs: false })
 
@@ -44,4 +45,5 @@ const value = computed({
   get: () => props.modelValue,
   set: (v: string) => emit('update:modelValue', v)
 })
+const polarisAttrs = usePolarisAttrs(props, ['modelValue'])
 </script>

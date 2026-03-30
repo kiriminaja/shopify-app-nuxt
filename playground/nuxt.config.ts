@@ -2,6 +2,11 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
   devtools: { enabled: true },
   compatibilityDate: 'latest',
+  vite: {
+    server: {
+      allowedHosts: ['*.trycloudflare.com']
+    }
+  },
   shopify: {
     apiKey: process.env.SHOPIFY_API_KEY || 'test-api-key',
     apiSecretKey: process.env.SHOPIFY_API_SECRET_KEY || 'test-api-secret',

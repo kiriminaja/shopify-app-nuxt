@@ -1,13 +1,15 @@
 <template>
-  <s-popover v-bind="{ ...$attrs, ...$props }">
+  <s-popover v-bind="polarisAttrs">
     <slot />
   </s-popover>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShPopover', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   id: string
   blockSize?: string
   minBlockSize?: string
@@ -16,4 +18,6 @@ defineProps<{
   minInlineSize?: string
   maxInlineSize?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

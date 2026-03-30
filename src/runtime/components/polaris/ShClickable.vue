@@ -1,13 +1,15 @@
 <template>
-  <s-clickable v-bind="{ ...$attrs, ...$props }">
+  <s-clickable v-bind="polarisAttrs">
     <slot />
   </s-clickable>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShClickable', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   disabled?: boolean
   loading?: boolean
   target?: 'auto' | '_blank' | '_self' | '_parent' | '_top' | (string & {})
@@ -42,4 +44,6 @@ defineProps<{
   commandFor?: string
   interestFor?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

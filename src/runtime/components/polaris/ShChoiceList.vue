@@ -1,6 +1,6 @@
 <template>
   <s-choice-list
-    v-bind="{ ...$attrs, ...$props }"
+    v-bind="polarisAttrs"
     :values="modelValue"
     @change="
       (evt: Event) => {
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShChoiceList', inheritAttrs: false })
 
@@ -39,4 +40,5 @@ const value = computed({
   get: () => props.modelValue,
   set: (v: string[]) => emit('update:modelValue', v)
 })
+const polarisAttrs = usePolarisAttrs(props, ['modelValue'])
 </script>

@@ -1,14 +1,18 @@
 <template>
-  <s-spinner v-bind="{ ...$attrs, ...$props }">
+  <s-spinner v-bind="polarisAttrs">
     <slot />
   </s-spinner>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShSpinner', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   accessibilityLabel?: string
   size?: 'base' | 'large' | 'large-100'
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

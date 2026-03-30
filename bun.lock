@@ -31,6 +31,7 @@
     "playground": {
       "name": "my-module-playground",
       "dependencies": {
+        "@shopify/shopify-app-session-storage-memory": "^6.0.0",
         "nuxt": "^4.4.2",
       },
       "devDependencies": {
@@ -519,6 +520,8 @@
     "@shopify/shopify-api": ["@shopify/shopify-api@13.0.0", "", { "dependencies": { "@shopify/admin-api-client": "^1.1.2", "@shopify/graphql-client": "^1.4.2", "@shopify/storefront-api-client": "^1.0.10", "compare-versions": "^6.1.1", "isbot": "^5.1.34", "jose": "^5.9.6", "lossless-json": "^4.3.0", "tslib": "^2.8.1" } }, "sha512-tf55PjnIoDY6wjv9gJB1FMYoRmalUCdB8ayPLlPwmDUzCRCKfbQdKrBEX1jnKRmSm7EvtjkUSqbI60v0/jAk9Q=="],
 
     "@shopify/shopify-app-session-storage": ["@shopify/shopify-app-session-storage@5.0.0", "", { "peerDependencies": { "@shopify/shopify-api": "^13.0.0" } }, "sha512-hFUeDGmA4NJmnsq0peYxYIhCzPtXzP9dKjoz04VwWq0XTFzmjy+6yLWY9LFNI4gSiK3Mws3FSLKaatd8TqIj2g=="],
+
+    "@shopify/shopify-app-session-storage-memory": ["@shopify/shopify-app-session-storage-memory@6.0.0", "", { "peerDependencies": { "@shopify/shopify-api": "^13.0.0", "@shopify/shopify-app-session-storage": "^5.0.0" } }, "sha512-QSSbliLj0zKx6noRvANQwILaY2I/SqsP+SlnrVSi5H987tfFgyr2OLNsNsf3oqYLXDZHOx+VdPLt+uSxziYKyg=="],
 
     "@shopify/storefront-api-client": ["@shopify/storefront-api-client@1.0.10", "", { "dependencies": { "@shopify/graphql-client": "^1.4.2" } }, "sha512-A0ItFW58L5+y/jnnJDEsmt2YcQSt2BG+pNoQOYRpPBJaOLpTj7A13q1QVrE5XYVGZCA6ZQ6FqAtgosHHrkut0Q=="],
 

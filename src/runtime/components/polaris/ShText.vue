@@ -1,13 +1,15 @@
 <template>
-  <s-text v-bind="{ ...$attrs, ...$props }">
+  <s-text v-bind="polarisAttrs">
     <slot />
   </s-text>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShText', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   fontVariantNumeric?: 'auto' | 'normal' | 'tabular-nums'
   color?: 'base' | 'subdued'
   tone?:
@@ -23,4 +25,6 @@ defineProps<{
   accessibilityVisibility?: 'visible' | 'hidden' | 'exclusive'
   interestFor?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

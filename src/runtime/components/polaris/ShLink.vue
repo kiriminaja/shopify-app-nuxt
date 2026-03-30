@@ -1,13 +1,15 @@
 <template>
-  <s-link v-bind="{ ...$attrs, ...$props }">
+  <s-link v-bind="polarisAttrs">
     <slot />
   </s-link>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShLink', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   tone?: 'auto' | 'critical' | 'neutral'
   accessibilityLabel?: string
   href?: string
@@ -18,4 +20,6 @@ defineProps<{
   commandFor?: string
   interestFor?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

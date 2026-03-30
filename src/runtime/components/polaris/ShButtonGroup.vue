@@ -1,14 +1,18 @@
 <template>
-  <s-button-group v-bind="{ ...$attrs, ...$props }">
+  <s-button-group v-bind="polarisAttrs">
     <slot />
   </s-button-group>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShButtonGroup', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   gap?: 'base' | 'none'
   accessibilityLabel?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

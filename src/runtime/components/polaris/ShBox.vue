@@ -1,13 +1,15 @@
 <template>
-  <s-box v-bind="{ ...$attrs, ...$props }">
+  <s-box v-bind="polarisAttrs">
     <slot />
   </s-box>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShBox', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   accessibilityRole?: string
   background?: string
   blockSize?: string
@@ -33,4 +35,6 @@ defineProps<{
   accessibilityVisibility?: 'visible' | 'hidden' | 'exclusive'
   display?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

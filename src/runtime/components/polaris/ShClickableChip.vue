@@ -1,13 +1,15 @@
 <template>
-  <s-clickable-chip v-bind="{ ...$attrs, ...$props }">
+  <s-clickable-chip v-bind="polarisAttrs">
     <slot />
   </s-clickable-chip>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShClickableChip', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   color?: string
   accessibilityLabel?: string
   removable?: boolean
@@ -18,4 +20,6 @@ defineProps<{
   commandFor?: string
   interestFor?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

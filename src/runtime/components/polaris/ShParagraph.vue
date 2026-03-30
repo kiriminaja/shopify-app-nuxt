@@ -1,13 +1,15 @@
 <template>
-  <s-paragraph v-bind="{ ...$attrs, ...$props }">
+  <s-paragraph v-bind="polarisAttrs">
     <slot />
   </s-paragraph>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShParagraph', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   fontVariantNumeric?: 'auto' | 'normal' | 'tabular-nums'
   lineClamp?: number
   tone?: 'info' | 'success' | 'warning' | 'critical' | 'caution' | 'auto'
@@ -15,4 +17,6 @@ defineProps<{
   dir?: '' | 'auto' | 'ltr' | 'rtl'
   accessibilityVisibility?: 'visible' | 'hidden' | 'exclusive'
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

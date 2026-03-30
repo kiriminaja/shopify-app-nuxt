@@ -1,13 +1,15 @@
 <template>
-  <s-stack v-bind="{ ...$attrs, ...$props }">
+  <s-stack v-bind="polarisAttrs">
     <slot />
   </s-stack>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShStack', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   direction?: string
   justifyContent?: string
   alignItems?: string
@@ -40,4 +42,6 @@ defineProps<{
   accessibilityVisibility?: 'visible' | 'hidden' | 'exclusive'
   display?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>

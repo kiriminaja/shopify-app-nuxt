@@ -1,13 +1,15 @@
 <template>
-  <s-grid v-bind="{ ...$attrs, ...$props }">
+  <s-grid v-bind="polarisAttrs">
     <slot />
   </s-grid>
 </template>
 
 <script setup lang="ts">
+import { usePolarisAttrs } from './utils'
+
 defineOptions({ name: 'ShGrid', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   gridTemplateColumns?: string
   gridTemplateRows?: string
   justifyItems?: string
@@ -44,4 +46,6 @@ defineProps<{
   accessibilityVisibility?: 'visible' | 'hidden' | 'exclusive'
   display?: string
 }>()
+
+const polarisAttrs = usePolarisAttrs(props)
 </script>
