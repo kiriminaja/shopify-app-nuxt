@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.12
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.11...v0.0.12)
+
+### 🚀 Enhancements
+
+- Add Shopify API integration files and update h3 dependency to v2.0.0 ([c96c2ab](https://github.com/kiriminaja/shopify-nuxt/commit/c96c2ab))
+- Enhance useShopifyFetch with server-side support and add tests for authorization header handling ([8091068](https://github.com/kiriminaja/shopify-nuxt/commit/8091068))
+
+### 💅 Refactors
+
+- Streamline useShopifyFetch function and remove redundant interface ([120c4c6](https://github.com/kiriminaja/shopify-nuxt/commit/120c4c6))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.11
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.10...v0.0.11)
