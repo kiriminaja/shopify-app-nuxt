@@ -9,7 +9,8 @@
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
-      "import": "./dist/module.mjs"
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.mjs"
     },
     "./test-helpers": {
       "types": "./dist/runtime/server/test-helpers/index.d.ts",
@@ -17,6 +18,7 @@
     }
   },
   "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
   "typesVersions": {
     "*": {
       ".": [

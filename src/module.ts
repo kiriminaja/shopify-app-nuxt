@@ -81,7 +81,8 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.app.head.meta = [
         {
           name: 'content-security-policy',
-          content: "frame-ancestors 'self' *.myshopify.com *.shopify.com"
+          content:
+            "frame-ancestors 'self' *.myshopify.com *.shopify.com *.trycloudflare.com"
         },
         ...(nuxt.options.app.head.meta || [])
       ]
