@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.13
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.12...v0.0.13)
+
+### 🚀 Enhancements
+
+- Enhance useShopifyFetch to support query parameters and improve type safety ([02a6949](https://github.com/kiriminaja/shopify-nuxt/commit/02a6949))
+- Enhance AdminContext and useShopifyAdmin to support generic JwtPayload type ([efde9ce](https://github.com/kiriminaja/shopify-nuxt/commit/efde9ce))
+
+### 📖 Documentation
+
+- Update README to clarify differences between shopify-nuxt and @nuxtjs/shopify ([52f8079](https://github.com/kiriminaja/shopify-nuxt/commit/52f8079))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.12
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.11...v0.0.12)
