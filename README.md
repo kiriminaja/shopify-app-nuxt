@@ -1,5 +1,7 @@
 # `shopify-nuxt`
 
+> **NOTE** This package is in early alpha and is not yet recommended for production use. The API may change without a major version bump. Please try it out and share your feedback!
+
 <!-- ![Build Status]() -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)

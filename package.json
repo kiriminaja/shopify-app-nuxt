@@ -43,23 +43,24 @@
   "dependencies": {
     "@nuxt/kit": "^4.4.2",
     "@shopify/app-bridge-types": "^0.7.0",
+    "@shopify/cli": "^3.92.1",
     "@shopify/polaris-types": "^1.0.1",
     "@shopify/shopify-api": "^13.0.0",
     "@shopify/shopify-app-session-storage": "^5.0.0",
-    "isbot": "^5.1.34"
+    "isbot": "^5.1.36"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^3.2.3",
+    "@nuxt/devtools": "^3.2.4",
     "@nuxt/eslint-config": "^1.15.2",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.4.2",
     "@nuxt/test-utils": "^4.0.0",
     "@types/node": "^25.5.0",
     "changelogen": "^0.6.2",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "nuxt": "^4.4.2",
-    "typescript": "~5.9.3",
-    "vitest": "^4.1.0",
-    "vue-tsc": "^3.2.5"
+    "typescript": "6.0.2",
+    "vitest": "^4.1.2",
+    "vue-tsc": "^3.2.6"
   }
 }

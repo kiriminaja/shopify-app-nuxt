@@ -28,5 +28,6 @@ export default createConfigForNuxt({
   '@stylistic/member-delimiter-style': 'off',
   '@stylistic/indent': 'off',
   'vue/html-indent': 'off',
-  'vue/html-self-closing': 'off'
+  'vue/html-self-closing': 'off',
+  'vue/no-deprecated-slot-attribute': 'off'
 })

@@ -1,19 +1,19 @@
 <template>
-  <s-page heading="App Playground Product">
-    <s-button slot="primary-action" variant="primary">Primary</s-button>
+  <ShPage heading="App Playground Product">
+    <ShButton slot="primary-action" variant="primary">Primary</ShButton>
     <div>
-      <s-heading>Shopify Nuxt Playground</s-heading>
-      <s-paragraph>This app is loaded inside the Shopify Admin.</s-paragraph>
+      <ShHeading>Shopify Nuxt Playground</ShHeading>
+      <ShParagraph>This app is loaded inside the Shopify Admin.</ShParagraph>
     </div>
-    <button variant="primary" @click="test">Save</button>
-    <button>Discard</button>
+    <ShButton variant="primary" @click="test">Save</ShButton>
+    <ShButton>Discard</ShButton>
 
-    <s-app-nav>
-      <s-link href="/" rel="home">Home</s-link>
-      <s-link href="/templates">Templates</s-link>
-      <s-link href="/settings">Settings</s-link>
-    </s-app-nav>
-  </s-page>
+    <ShAppNav>
+      <ShLink href="/" rel="home">Home</ShLink>
+      <ShLink href="/templates">Templates</ShLink>
+      <ShLink href="/settings">Settings</ShLink>
+    </ShAppNav>
+  </ShPage>
 </template>
 
 <script setup lang="ts">
