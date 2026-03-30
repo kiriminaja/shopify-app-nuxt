@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.0.2
+
+[compare changes](https://github.com/yanuaraditia/shopify-nuxt/compare/v0.0.1...v0.0.2)
+
+### 🚀 Enhancements
+
+- Enhance event handling in Polaris components with additional emitters ([8d5cb26](https://github.com/yanuaraditia/shopify-nuxt/commit/8d5cb26))
+- Update Polaris components to improve event handling and structure ([a9759e5](https://github.com/yanuaraditia/shopify-nuxt/commit/a9759e5))
+- Update form components to use v-model for better data binding ([97b1b9c](https://github.com/yanuaraditia/shopify-nuxt/commit/97b1b9c))
+- Refactor Polaris components to use usePolarisAttrs utility for attribute merging ([73f88b1](https://github.com/yanuaraditia/shopify-nuxt/commit/73f88b1))
+
+### 🩹 Fixes
+
+- Update package name to include scope ([94227b3](https://github.com/yanuaraditia/shopify-nuxt/commit/94227b3))
+- Revert package name to original format ([99e8935](https://github.com/yanuaraditia/shopify-nuxt/commit/99e8935))
+- Ensure consistent value emission in form components ([4cfb40f](https://github.com/yanuaraditia/shopify-nuxt/commit/4cfb40f))
+- Correct button attribute order for consistency in app.vue ([c1ce550](https://github.com/yanuaraditia/shopify-nuxt/commit/c1ce550))
+- Update v-bind usage in Polaris components to include props for better attribute handling ([459a359](https://github.com/yanuaraditia/shopify-nuxt/commit/459a359))
+- Add h3 dependency and update useShopifyFetch for server-side compatibility ([694c281](https://github.com/yanuaraditia/shopify-nuxt/commit/694c281))
+- Enhance Shopify configuration for better environment variable handling and improve error handling in admin authentication ([e0068eb](https://github.com/yanuaraditia/shopify-nuxt/commit/e0068eb))
+
+### 💅 Refactors
+
+- Remove unused ShopifyAppProvider component ([2934373](https://github.com/yanuaraditia/shopify-nuxt/commit/2934373))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.1
 
 
