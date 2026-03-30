@@ -13,86 +13,82 @@ type ShopifyFetchData<
   M extends RouterMethod
 > = [T] extends [undefined] ? TypedInternalResponse<R, unknown, M> : T
 
-interface ShopifyFetchFunction {
-  <
-    T = undefined,
-    R extends NitroFetchRequest = NitroFetchRequest,
-    M extends AvailableRouterMethod<R> = 'get' extends AvailableRouterMethod<R>
-      ? 'get'
-      : AvailableRouterMethod<R>
-  >(
-    url: R,
-    options?: Omit<RequestInit, 'method'> & { method?: Uppercase<M> | M }
-  ): Promise<{
-    data: ShopifyFetchData<T, R, Extract<Lowercase<M>, RouterMethod>>
-    response: Response
-  }>
-}
+export async function useShopifyFetch<
+  T = undefined,
+  R extends NitroFetchRequest = NitroFetchRequest,
+  M extends AvailableRouterMethod<R> = 'get' extends AvailableRouterMethod<R>
+    ? 'get'
+    : AvailableRouterMethod<R>
+>(
+  url: R,
+  options?: Omit<RequestInit, 'method'> & { method?: Uppercase<M> | M }
+): Promise<{
+  data: ShopifyFetchData<T, R, Extract<Lowercase<M>, RouterMethod>>
+  response: Response
+}>
+export async function useShopifyFetch(
+  url: NitroFetchRequest,
+  options?: RequestInit & { method?: RouterMethod | Uppercase<RouterMethod> }
+): Promise<{ data: unknown; response: Response }> {
+  const opts = options ?? {}
 
-export function useShopifyFetch(): ShopifyFetchFunction {
   if (import.meta.server) {
     const event = useRequestEvent()
+    const headers: Record<string, string> = {}
 
-    return (async (url: string, options: RequestInit = {}) => {
-      const headers: Record<string, string> = {}
-
-      // Forward the Authorization header from the incoming request
-      const authHeader = event?.headers.get('authorization')
-      if (authHeader) {
-        headers['Authorization'] = authHeader
-      }
-
-      if (options.headers) {
-        const incoming = new Headers(options.headers)
-        incoming.forEach((value, key) => {
-          headers[key] = value
-        })
-      }
-
-      const { method, ...rest } = options as RequestInit & { method?: string }
-
-      const response = await globalThis.$fetch.raw(url, {
-        ...rest,
-        method: method as any,
-        headers
-      })
-
-      return { data: response._data, response: response as unknown as Response }
-    }) as unknown as ShopifyFetchFunction
-  }
-
-  const nuxtApp = useNuxtApp()
-
-  return (async (url: string, options: RequestInit = {}) => {
-    const shopify = nuxtApp.$shopify as ShopifyGlobal | undefined
-
-    if (!shopify) {
-      throw new Error(
-        'Shopify App Bridge is not available. Make sure the app is loaded within the Shopify Admin.'
-      )
+    // Forward the Authorization header from the incoming request
+    const authHeader = event?.headers.get('authorization')
+    if (authHeader) {
+      headers['Authorization'] = authHeader
     }
 
-    const token = await shopify.idToken()
+    if (opts.headers) {
+      const incoming = new Headers(opts.headers)
+      incoming.forEach((value, key) => {
+        headers[key] = value
+      })
+    }
 
-    const headers = new Headers(options.headers || {})
-    headers.set('Authorization', `Bearer ${token}`)
+    const { method, ...rest } = opts
 
-    const response = await fetch(url, {
-      ...options,
+    const fetchResponse = await globalThis.$fetch.raw(url, {
+      ...rest,
+      method,
       headers
     })
 
-    if (!response.ok) {
-      throw new Error(
-        `Shopify fetch failed: ${response.status} ${response.statusText}`
-      )
-    }
+    return { data: fetchResponse._data, response: fetchResponse }
+  }
 
-    const contentType = response.headers.get('content-type')
-    if (contentType?.includes('application/json')) {
-      return { data: await response.json(), response }
-    }
+  const nuxtApp = useNuxtApp()
+  const shopify = nuxtApp.$shopify as ShopifyGlobal | undefined
 
-    return { data: await response.text(), response }
-  }) as unknown as ShopifyFetchFunction
+  if (!shopify) {
+    throw new Error(
+      'Shopify App Bridge is not available. Make sure the app is loaded within the Shopify Admin.'
+    )
+  }
+
+  const token = await shopify.idToken()
+
+  const headers = new Headers(opts.headers || {})
+  headers.set('Authorization', `Bearer ${token}`)
+
+  const fetchResponse = await fetch(url as RequestInfo, {
+    ...opts,
+    headers
+  })
+
+  if (!fetchResponse.ok) {
+    throw new Error(
+      `Shopify fetch failed: ${fetchResponse.status} ${fetchResponse.statusText}`
+    )
+  }
+
+  const contentType = fetchResponse.headers.get('content-type')
+  if (contentType?.includes('application/json')) {
+    return { data: await fetchResponse.json(), response: fetchResponse }
+  }
+
+  return { data: await fetchResponse.text(), response: fetchResponse }
 }
