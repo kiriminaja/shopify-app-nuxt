@@ -1,5 +1,9 @@
 <template>
-  <s-switch v-bind="$attrs" @change="emit('change', $event)" @input="emit('input', $event)">
+  <s-switch
+    v-bind="$attrs"
+    @change="emit('change', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-switch>
 </template>

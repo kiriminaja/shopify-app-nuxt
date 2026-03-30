@@ -1,5 +1,12 @@
 <template>
-  <s-date-picker v-bind="$attrs" @blur="emit('blur', $event)" @change="emit('change', $event)" @focus="emit('focus', $event)" @input="emit('input', $event)" @viewchange="emit('viewchange', $event)">
+  <s-date-picker
+    v-bind="$attrs"
+    @blur="emit('blur', $event)"
+    @change="emit('change', $event)"
+    @focus="emit('focus', $event)"
+    @input="emit('input', $event)"
+    @viewchange="emit('viewchange', $event)"
+  >
     <slot />
   </s-date-picker>
 </template>

@@ -1,5 +1,11 @@
 <template>
-  <s-url-field v-bind="$attrs" @blur="emit('blur', $event)" @change="emit('change', $event)" @focus="emit('focus', $event)" @input="emit('input', $event)">
+  <s-url-field
+    v-bind="$attrs"
+    @blur="emit('blur', $event)"
+    @change="emit('change', $event)"
+    @focus="emit('focus', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-url-field>
 </template>

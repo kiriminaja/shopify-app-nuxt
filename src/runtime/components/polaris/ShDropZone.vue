@@ -1,5 +1,10 @@
 <template>
-  <s-drop-zone v-bind="$attrs" @change="emit('change', $event)" @droprejected="emit('droprejected', $event)" @input="emit('input', $event)">
+  <s-drop-zone
+    v-bind="$attrs"
+    @change="emit('change', $event)"
+    @droprejected="emit('droprejected', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-drop-zone>
 </template>

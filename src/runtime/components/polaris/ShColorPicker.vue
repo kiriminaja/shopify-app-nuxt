@@ -1,5 +1,9 @@
 <template>
-  <s-color-picker v-bind="$attrs" @change="emit('change', $event)" @input="emit('input', $event)">
+  <s-color-picker
+    v-bind="$attrs"
+    @change="emit('change', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-color-picker>
 </template>

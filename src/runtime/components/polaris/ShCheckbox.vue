@@ -1,5 +1,9 @@
 <template>
-  <s-checkbox v-bind="$attrs" @change="emit('change', $event)" @input="emit('input', $event)">
+  <s-checkbox
+    v-bind="$attrs"
+    @change="emit('change', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-checkbox>
 </template>

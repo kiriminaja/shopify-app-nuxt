@@ -1,5 +1,13 @@
 <template>
-  <s-date-field v-bind="$attrs" @blur="emit('blur', $event)" @change="emit('change', $event)" @focus="emit('focus', $event)" @input="emit('input', $event)" @invalid="emit('invalid', $event)" @viewchange="emit('viewchange', $event)">
+  <s-date-field
+    v-bind="$attrs"
+    @blur="emit('blur', $event)"
+    @change="emit('change', $event)"
+    @focus="emit('focus', $event)"
+    @input="emit('input', $event)"
+    @invalid="emit('invalid', $event)"
+    @viewchange="emit('viewchange', $event)"
+  >
     <slot />
   </s-date-field>
 </template>

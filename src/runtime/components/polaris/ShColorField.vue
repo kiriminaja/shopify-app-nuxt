@@ -1,5 +1,11 @@
 <template>
-  <s-color-field v-bind="$attrs" @blur="emit('blur', $event)" @change="emit('change', $event)" @focus="emit('focus', $event)" @input="emit('input', $event)">
+  <s-color-field
+    v-bind="$attrs"
+    @blur="emit('blur', $event)"
+    @change="emit('change', $event)"
+    @focus="emit('focus', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-color-field>
 </template>

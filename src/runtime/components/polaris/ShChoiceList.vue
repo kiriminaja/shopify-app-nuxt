@@ -1,5 +1,9 @@
 <template>
-  <s-choice-list v-bind="$attrs" @change="emit('change', $event)" @input="emit('input', $event)">
+  <s-choice-list
+    v-bind="$attrs"
+    @change="emit('change', $event)"
+    @input="emit('input', $event)"
+  >
     <slot />
   </s-choice-list>
 </template>
