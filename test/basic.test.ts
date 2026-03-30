@@ -12,7 +12,8 @@ function computeHmac(body: string, secret: string = TEST_API_SECRET): string {
   return createHmac('sha256', secret).update(body, 'utf8').digest('base64')
 }
 
-const BROWSER_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+const BROWSER_UA =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
 describe('shopify-nuxt module', async () => {
   await setup({
@@ -194,7 +195,7 @@ describe('shopify-nuxt module', async () => {
     it('returns 400 or 401 without session token', async () => {
       try {
         await $fetch('/api/shop', {
-          headers: { 'user-agent': BROWSER_UA },
+          headers: { 'user-agent': BROWSER_UA }
         })
         expect.unreachable('Should have thrown')
       } catch (e: any) {
@@ -222,8 +223,8 @@ describe('shopify-nuxt module', async () => {
         await $fetch('/api/shop', {
           headers: {
             'user-agent': BROWSER_UA,
-            'authorization': 'Bearer invalid-token',
-          },
+            authorization: 'Bearer invalid-token'
+          }
         })
         expect.unreachable('Should have thrown')
       } catch (e: any) {

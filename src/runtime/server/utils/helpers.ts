@@ -1,10 +1,5 @@
 import type { H3Event } from 'h3'
-import {
-  getHeader,
-  getQuery,
-  setResponseHeader,
-  readRawBody,
-} from 'h3'
+import { getHeader, getQuery, setResponseHeader, readRawBody } from 'h3'
 import type { JwtPayload } from '@shopify/shopify-api'
 import { isbot } from 'isbot'
 import { getShopifyApi, getResolvedConfig } from '../services/shopify'
@@ -45,8 +40,16 @@ export async function validateSessionToken(
 export function ensureCORSHeaders(event: H3Event): void {
   const config = getResolvedConfig()
   setResponseHeader(event, 'Access-Control-Allow-Origin', config.appUrl)
-  setResponseHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  setResponseHeader(event, 'Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  setResponseHeader(
+    event,
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
+  )
+  setResponseHeader(
+    event,
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization'
+  )
   setResponseHeader(event, 'Access-Control-Allow-Credentials', 'true')
 }
 
@@ -96,7 +99,7 @@ function safeCompare(a: string, b: string): boolean {
 export function renderAppBridgePage(
   apiKey: string,
   _appUrl: string,
-  redirectUrl?: string,
+  redirectUrl?: string
 ): string {
   const parts: string[] = [
     '<!DOCTYPE html>',
@@ -107,7 +110,7 @@ export function renderAppBridgePage(
     '    <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>',
     '  </head>',
     '  <body>',
-    '    <script>',
+    '    <script>'
   ]
   if (redirectUrl) {
     parts.push("      window.open('" + redirectUrl + "', '_top');")
