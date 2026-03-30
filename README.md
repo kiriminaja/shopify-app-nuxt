@@ -131,12 +131,6 @@ const shopify = useAppBridge()
 const shopifyFetch = useShopifyFetch()
 const { data } = await shopifyFetch('/api/products')
 </script>
-
-<template>
-  <ShopifyAppProvider>
-    <!-- Your app content -->
-  </ShopifyAppProvider>
-</template>
 ```
 
 ### Using Polaris components
