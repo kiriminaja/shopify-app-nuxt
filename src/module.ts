@@ -84,9 +84,7 @@ export default defineNuxtModule<ModuleOptions>({
     // The meta tag MUST appear before the App Bridge script — it reads the API key on load.
     nuxt.hook('app:resolve', () => {
       nuxt.options.app.head = nuxt.options.app.head || {}
-      nuxt.options.app.head.meta = [
-        ...(nuxt.options.app.head.meta || [])
-      ]
+      nuxt.options.app.head.meta = [...(nuxt.options.app.head.meta || [])]
       nuxt.options.app.head.script = [
         // 1. Inline script to create the meta tag imperatively — guarantees it
         //    exists in the DOM before the CDN script executes.

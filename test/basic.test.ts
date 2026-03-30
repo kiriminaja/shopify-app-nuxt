@@ -1,7 +1,7 @@
 import { createHmac } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
-import { setup, $fetch } from '@nuxt/test-utils/e2e'
+import { setup, $fetch, url } from '@nuxt/test-utils/e2e'
 
 const TEST_API_KEY = 'test-api-key'
 const TEST_API_SECRET = 'test-api-secret'
@@ -44,9 +44,10 @@ describe('shopify-nuxt module', async () => {
       expect(html).toContain('cdn.shopify.com/shopifycloud/polaris')
     })
 
-    it('includes CSP frame-ancestors meta tag', async () => {
-      const html = await $fetch('/')
-      expect(html).toContain('frame-ancestors')
+    it('includes CSP frame-ancestors header', async () => {
+      const res = await fetch(url('/'))
+      const csp = res.headers.get('content-security-policy')
+      expect(csp).toContain('frame-ancestors')
     })
   })
 
