@@ -9,7 +9,7 @@
       <ShStack gap="base">
         <ShTextField v-model="example" label="Product title" required />
         <ShButtonGroup>
-          <ShButton variant="primary" slot="primary-action" @click="test">
+          <ShButton slot="primary-action" variant="primary" @click="test">
             Save
           </ShButton>
           <ShButton slot="secondary-actions">Discard</ShButton>
