@@ -6,7 +6,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
 [![npm version](https://badge.fury.io/js/shopify-nuxt.svg)](https://badge.fury.io/js/shopify-nuxt)
+[![NPM Downloads](https://img.shields.io/npm/dm/shopify-nuxt)](https://npmtrends.com/shopify-nuxt)
 [![Nuxt](https://img.shields.io/badge/Nuxt-020420?logo=nuxt)](https://nuxt.com)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/shopify-nuxt.svg)](https://img.shields.io/bundlephobia/minzip/shopify-nuxt.svg)
 
 This package makes it easy to use [Nuxt](https://nuxt.com/) to build Shopify apps.
 
@@ -391,6 +393,10 @@ Content: `ShText`, `ShHeading`, `ShParagraph`, `ShIcon`, `ShImage`, `ShThumbnail
 
 Other: `ShModal`, `ShQueryContainer`
 
+App Bridge UI: `ShUiModal`, `ShUiTitleBar`, `ShUiSaveBar`, `ShUiNavMenu`
+
+Loading: `ShLoadingIndicator`
+
 ### Using `ShModal`
 
 `ShModal` wraps the [Polaris `<s-modal>`](https://shopify.dev/docs/api/app-home/web-components/overlays/modal) component — it renders **inside** your app's iframe. Open and close it using `commandFor` / `command` attributes:
@@ -417,7 +423,142 @@ Other: `ShModal`, `ShQueryContainer`
 </template>
 ```
 
-> **Note**: `ShModal` is **not** the same as the [App Bridge `<ui-modal>`](https://shopify.dev/docs/api/app-bridge-library/apis/modal) which renders outside the iframe and is controlled via `shopify.modal.show(id)`. If you need the App Bridge modal, use `<ui-modal>` directly.
+> **Note**: `ShModal` is **not** the same as the [App Bridge `<ui-modal>`](https://shopify.dev/docs/api/app-bridge-library/apis/modal) which renders outside the iframe and is controlled via `shopify.modal.show(id)`. If you need the App Bridge modal, use `<ShUiModal>` (see below).
+
+### App Bridge UI components
+
+In addition to the Polaris `Sh*` components (which wrap `s-*` web components rendered **inside** your app's iframe), this module also provides Vue wrappers for [App Bridge UI web components](https://shopify.dev/docs/api/app-bridge-library/web-components) (`ui-*`). These render **outside** the app iframe in the Shopify Admin shell.
+
+#### Polaris (`Sh*`) vs App Bridge (`ShUi*`) — what's the difference?
+
+|                    | Polaris (`Sh*`)                           | App Bridge (`ShUi*`)                                                              |
+| ------------------ | ----------------------------------------- | --------------------------------------------------------------------------------- |
+| **HTML elements**  | `<s-button>`, `<s-modal>`, etc.           | `<ui-modal>`, `<ui-title-bar>`, etc.                                              |
+| **Renders in**     | Your app's iframe                         | Shopify Admin (outside the iframe)                                                |
+| **Use for**        | In-app UI: forms, tables, buttons, layout | Admin-level chrome: page title, modals overlaying the admin, save bar, navigation |
+| **Controlled via** | Props, slots, `command`/`commandFor`      | Props, template refs, `shopify.modal.show(id)`                                    |
+
+#### `<ShUiModal>`
+
+Wraps [`<ui-modal>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-modal) — renders a full-screen overlay **outside** the iframe, managed by Shopify Admin.
+
+```vue
+<script setup>
+const modalRef = ref()
+</script>
+
+<template>
+  <ShButton @click="modalRef.show()">Open Modal</ShButton>
+
+  <ShUiModal ref="modalRef" id="my-modal" variant="large" @hide="onClose">
+    <p>This content renders outside the iframe.</p>
+
+    <template #title-bar>
+      <ShUiTitleBar title="Edit Product">
+        <button variant="primary" onclick="handleSave()">Save</button>
+        <button onclick="document.getElementById('my-modal').hide()">
+          Cancel
+        </button>
+      </ShUiTitleBar>
+    </template>
+  </ShUiModal>
+</template>
+```
+
+| Prop      | Type                                    | Default  | Description                                            |
+| --------- | --------------------------------------- | -------- | ------------------------------------------------------ |
+| `id`      | `string`                                | —        | Unique identifier (used with `shopify.modal.show(id)`) |
+| `variant` | `'small' \| 'base' \| 'large' \| 'max'` | `'base'` | Modal size                                             |
+| `src`     | `string`                                | —        | URL to load in an iframe inside the modal              |
+
+| Event  | Description                   |
+| ------ | ----------------------------- |
+| `show` | Emitted when the modal opens  |
+| `hide` | Emitted when the modal closes |
+
+Exposed methods via template ref: `show()`, `hide()`, `toggle()`
+
+#### `<ShUiTitleBar>`
+
+Wraps [`<ui-title-bar>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-title-bar) — sets the page title and action buttons in the Shopify Admin title bar.
+
+```vue
+<template>
+  <ShUiTitleBar title="Products">
+    <button variant="primary" onclick="createProduct()">Create product</button>
+    <button onclick="exportProducts()">Export</button>
+  </ShUiTitleBar>
+</template>
+```
+
+| Prop    | Type     | Description                                |
+| ------- | -------- | ------------------------------------------ |
+| `title` | `string` | The title displayed in the Admin title bar |
+
+Child elements: `<button>` (with optional `variant="primary"` and `tone="critical"`), `<a>` (with optional `variant="breadcrumb"`), and `<section>` groups.
+
+#### `<ShUiSaveBar>`
+
+Wraps [`<ui-save-bar>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-save-bar) — shows a contextual save bar at the top of the Admin when there are unsaved changes.
+
+```vue
+<script setup>
+const saveBarRef = ref()
+
+function onFormChange() {
+  saveBarRef.value.show()
+}
+</script>
+
+<template>
+  <ShUiSaveBar ref="saveBarRef" id="my-save-bar" discard-confirmation>
+    <button variant="primary" onclick="handleSave()">Save</button>
+    <button onclick="handleDiscard()">Discard</button>
+  </ShUiSaveBar>
+</template>
+```
+
+| Prop                  | Type      | Description                           |
+| --------------------- | --------- | ------------------------------------- |
+| `id`                  | `string`  | Unique identifier                     |
+| `discardConfirmation` | `boolean` | Show a confirmation dialog on discard |
+
+| Event  | Description                            |
+| ------ | -------------------------------------- |
+| `show` | Emitted when the save bar appears      |
+| `hide` | Emitted when the save bar is dismissed |
+
+Exposed methods via template ref: `show()`, `hide()`, `toggle()`
+
+#### `<ShUiNavMenu>`
+
+Wraps [`<ui-nav-menu>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-nav-menu) — configures the app's navigation menu in the Shopify Admin sidebar.
+
+```vue
+<template>
+  <ShUiNavMenu>
+    <a href="/" rel="home">Home</a>
+    <a href="/products">Products</a>
+    <a href="/settings">Settings</a>
+  </ShUiNavMenu>
+</template>
+```
+
+> **Tip**: For most apps, use the `navLinks` config option with `<ShopifyAppProvider>` instead of `<ShUiNavMenu>` directly. Use `<ShUiNavMenu>` only when you need dynamic or conditional navigation.
+
+### Loading indicator
+
+`<ShLoadingIndicator>` hooks into Nuxt's `useLoadingIndicator()` and calls `shopify.loading()` to show/hide the Shopify Admin's native top loading bar during page navigations:
+
+```vue
+<!-- app.vue -->
+<template>
+  <ShLoadingIndicator />
+  <NuxtPage />
+</template>
+```
+
+This replaces `<NuxtLoadingIndicator>` with the native Shopify loading bar for a more integrated experience.
 
 ## OAuth routes
 
@@ -442,20 +583,21 @@ To load your app within the Shopify Admin, you need to:
 
 ## Features
 
-| Feature             | Description                                                                     |
-| ------------------- | ------------------------------------------------------------------------------- |
-| **Authentication**  | OAuth flow, session tokens, token exchange — all handled automatically          |
-| **App Bridge**      | CDN-based App Bridge with full TypeScript types via `@shopify/app-bridge-types` |
-| **Polaris**         | Vue wrapper components (`Sh*`) for all Polaris web components with typed props  |
-| **Typed GraphQL**   | Admin and Storefront API clients typed via `@shopify/admin-api-client`          |
-| **Webhooks**        | HMAC validation, payload parsing, and webhook registration                      |
-| **Admin API**       | GraphQL and REST clients with automatic session management                      |
-| **Storefront API**  | Typed GraphQL client for Storefront API via `@shopify/storefront-api-client`    |
-| **Billing**         | Billing context for subscription and usage-based charges                        |
-| **Session storage** | Built-in `MemorySessionStorage` default, pluggable via `configureShopify()`     |
-| **Auto-imports**    | Server utilities, client composables, and components are auto-imported          |
-| **Bot detection**   | Admin auth automatically detects bots and returns 410 to avoid unnecessary auth |
-| **CORS**            | Built-in CORS helpers for public/checkout extension endpoints                   |
+| Feature             | Description                                                                                    |
+| ------------------- | ---------------------------------------------------------------------------------------------- |
+| **Authentication**  | OAuth flow, session tokens, token exchange — all handled automatically                         |
+| **App Bridge**      | CDN-based App Bridge with full TypeScript types via `@shopify/app-bridge-types`                |
+| **Polaris**         | Vue wrapper components (`Sh*`) for all Polaris web components with typed props                 |
+| **App Bridge UI**   | Vue wrappers (`ShUi*`) for App Bridge `ui-*` components (modal, title bar, save bar, nav menu) |
+| **Typed GraphQL**   | Admin and Storefront API clients typed via `@shopify/admin-api-client`                         |
+| **Webhooks**        | HMAC validation, payload parsing, and webhook registration                                     |
+| **Admin API**       | GraphQL and REST clients with automatic session management                                     |
+| **Storefront API**  | Typed GraphQL client for Storefront API via `@shopify/storefront-api-client`                   |
+| **Billing**         | Billing context for subscription and usage-based charges                                       |
+| **Session storage** | Built-in `MemorySessionStorage` default, pluggable via `configureShopify()`                    |
+| **Auto-imports**    | Server utilities, client composables, and components are auto-imported                         |
+| **Bot detection**   | Admin auth automatically detects bots and returns 410 to avoid unnecessary auth                |
+| **CORS**            | Built-in CORS helpers for public/checkout extension endpoints                                  |
 
 ## Server utilities
 
