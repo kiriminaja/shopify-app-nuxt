@@ -3,7 +3,10 @@ import type { ShopifyGlobal } from '@shopify/app-bridge-types'
 
 export function useShopifyFetch() {
   if (import.meta.server) {
-    throw new Error('useShopifyFetch() can only be used on the client side')
+    // Return a no-op on server — use with `server: false` in useAsyncData
+    return async (_url: string, _options?: RequestInit) => {
+      return { data: null, response: null as unknown as Response }
+    }
   }
 
   const nuxtApp = useNuxtApp()

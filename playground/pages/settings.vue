@@ -1,5 +1,10 @@
 <script setup lang="ts">
-const { data } = await useAsyncData('settings', () => $fetch('/api/shop'))
+const shopifyFetch = useShopifyFetch()
+const { data } = await useAsyncData(
+  'settings',
+  () => shopifyFetch('/api/shop'),
+  { server: false }
+)
 </script>
 
 <template>
