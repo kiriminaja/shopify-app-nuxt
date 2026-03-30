@@ -8,6 +8,7 @@
 defineOptions({ name: 'ShPopover', inheritAttrs: false })
 
 defineProps<{
+  id: string
   blockSize?: string
   minBlockSize?: string
   maxBlockSize?: string

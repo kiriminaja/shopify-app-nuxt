@@ -64,9 +64,10 @@ export default defineNuxtModule<ModuleOptions>({
     addImportsDir(resolver.resolve('./runtime/composables'))
 
     // ─── Components ────────────────────────────────────────────────────
-    // Auto-register Vue components (ShopifyAppProvider, ShopifyAppProxyProvider)
+    // Auto-register Vue components (ShopifyAppProvider, ShopifyAppProxyProvider, Sh* polaris wrappers)
     addComponentsDir({
-      path: resolver.resolve('./runtime/components')
+      path: resolver.resolve('./runtime/components'),
+      pathPrefix: false
     })
 
     // ─── App Bridge Head Tags (SSR) ─────────────────────────────────

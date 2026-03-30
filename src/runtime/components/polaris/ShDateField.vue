@@ -1,5 +1,5 @@
 <template>
-  <s-date-field v-bind="$attrs">
+  <s-date-field v-bind="$attrs" @blur="emit('blur', $event)" @change="emit('change', $event)" @focus="emit('focus', $event)" @input="emit('input', $event)" @invalid="emit('invalid', $event)" @viewchange="emit('viewchange', $event)">
     <slot />
   </s-date-field>
 </template>
@@ -27,5 +27,14 @@ defineProps<{
   id?: string
   name?: string
   value?: string
+}>()
+
+const emit = defineEmits<{
+  blur: [event: Event]
+  change: [event: Event]
+  focus: [event: Event]
+  input: [event: Event]
+  invalid: [event: Event]
+  viewchange: [event: Event]
 }>()
 </script>

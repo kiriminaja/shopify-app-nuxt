@@ -1,5 +1,5 @@
 <template>
-  <s-color-picker v-bind="$attrs">
+  <s-color-picker v-bind="$attrs" @change="emit('change', $event)" @input="emit('input', $event)">
     <slot />
   </s-color-picker>
 </template>
@@ -12,5 +12,10 @@ defineProps<{
   name?: string
   defaultValue?: string
   value?: string
+}>()
+
+const emit = defineEmits<{
+  change: [event: Event]
+  input: [event: Event]
 }>()
 </script>

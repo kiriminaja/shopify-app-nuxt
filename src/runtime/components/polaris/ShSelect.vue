@@ -1,5 +1,5 @@
 <template>
-  <s-select v-bind="$attrs">
+  <s-select v-bind="$attrs" @change="emit('change', $event)" @input="emit('input', $event)">
     <slot />
   </s-select>
 </template>
@@ -19,5 +19,10 @@ defineProps<{
   disabled?: boolean
   id?: string
   name?: string
+}>()
+
+const emit = defineEmits<{
+  change: [event: Event]
+  input: [event: Event]
 }>()
 </script>

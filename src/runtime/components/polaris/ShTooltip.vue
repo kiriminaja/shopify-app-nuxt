@@ -6,4 +6,8 @@
 
 <script setup lang="ts">
 defineOptions({ name: 'ShTooltip', inheritAttrs: false })
+
+defineProps<{
+  id: string
+}>()
 </script>
