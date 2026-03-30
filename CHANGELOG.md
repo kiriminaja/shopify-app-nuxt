@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.0.8
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.7...v0.0.8)
+
+### 🚀 Enhancements
+
+- Add Nitro plugin to set Shopify-required response headers for document requests ([6f37605](https://github.com/kiriminaja/shopify-nuxt/commit/6f37605))
+
+### 🩹 Fixes
+
+- Remove TypeScript error suppression for auto-import in Shopify defaults plugin ([7b08195](https://github.com/kiriminaja/shopify-nuxt/commit/7b08195))
+
+### 💅 Refactors
+
+- Update meta tag handling in Nuxt module and improve CSP header test ([10171d4](https://github.com/kiriminaja/shopify-nuxt/commit/10171d4))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.7
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.6...v0.0.7)
