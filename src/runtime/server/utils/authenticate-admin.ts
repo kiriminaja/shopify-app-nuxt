@@ -18,6 +18,11 @@ import {
 import type { AdminContext, BillingContext } from '../../types'
 import { AppDistribution } from '../../types'
 
+const OnlineAccessToken =
+  'urn:shopify:params:oauth:token-type:online-access-token'
+const OfflineAccessToken =
+  'urn:shopify:params:oauth:token-type:offline-access-token'
+
 /**
  * Authenticate an admin request and return an authenticated admin context.
  *
@@ -193,11 +198,28 @@ async function performTokenExchange(
   shop: string,
   sessionToken: string
 ) {
-  const { session: onlineSession } = await api.auth.tokenExchange({
-    shop,
-    sessionToken,
-    requestedTokenType: config.useOnlineTokens ? 'online' : 'offline'
-  })
+  let onlineSession: any
+  try {
+    const result = await api.auth.tokenExchange({
+      shop,
+      sessionToken,
+      requestedTokenType: config.useOnlineTokens
+        ? OnlineAccessToken
+        : OfflineAccessToken
+    })
+    onlineSession = result.session
+  } catch (error: any) {
+    console.error('[shopify-nuxt] Token exchange failed:', {
+      shop,
+      requestedTokenType: config.useOnlineTokens
+        ? OnlineAccessToken
+        : OfflineAccessToken,
+      scopes: api.config.scopes?.toString(),
+      responseBody: error?.response?.body,
+      message: error?.message
+    })
+    throw error
+  }
 
   // Store the session
   await sessionStorage.storeSession(onlineSession)
@@ -207,7 +229,7 @@ async function performTokenExchange(
     const { session: offlineSession } = await api.auth.tokenExchange({
       shop,
       sessionToken,
-      requestedTokenType: 'offline'
+      requestedTokenType: OfflineAccessToken
     })
     await sessionStorage.storeSession(offlineSession)
   }

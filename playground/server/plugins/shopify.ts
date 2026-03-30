@@ -6,7 +6,7 @@ export default defineNitroPlugin(() => {
   configureShopify({
     sessionStorage: new MemorySessionStorage(),
     hooks: {
-      afterAuth: async ({ session, admin }) => {
+      afterAuth: async ({ session: _session, admin: _admin }) => {
         // Register webhooks, seed data, etc.
       }
     }
