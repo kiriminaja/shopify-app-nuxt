@@ -85,11 +85,6 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook('app:resolve', () => {
       nuxt.options.app.head = nuxt.options.app.head || {}
       nuxt.options.app.head.meta = [
-        {
-          name: 'content-security-policy',
-          content:
-            "frame-ancestors 'self' *.myshopify.com *.shopify.com *.trycloudflare.com"
-        },
         ...(nuxt.options.app.head.meta || [])
       ]
       nuxt.options.app.head.script = [
@@ -200,6 +195,9 @@ export {}
       nitroConfig.plugins = nitroConfig.plugins || []
       nitroConfig.plugins.push(
         resolver.resolve('./runtime/server/plugins/shopify-defaults')
+      )
+      nitroConfig.plugins.push(
+        resolver.resolve('./runtime/server/plugins/add-response-headers')
       )
     })
 
