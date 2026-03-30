@@ -10,6 +10,7 @@ import { usePolarisAttrs } from './utils'
 defineOptions({ name: 'ShModal', inheritAttrs: false })
 
 const props = defineProps<{
+  id: string
   accessibilityLabel?: string
   heading?: string
   padding?: 'base' | 'none'
