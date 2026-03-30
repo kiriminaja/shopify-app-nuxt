@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.0.3
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.2...v0.0.3)
+
+### 🚀 Enhancements
+
+- Integrate Shopify session storage and enhance API handling with new endpoints ([ba02f8c](https://github.com/kiriminaja/shopify-nuxt/commit/ba02f8c))
+- Add default session storage plugin and enhance Shopify configuration handling ([ab7360a](https://github.com/kiriminaja/shopify-nuxt/commit/ab7360a))
+- Enhance Shopify integration with session storage options and API context improvements ([453ccc8](https://github.com/kiriminaja/shopify-nuxt/commit/453ccc8))
+- Implement Shopify authentication flow with custom login page and middleware enhancements ([c566d1d](https://github.com/kiriminaja/shopify-nuxt/commit/c566d1d))
+- Add support for custom authentication page and enhance runtime config types ([ebae965](https://github.com/kiriminaja/shopify-nuxt/commit/ebae965))
+
+### 🩹 Fixes
+
+- Update repository field in package.json to correct owner ([ac03fcb](https://github.com/kiriminaja/shopify-nuxt/commit/ac03fcb))
+- Correct variable name from 'payload' to '_payload' in webhook handler ([b66c4f8](https://github.com/kiriminaja/shopify-nuxt/commit/b66c4f8))
+
+### 💅 Refactors
+
+- Clean up code formatting and improve readability in helpers and tests ([e2243b4](https://github.com/kiriminaja/shopify-nuxt/commit/e2243b4))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.2
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.1...v0.0.2)
