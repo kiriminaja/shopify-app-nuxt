@@ -234,4 +234,27 @@ describe('shopify-nuxt module', async () => {
       }
     })
   })
+
+  // ─── useShopifyFetch (server-side) ────────────────────────────────
+
+  describe('useShopifyFetch server-side', () => {
+    const echoPath = '/api/shopify-fetch-echo'
+
+    it('returns 200 from the echo endpoint', async () => {
+      const res = await $fetch(echoPath)
+      expect(res).toBeDefined()
+    })
+
+    it('echo endpoint returns null authorization when no header sent', async () => {
+      const res = await $fetch<{ authorization: string | null }>(echoPath)
+      expect(res.authorization).toBeNull()
+    })
+
+    it('echo endpoint reflects Authorization header', async () => {
+      const res = await $fetch<{ authorization: string | null }>(echoPath, {
+        headers: { authorization: 'Bearer test-token-123' }
+      })
+      expect(res.authorization).toBe('Bearer test-token-123')
+    })
+  })
 })

@@ -27,6 +27,11 @@
           Save
         </ShButton>
         <span>Typed: {{ example || '-' }}</span>
+        <ShBanner v-if="shop" heading="Shop info" tone="info">
+          <ShParagraph>
+            {{ shop.shop.name }} ({{ shop.shop.currencyCode }})
+          </ShParagraph>
+        </ShBanner>
       </ShStack>
     </form>
     <ShModal id="example-modal" heading="Example Modal">
@@ -44,7 +49,19 @@
 </template>
 
 <script setup lang="ts">
+interface ShopResponse {
+  shop: { name: string; currencyCode: string }
+}
+
 const shopify = useAppBridge()
+
+const { data: shopData } = await useAsyncData(
+  'shop',
+  () => useShopifyFetch<ShopResponse>('/api/shop'),
+  { server: false }
+)
+
+const shop = computed(() => shopData.value?.data)
 
 const test = () => {
   console.info(

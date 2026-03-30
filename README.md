@@ -283,21 +283,36 @@ const shop = shopify.config.shop
 
 ### Authenticated fetch
 
-Use `useShopifyFetch()` for client-side API calls that automatically include the session token:
+Use `useShopifyFetch()` for API calls that automatically include the Shopify session token. It works on both client and server — on the client it fetches a session token via App Bridge, on the server it forwards the incoming `Authorization` header.
 
 ```vue
 <script setup>
-const shopifyFetch = useShopifyFetch()
-
-const { data: products } = await useAsyncData(
-  'products',
-  () => shopifyFetch('/api/products'),
+const { data: shop } = await useAsyncData(
+  'shop',
+  () => useShopifyFetch('/api/shop'),
   { server: false }
 )
 </script>
 ```
 
-> **Important**: Always use `server: false` with `useShopifyFetch()` — session tokens are only available on the client side within the Shopify admin iframe.
+With generic types for full type safety:
+
+```vue
+<script setup lang="ts">
+interface ShopData {
+  shop: { name: string; currencyCode: string }
+}
+
+const { data } = await useAsyncData(
+  'shop',
+  () => useShopifyFetch<ShopData>('/api/shop'),
+  { server: false }
+)
+// data.value.data.shop.name is fully typed
+</script>
+```
+
+> **Important**: Always use `server: false` with `useShopifyFetch()` in `useAsyncData` — session tokens are only available on the client side within the Shopify admin iframe.
 
 ## Using Polaris components
 
