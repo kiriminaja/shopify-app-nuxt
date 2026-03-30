@@ -49,7 +49,8 @@ export default defineNuxtModule<ModuleOptions>({
     // Public config (safe to expose to client — only the API key)
     nuxt.options.runtimeConfig.public.shopify = {
       apiKey: options.apiKey,
-      authPagePath: options.authPage !== false ? '/auth' : ''
+      authPagePath: options.authPage !== false ? '/auth' : '',
+      authPathPrefix: options.authPathPrefix || '/_shopify/auth'
     }
 
     // ─── Aliases ───────────────────────────────────────────────────────

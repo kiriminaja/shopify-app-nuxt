@@ -184,6 +184,7 @@ export interface ShopifyServerConfig {
 export interface ShopifyPublicConfig {
   apiKey: string
   authPagePath: string
+  authPathPrefix: string
 }
 
 declare module 'nuxt/schema' {

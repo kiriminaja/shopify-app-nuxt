@@ -98,6 +98,7 @@ Any config passed to `configureShopify()` is merged with the defaults — you on
 | `authPathPrefix`  | `string`          | `/_shopify/auth` | URL prefix for OAuth endpoints                                          |
 | `distribution`    | `AppDistribution` | `app_store`      | App distribution type (`app_store`, `single_merchant`, `shopify_admin`) |
 | `useOnlineTokens` | `boolean`         | `false`          | Use online (per-user) tokens in addition to offline (per-shop) tokens   |
+| `authPage`        | `string \| false` | built-in page    | Custom auth page component path, or `false` to disable                  |
 
 ## Authenticating admin requests
 
@@ -455,6 +456,32 @@ const session = testSession()
 const customConfig = testConfig({ apiKey: 'custom-key' })
 const customSession = testSession({ shop: 'custom-shop.myshopify.com' })
 ```
+
+## TypeScript
+
+The module augments Nuxt's `RuntimeConfig` types so you get full autocomplete and type safety when accessing config:
+
+```ts
+// Server — all Shopify config fields are typed
+const config = useRuntimeConfig()
+config.shopify.apiKey // string
+config.shopify.apiSecretKey // string
+config.shopify.scopes // string[]
+config.shopify.appUrl // string
+
+// Client — only public fields
+const publicConfig = useRuntimeConfig().public
+publicConfig.shopify.apiKey // string
+publicConfig.shopify.authPagePath // string
+publicConfig.shopify.authPathPrefix // string
+```
+
+The types are declared via module augmentation in `nuxt/schema`:
+
+| Interface             | Key       | Fields                                                                                                          |
+| --------------------- | --------- | --------------------------------------------------------------------------------------------------------------- |
+| `RuntimeConfig`       | `shopify` | `apiKey`, `apiSecretKey`, `scopes`, `appUrl`, `apiVersion`, `authPathPrefix`, `distribution`, `useOnlineTokens` |
+| `PublicRuntimeConfig` | `shopify` | `apiKey`, `authPagePath`, `authPathPrefix`                                                                      |
 
 ## Resources
 

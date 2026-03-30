@@ -23,9 +23,7 @@ async function handleSubmit() {
 
   try {
     const config = useRuntimeConfig()
-    const authPrefix = config.public.shopify?.authPagePath
-      ? '/_shopify/auth'
-      : '/_shopify/auth'
+    const authPrefix = config.public.shopify.authPathPrefix
     const domain = value.includes('.myshopify.com')
       ? value
       : `${value}.myshopify.com`
