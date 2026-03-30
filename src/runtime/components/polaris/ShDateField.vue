@@ -47,11 +47,14 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void
-  (e: 'blur' | 'change' | 'focus' | 'input' | 'invalid' | 'viewchange', event: Event): void
+  (
+    e: 'blur' | 'change' | 'focus' | 'input' | 'invalid' | 'viewchange',
+    event: Event
+  ): void
 }>()
 
 const value = computed({
   get: () => props.modelValue,
-  set: (v: string) => emit('update:modelValue', v),
+  set: (v: string) => emit('update:modelValue', v)
 })
 </script>
