@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.0.4
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.3...v0.0.4)
+
+### 🚀 Enhancements
+
+- Wrap NuxtPage in NuxtLayout and add id prop to ShModal component ([2d92492](https://github.com/kiriminaja/shopify-nuxt/commit/2d92492))
+- Enhance ShModal component with additional slots and update usage examples in README ([789359d](https://github.com/kiriminaja/shopify-nuxt/commit/789359d))
+- Add navigation links support in ShopifyAppProvider and update related documentation ([d93a38e](https://github.com/kiriminaja/shopify-nuxt/commit/d93a38e))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.3
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.2...v0.0.3)
