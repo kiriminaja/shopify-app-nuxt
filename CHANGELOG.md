@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.9
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.8...v0.0.9)
+
+### 💅 Refactors
+
+- Enhance useShopifyFetch to support authorization headers and improve type definitions ([54431e5](https://github.com/kiriminaja/shopify-nuxt/commit/54431e5))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.8
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.7...v0.0.8)
