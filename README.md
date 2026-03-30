@@ -176,17 +176,16 @@ To load your app within the Shopify Admin, you need to:
 
 ## Features
 
-| Feature              | Description                                                                     |
-| -------------------- | ------------------------------------------------------------------------------- |
-| **Authentication**   | OAuth flow, session tokens, token exchange — all handled automatically          |
-| **App Bridge**       | CDN-based App Bridge with full TypeScript types via `@shopify/app-bridge-types` |
-| **Polaris**          | Vue wrapper components (`Sh*`) for all Polaris web components with typed props  |
-| **Webhooks**         | HMAC validation, payload parsing, and webhook registration                      |
-| **Admin API**        | GraphQL and REST clients with automatic session management                      |
-| **Billing**          | Billing context for subscription and usage-based charges                        |
-| **Session storage**  | Pluggable session storage via `@shopify/shopify-app-session-storage`            |
-| **CSP headers**      | Automatic `frame-ancestors` headers for embedded apps                           |
-| **Auto-imports**     | Server utilities and client composables are auto-imported                       |
+| Feature             | Description                                                                     |
+| ------------------- | ------------------------------------------------------------------------------- |
+| **Authentication**  | OAuth flow, session tokens, token exchange — all handled automatically          |
+| **App Bridge**      | CDN-based App Bridge with full TypeScript types via `@shopify/app-bridge-types` |
+| **Polaris**         | Vue wrapper components (`Sh*`) for all Polaris web components with typed props  |
+| **Webhooks**        | HMAC validation, payload parsing, and webhook registration                      |
+| **Admin API**       | GraphQL and REST clients with automatic session management                      |
+| **Billing**         | Billing context for subscription and usage-based charges                        |
+| **Session storage** | Pluggable session storage via `@shopify/shopify-app-session-storage`            |
+| **Auto-imports**    | Server utilities and client composables are auto-imported                       |
 
 ## Server utilities
 

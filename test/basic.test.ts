@@ -22,15 +22,6 @@ describe('shopify-nuxt module', async () => {
     expect(html).toContain('cdn.shopify.com/shopifycloud/app-bridge.js')
   })
 
-  it('includes CSP frame-ancestors header', async () => {
-    const response = await fetch(url('/'), {
-      headers: { accept: 'text/html' }
-    })
-    const csp = response.headers.get('content-security-policy')
-    expect(csp).toContain('frame-ancestors')
-    expect(csp).toContain('admin.shopify.com')
-  })
-
   it('has auth route', async () => {
     try {
       await $fetch('/_shopify/auth?shop=test.myshopify.com')
