@@ -13,6 +13,8 @@ type ShopifyFetchData<
   M extends RouterMethod
 > = [T] extends [undefined] ? TypedInternalResponse<R, unknown, M> : T
 
+type QueryParams = Record<string, string | number | boolean | null | undefined>
+
 export async function useShopifyFetch<
   T = undefined,
   R extends NitroFetchRequest = NitroFetchRequest,
@@ -21,16 +23,22 @@ export async function useShopifyFetch<
     : AvailableRouterMethod<R>
 >(
   url: R,
-  options?: Omit<RequestInit, 'method'> & { method?: Uppercase<M> | M }
+  options?: Omit<RequestInit, 'method'> & {
+    method?: Uppercase<M> | M
+    query?: QueryParams
+  }
 ): Promise<{
   data: ShopifyFetchData<T, R, Extract<Lowercase<M>, RouterMethod>>
   response: Response
 }>
 export async function useShopifyFetch(
   url: NitroFetchRequest,
-  options?: RequestInit & { method?: RouterMethod | Uppercase<RouterMethod> }
+  options?: RequestInit & {
+    method?: RouterMethod | Uppercase<RouterMethod>
+    query?: QueryParams
+  }
 ): Promise<{ data: unknown; response: Response }> {
-  const opts = options ?? {}
+  const { query, ...opts } = options ?? {}
 
   if (import.meta.server) {
     const event = useRequestEvent()
@@ -54,7 +62,8 @@ export async function useShopifyFetch(
     const fetchResponse = await globalThis.$fetch.raw(url, {
       ...rest,
       method,
-      headers
+      headers,
+      query
     })
 
     return { data: fetchResponse._data, response: fetchResponse }
@@ -74,7 +83,19 @@ export async function useShopifyFetch(
   const headers = new Headers(opts.headers || {})
   headers.set('Authorization', `Bearer ${token}`)
 
-  const fetchResponse = await fetch(url as RequestInfo, {
+  let resolvedUrl = url as string
+  if (query) {
+    const params = new URLSearchParams()
+    for (const [key, value] of Object.entries(query)) {
+      if (value !== null && value !== undefined) {
+        params.set(key, String(value))
+      }
+    }
+    const qs = params.toString()
+    if (qs) resolvedUrl += (resolvedUrl.includes('?') ? '&' : '?') + qs
+  }
+
+  const fetchResponse = await fetch(resolvedUrl, {
     ...opts,
     headers
   })

@@ -49,15 +49,11 @@
 </template>
 
 <script setup lang="ts">
-interface ShopResponse {
-  shop: { name: string; currencyCode: string }
-}
-
 const shopify = useAppBridge()
 
 const { data: shopData } = await useAsyncData(
   'shop',
-  () => useShopifyFetch<ShopResponse>('/api/shop'),
+  () => useShopifyFetch('/api/shop'),
   { server: false }
 )
 
