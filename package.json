@@ -1,5 +1,5 @@
 {
-  "name": "@yanuaraditia/shopify-nuxt",
+  "name": "shopify-nuxt",
   "version": "0.0.1",
   "description": "Shopify app integration for Nuxt - authentication, webhooks, billing, and App Bridge",
   "repository": "yanuaraditia/shopify-nuxt",
