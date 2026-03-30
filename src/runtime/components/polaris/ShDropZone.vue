@@ -1,7 +1,13 @@
 <template>
   <s-drop-zone
     v-bind="$attrs"
-    @change="emit('change', $event)"
+    :value="modelValue"
+    @change="
+      (evt: Event) => {
+        emit('change', evt)
+        value = (evt.currentTarget as HTMLInputElement)?.value || ''
+      }
+    "
     @droprejected="emit('droprejected', $event)"
     @input="emit('input', $event)"
   >
@@ -10,9 +16,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 defineOptions({ name: 'ShDropZone', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   accept?: string
   accessibilityLabel?: string
   disabled?: boolean
@@ -22,12 +30,16 @@ defineProps<{
   multiple?: boolean
   name?: string
   required?: boolean
-  value?: string
+  modelValue?: string
 }>()
 
 const emit = defineEmits<{
-  change: [event: Event]
-  droprejected: [event: Event]
-  input: [event: Event]
+  (e: 'update:modelValue', v: string): void
+  (e: 'change' | 'droprejected' | 'input', event: Event): void
 }>()
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (v: string) => emit('update:modelValue', v),
+})
 </script>

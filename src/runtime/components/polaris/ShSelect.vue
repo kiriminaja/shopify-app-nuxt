@@ -1,7 +1,13 @@
 <template>
   <s-select
     v-bind="$attrs"
-    @change="emit('change', $event)"
+    :value="modelValue"
+    @change="
+      (evt: Event) => {
+        emit('change', evt)
+        value = (evt.currentTarget as HTMLSelectElement)?.value || ''
+      }
+    "
     @input="emit('input', $event)"
   >
     <slot />
@@ -9,9 +15,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 defineOptions({ name: 'ShSelect', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   icon?: string
   details?: string
   error?: string
@@ -19,14 +27,19 @@ defineProps<{
   placeholder?: string
   required?: boolean
   labelAccessibilityVisibility?: 'visible' | 'exclusive'
-  value?: string
   disabled?: boolean
   id?: string
   name?: string
+  modelValue?: string
 }>()
 
 const emit = defineEmits<{
-  change: [event: Event]
-  input: [event: Event]
+  (e: 'update:modelValue', v: string): void
+  (e: 'change' | 'input', event: Event): void
 }>()
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (v: string) => emit('update:modelValue', v),
+})
 </script>

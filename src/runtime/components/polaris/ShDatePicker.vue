@@ -1,8 +1,14 @@
 <template>
   <s-date-picker
     v-bind="$attrs"
+    :value="modelValue"
     @blur="emit('blur', $event)"
-    @change="emit('change', $event)"
+    @change="
+      (evt: Event) => {
+        emit('change', evt)
+        value = (evt.currentTarget as HTMLInputElement)?.value || ''
+      }
+    "
     @focus="emit('focus', $event)"
     @input="emit('input', $event)"
     @viewchange="emit('viewchange', $event)"
@@ -12,9 +18,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 defineOptions({ name: 'ShDatePicker', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   defaultView?: string
   view?: string
   allow?: string
@@ -24,14 +32,16 @@ defineProps<{
   type?: 'single' | 'range'
   defaultValue?: string
   name?: string
-  value?: string
+  modelValue?: string
 }>()
 
 const emit = defineEmits<{
-  blur: [event: Event]
-  change: [event: Event]
-  focus: [event: Event]
-  input: [event: Event]
-  viewchange: [event: Event]
+  (e: 'update:modelValue', v: string): void
+  (e: 'blur' | 'change' | 'focus' | 'input' | 'viewchange', event: Event): void
 }>()
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (v: string) => emit('update:modelValue', v),
+})
 </script>

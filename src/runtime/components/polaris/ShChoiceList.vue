@@ -1,7 +1,13 @@
 <template>
   <s-choice-list
     v-bind="$attrs"
-    @change="emit('change', $event)"
+    :values="modelValue"
+    @change="
+      (evt: Event) => {
+        emit('change', evt)
+        value = (evt.currentTarget as any)?.values || []
+      }
+    "
     @input="emit('input', $event)"
   >
     <slot />
@@ -9,9 +15,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 defineOptions({ name: 'ShChoiceList', inheritAttrs: false })
 
-defineProps<{
+const props = defineProps<{
   disabled?: boolean
   name?: string
   error?: string
@@ -19,11 +27,16 @@ defineProps<{
   multiple?: boolean
   label?: string
   labelAccessibilityVisibility?: 'visible' | 'exclusive'
-  values?: string[]
+  modelValue?: string[]
 }>()
 
 const emit = defineEmits<{
-  change: [event: Event]
-  input: [event: Event]
+  (e: 'update:modelValue', v: string[]): void
+  (e: 'change' | 'input', event: Event): void
 }>()
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (v: string[]) => emit('update:modelValue', v),
+})
 </script>
