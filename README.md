@@ -343,7 +343,7 @@ Wrap your app pages with `<ShopifyAppProvider>` to automatically render the [App
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['shopify-nuxt'],
+  modules: ['shopify-app-nuxt'],
   shopify: {
     // ...
     navLinks: [
@@ -464,7 +464,7 @@ Loading: `ShLoadingIndicator`
 
 In addition to the Polaris `Sh*` components (which wrap `s-*` web components rendered **inside** your app's iframe), this module also provides Vue wrappers for [App Bridge UI web components](https://shopify.dev/docs/api/app-bridge-library/web-components) (`ui-*`). These render **outside** the app iframe in the Shopify Admin shell.
 
-These are the **Vue replacements** for [`@shopify/app-bridge-react`](https://www.npmjs.com/package/@shopify/app-bridge-react) components (`Modal`, `TitleBar`, `SaveBar`, `NavMenu`). Since `@shopify/app-bridge-react` is React-only, `shopify-nuxt` provides equivalent Vue components that use the same underlying App Bridge APIs.
+These are the **Vue replacements** for [`@shopify/app-bridge-react`](https://www.npmjs.com/package/@shopify/app-bridge-react) components (`Modal`, `TitleBar`, `SaveBar`, `NavMenu`). Since `@shopify/app-bridge-react` is React-only, `shopify-app-nuxt` provides equivalent Vue components that use the same underlying App Bridge APIs.
 
 #### Polaris (`Sh*`) vs App Bridge (`ShUi*`) — what's the difference?
 
@@ -699,10 +699,10 @@ These are auto-imported in your Vue components:
 
 ## Testing your app
 
-This package exports test helpers through `shopify-nuxt/test-helpers` to simplify testing:
+This package exports test helpers through `shopify-app-nuxt/test-helpers` to simplify testing:
 
 ```ts
-import { testConfig, testSession } from 'shopify-nuxt/test-helpers'
+import { testConfig, testSession } from 'shopify-app-nuxt/test-helpers'
 
 // testConfig() returns a dummy configuration for testing
 const config = testConfig()

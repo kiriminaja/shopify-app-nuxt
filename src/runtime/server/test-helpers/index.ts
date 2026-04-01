@@ -4,7 +4,7 @@ import type { Session } from '@shopify/shopify-api'
  * Test helper that returns a mock configuration for testing.
  *
  * ```ts
- * import { testConfig } from 'shopify-nuxt/test-helpers'
+ * import { testConfig } from 'shopify-app-nuxt/test-helpers'
  *
  * const config = testConfig()
  * // Use in your test setup

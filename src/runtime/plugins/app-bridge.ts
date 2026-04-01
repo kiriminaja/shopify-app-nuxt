@@ -15,7 +15,7 @@ export default defineNuxtPlugin(() => {
   }
 
   console.log(
-    '[shopify-nuxt] App Bridge plugin initializing, window.shopify available:',
+    '[shopify-app-nuxt] App Bridge plugin initializing, window.shopify available:',
     !!window.shopify
   )
 
@@ -26,7 +26,7 @@ export default defineNuxtPlugin(() => {
     get(_target, prop, receiver) {
       if (!window.shopify) {
         console.warn(
-          '[shopify-nuxt] window.shopify is not available yet. The CDN script may not have loaded.'
+          '[shopify-app-nuxt] window.shopify is not available yet. The CDN script may not have loaded.'
         )
         throw new Error(
           'Shopify App Bridge is not available. Ensure the app is loaded inside the Shopify Admin.'

@@ -15,7 +15,7 @@ function computeHmac(body: string, secret: string = TEST_API_SECRET): string {
 const BROWSER_UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
-describe('shopify-nuxt module', async () => {
+describe('shopify-app-nuxt module', async () => {
   await setup({
     rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url))
   })
