@@ -15,14 +15,11 @@ import {
   getShopFromEvent,
   renderAppBridgePage
 } from './helpers'
-import type { AdminContext, BillingContext } from '../../types'
-import type { JwtPayload } from '@shopify/shopify-api'
+import type { AdminContext, BillingContext, ResolvedConfig } from '../../types'
+import type { JwtPayload, Session, Shopify } from '@shopify/shopify-api'
+import { RequestedTokenType } from '@shopify/shopify-api'
+import type { SessionStorage } from '@shopify/shopify-app-session-storage'
 import { AppDistribution } from '../../types'
-
-const OnlineAccessToken =
-  'urn:shopify:params:oauth:token-type:online-access-token'
-const OfflineAccessToken =
-  'urn:shopify:params:oauth:token-type:offline-access-token'
 
 /**
  * Authenticate an admin request and return an authenticated admin context.
@@ -98,7 +95,7 @@ export async function useShopifyAdmin<T extends object = JwtPayload>(
   }
 
   // Validate the session token
-  let payload: any
+  let payload: JwtPayload | undefined
   let shop: string
   let sessionId: string
 
@@ -126,7 +123,7 @@ export async function useShopifyAdmin<T extends object = JwtPayload>(
     ? await sessionStorage.loadSession(sessionId)
     : undefined
 
-  let session: any
+  let session: Session
 
   if (existingSession && existingSession.isActive(api.config.scopes)) {
     // Session exists and is active
@@ -187,7 +184,7 @@ export async function useShopifyAdmin<T extends object = JwtPayload>(
   return {
     session,
     admin,
-    sessionToken: payload,
+    sessionToken: payload as T | undefined,
     billing,
     cors,
     redirect
@@ -195,31 +192,32 @@ export async function useShopifyAdmin<T extends object = JwtPayload>(
 }
 
 async function performTokenExchange(
-  api: any,
-  config: any,
-  sessionStorage: any,
+  api: Shopify,
+  config: ResolvedConfig,
+  sessionStorage: SessionStorage,
   shop: string,
   sessionToken: string
 ) {
-  let onlineSession: any
+  let onlineSession: Session
   try {
     const result = await api.auth.tokenExchange({
       shop,
       sessionToken,
       requestedTokenType: config.useOnlineTokens
-        ? OnlineAccessToken
-        : OfflineAccessToken
+        ? RequestedTokenType.OnlineAccessToken
+        : RequestedTokenType.OfflineAccessToken
     })
     onlineSession = result.session
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { response?: { body?: unknown }; message?: string }
     console.debug('[shopify-app-nuxt] Token exchange failed:', {
       shop,
       requestedTokenType: config.useOnlineTokens
-        ? OnlineAccessToken
-        : OfflineAccessToken,
+        ? RequestedTokenType.OnlineAccessToken
+        : RequestedTokenType.OfflineAccessToken,
       scopes: api.config.scopes?.toString(),
-      responseBody: error?.response?.body,
-      message: error?.message
+      responseBody: err?.response?.body,
+      message: err?.message
     })
     throw error
   }
@@ -232,7 +230,7 @@ async function performTokenExchange(
     const { session: offlineSession } = await api.auth.tokenExchange({
       shop,
       sessionToken,
-      requestedTokenType: OfflineAccessToken
+      requestedTokenType: RequestedTokenType.OfflineAccessToken
     })
     await sessionStorage.storeSession(offlineSession)
   }
@@ -247,9 +245,9 @@ async function performTokenExchange(
 }
 
 function createBillingContext(
-  api: any,
-  config: any,
-  session: any,
+  api: Shopify,
+  config: ResolvedConfig,
+  session: Session,
   _event: H3Event
 ): BillingContext {
   return {
@@ -266,7 +264,7 @@ function createBillingContext(
       if (!hasPayment) {
         const confirmationUrl = await api.billing.request({
           session,
-          plan: plans[0],
+          plan: plans[0]!,
           isTest: true
         })
         throw new Response(null, {

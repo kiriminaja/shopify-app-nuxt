@@ -18,7 +18,7 @@ import type { FlowContext } from '../../types'
  * })
  * ```
  */
-export async function useShopifyFlow(event: H3Event): Promise<FlowContext> {
+export async function useShopifyFlow<Payload extends Record<string, any> = Record<string, any>>(event: H3Event): Promise<FlowContext<Payload>> {
   const api = getShopifyApi()
 
   if (event.method !== 'POST') {
@@ -61,9 +61,9 @@ export async function useShopifyFlow(event: H3Event): Promise<FlowContext> {
   }
 
   // Parse payload
-  let payload: Record<string, any>
+  let payload: Payload
   try {
-    payload = JSON.parse(rawBody)
+    payload = JSON.parse(rawBody) as Payload
   } catch {
     throw createError({
       statusCode: 400,

@@ -154,10 +154,10 @@ export interface WebhookContext {
   apiVersion: string
 }
 
-export interface FlowContext {
+export interface FlowContext<Payload extends Record<string, any> = Record<string, any>> {
   session: Session
   admin: AdminApiContext
-  payload: Record<string, any>
+  payload: Payload
 }
 
 export interface PublicContext {
