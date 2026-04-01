@@ -1,14 +1,14 @@
-# `shopify-nuxt`
+# `shopify-app-nuxt`
 
 > **NOTE** This package is in early alpha and is not yet recommended for production use. The API may change without a major version bump. Please try it out and share your feedback!
 
 <!-- ![Build Status]() -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
-[![npm version](https://badge.fury.io/js/shopify-nuxt.svg)](https://badge.fury.io/js/shopify-nuxt)
-[![NPM Downloads](https://img.shields.io/npm/dm/shopify-nuxt)](https://npmtrends.com/shopify-nuxt)
+[![npm version](https://badge.fury.io/js/shopify-app-nuxt.svg)](https://badge.fury.io/js/shopify-app-nuxt)
+[![NPM Downloads](https://img.shields.io/npm/dm/shopify-app-nuxt)](https://npmtrends.com/shopify-app-nuxt)
 [![Nuxt](https://img.shields.io/badge/Nuxt-020420?logo=nuxt)](https://nuxt.com)
-[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/shopify-nuxt.svg)](https://img.shields.io/bundlephobia/minzip/shopify-nuxt.svg)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/shopify-app-nuxt.svg)](https://img.shields.io/bundlephobia/minzip/shopify-app-nuxt.svg)
 
 This package makes it easy to use [Nuxt](https://nuxt.com/) to build Shopify apps.
 
@@ -18,9 +18,9 @@ It builds on the `@shopify/shopify-api` package and creates a Nuxt module layer 
 
 ## How is this different from `@nuxtjs/shopify`?
 
-[`@nuxtjs/shopify`](https://shopify.nuxtjs.org) and `shopify-nuxt` solve completely different problems — you may even use both in the same project.
+[`@nuxtjs/shopify`](https://shopify.nuxtjs.org) and `shopify-app-nuxt` solve completely different problems — you may even use both in the same project.
 
-|                               | [`@nuxtjs/shopify`](https://shopify.nuxtjs.org) | `shopify-nuxt` (this package)               |
+|                               | [`@nuxtjs/shopify`](https://shopify.nuxtjs.org) | `shopify-app-nuxt` (this package)            |
 | ----------------------------- | ----------------------------------------------- | ------------------------------------------- |
 | **Use case**                  | Headless storefront                             | Shopify admin app (embedded)                |
 | **Who it's for**              | Merchants building custom storefronts           | Developers building Shopify apps            |
@@ -34,7 +34,7 @@ It builds on the `@shopify/shopify-api` package and creates a Nuxt module layer 
 
 **Use `@nuxtjs/shopify`** if you want to build a custom Nuxt storefront that queries products, collections, and customer data from a Shopify store using the Storefront or Admin API with a static token.
 
-**Use `shopify-nuxt`** if you are building a Shopify app — something that runs inside the Shopify Admin, authenticates merchants via OAuth, handles session tokens, manages webhooks, and optionally charges merchants via the Billing API.
+**Use `shopify-app-nuxt`** if you are building a Shopify app — something that runs inside the Shopify Admin, authenticates merchants via OAuth, handles session tokens, manages webhooks, and optionally charges merchants via the Billing API.
 
 ## Requirements
 
@@ -51,20 +51,20 @@ Install the module to your Nuxt application:
 
 ```bash
 # Using bun
-bun add shopify-nuxt
+bun add shopify-app-nuxt
 
 # Using npm
-npm install shopify-nuxt
+npm install shopify-app-nuxt
 
 # Using yarn
-yarn add shopify-nuxt
+yarn add shopify-app-nuxt
 ```
 
-Then add `shopify-nuxt` to the `modules` section and configure it in your `nuxt.config.ts`:
+Then add `shopify-app-nuxt` to the `modules` section and configure it in your `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['shopify-nuxt'],
+  modules: ['shopify-app-nuxt'],
 
   shopify: {
     apiKey: 'ApiKeyFromPartnersDashboard',

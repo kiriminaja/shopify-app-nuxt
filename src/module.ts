@@ -18,7 +18,7 @@ export type { ModuleOptions }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'shopify-nuxt',
+    name: 'shopify-app-nuxt',
     configKey: 'shopify'
   },
   defaults: {

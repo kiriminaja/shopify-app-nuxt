@@ -1,8 +1,9 @@
 {
-  "name": "shopify-nuxt",
+  "name": "shopify-app-nuxt",
   "version": "0.0.13",
   "description": "Shopify app integration for Nuxt - authentication, webhooks, billing, and App Bridge",
   "repository": "kiriminaja/shopify-nuxt",
+  "homepage": "https://shopify-app-nuxt.vercel.app",
   "license": "MIT",
   "type": "module",
   "author": "KiriminAja",
