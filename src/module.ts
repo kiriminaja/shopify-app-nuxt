@@ -3,7 +3,6 @@ import {
   addPlugin,
   addServerHandler,
   addImportsDir,
-  addComponentsDir,
   createResolver,
   addServerImportsDir,
   addRouteMiddleware,
@@ -11,7 +10,7 @@ import {
   extendPages
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
-import type { ModuleOptions } from './runtime/types'
+import { AppDistribution, type ModuleOptions } from './runtime/types'
 import { ApiVersion } from '@shopify/shopify-api'
 
 export type { ModuleOptions }
@@ -27,8 +26,9 @@ export default defineNuxtModule<ModuleOptions>({
     appUrl: '',
     apiVersion: ApiVersion.January26,
     authPathPrefix: '/_shopify/auth',
-    distribution: 'app_store' as any,
-    useOnlineTokens: false
+    distribution: AppDistribution.AppStore,
+    useOnlineTokens: false,
+    componentPrefix: 'Sh'
   },
   setup(options, nuxt: Nuxt) {
     const resolver = createResolver(import.meta.url)
@@ -42,8 +42,8 @@ export default defineNuxtModule<ModuleOptions>({
       appUrl: options.appUrl,
       apiVersion: options.apiVersion || ApiVersion.January26,
       authPathPrefix: options.authPathPrefix || '/_shopify/auth',
-      distribution: options.distribution || 'app_store',
-      useOnlineTokens: options.useOnlineTokens || false
+      distribution: options.distribution || AppDistribution.AppStore,
+      useOnlineTokens: options.useOnlineTokens || false,
     }
 
     // Public config (safe to expose to client — only the API key)
@@ -73,10 +73,15 @@ export default defineNuxtModule<ModuleOptions>({
     addImportsDir(resolver.resolve('./runtime/composables'))
 
     // ─── Components ────────────────────────────────────────────────────
-    // Auto-register Vue components (ShopifyAppProvider, ShopifyAppProxyProvider, Sh* polaris wrappers)
-    addComponentsDir({
-      path: resolver.resolve('./runtime/components'),
-      pathPrefix: false
+    // Auto-register Polaris components from the CDN as Vue components.
+    const componentsDir = resolver.resolve('./runtime/components')
+    nuxt.hook('components:dirs', (dirs) => {
+      dirs.push({
+        path: componentsDir,
+        prefix: options.componentPrefix,
+        pathPrefix: false,
+        extensions: ['vue']
+      })
     })
 
     // ─── App Bridge Head Tags (SSR) ─────────────────────────────────
@@ -85,6 +90,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook('app:resolve', () => {
       nuxt.options.app.head = nuxt.options.app.head || {}
       nuxt.options.app.head.meta = [...(nuxt.options.app.head.meta || [])]
+
       nuxt.options.app.head.script = [
         // 1. Inline script to create the meta tag imperatively — guarantees it
         //    exists in the DOM before the CDN script executes.

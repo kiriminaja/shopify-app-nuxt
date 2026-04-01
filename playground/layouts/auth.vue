@@ -1,5 +1,5 @@
 <template>
-  <ShopifyAppProvider>
+  <ShApp>
     <slot />
-  </ShopifyAppProvider>
+  </ShApp>
 </template>

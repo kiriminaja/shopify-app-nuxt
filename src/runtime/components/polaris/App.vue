@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useRuntimeConfig } from '#app'
-import type { NavLink } from '../types'
+import type { NavLink } from '../../types'
 
 const props = defineProps<{
   /** Override the nav links from module config */

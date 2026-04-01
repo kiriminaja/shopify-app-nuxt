@@ -74,10 +74,16 @@ export interface ModuleOptions {
 
   /**
    * Navigation links for the app sidebar (`<ShAppNav>`).
-   * Used by `<ShopifyAppProvider>` to render the App Bridge nav menu.
+   * Used by `<ShApp>` to render the App Bridge nav menu.
    * Each link has a `label`, `href`, and optionally `rel: 'home'` for the default landing page.
    */
   navLinks?: NavLink[]
+
+  /**
+   * Component prefix for auto-imported components from the module. Defaults to 'Sh' (e.g., `<ShButton>`).
+   * @default 'Sh'
+   */
+  componentPrefix?: string
 }
 
 export interface NavLink {

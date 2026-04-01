@@ -83,8 +83,8 @@ export default defineNitroPlugin(() => {
 
 ### Components (auto-registered)
 
-- `<ShopifyAppProvider>` — Semantic wrapper for embedded app pages
-- `<ShopifyAppProxyProvider>` — Wrapper for app proxy pages
+- `<ShApp>` — App wrapper with nav menu (uses configurable `componentPrefix`, default `Sh`)
+- `<ShLoadingIndicator>` — Hooks into Nuxt loading indicator + Shopify loading bar
 
 ### OAuth Routes (auto-registered)
 
@@ -138,8 +138,10 @@ src/
 │   │   ├── useAppBridge.ts            # Typed App Bridge accessor
 │   │   └── useShopifyFetch.ts         # Authenticated fetch wrapper
 │   ├── components/
-│   │   ├── ShopifyAppProvider.vue     # Embedded app wrapper
-│   │   └── ShopifyAppProxyProvider.vue # App proxy wrapper
+│   │   polaris/
+│   │   │   ├── App.vue                # App wrapper with nav menu
+│   │   │   ├── LoadingIndicator.vue   # Nuxt ↔ Shopify loading bar bridge
+│   │   │   └── *.vue                  # Polaris web component wrappers
 │   └── server/
 │       ├── index.ts                   # Barrel (#shopify/server alias)
 │       ├── services/
