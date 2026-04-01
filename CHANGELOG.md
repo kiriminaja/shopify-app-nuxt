@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.24
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.23...v0.0.24)
+
+### 🩹 Fixes
+
+- Remove variant attribute from secondaryAction button in UiSaveBar since polaris doesn't allow that ([b865c1f](https://github.com/kiriminaja/shopify-app-nuxt/commit/b865c1f))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.23
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.22...v0.0.23)
