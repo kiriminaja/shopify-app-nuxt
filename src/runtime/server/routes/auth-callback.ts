@@ -5,7 +5,6 @@ import {
   getSessionStorage
 } from '../services/shopify'
 import { createAdminApiContext } from '../utils/clients'
-import { logger } from '../../logger'
 
 /**
  * Handle the OAuth callback from Shopify.
@@ -19,8 +18,8 @@ export default defineEventHandler(async (event) => {
 
   try {
     const callbackResponse = await api.auth.callback({
-      rawRequest: event.req,
-      rawResponse: event.res
+      rawRequest: event.node.req,
+      rawResponse: event.node.res
     })
 
     const { session } = callbackResponse
@@ -44,10 +43,7 @@ export default defineEventHandler(async (event) => {
       try {
         await api.webhooks.register({ session })
       } catch (e) {
-        logger.debug({
-          message: '[shopify-app-nuxt] Failed to register webhooks:',
-          error: e,
-        })
+        console.debug('[shopify-app-nuxt] Failed to register webhooks:', e)
       }
     }
 
@@ -60,10 +56,7 @@ export default defineEventHandler(async (event) => {
     const redirectUrl = `${config.appUrl}?shop=${shop}&host=${host}`
     return sendRedirect(event, redirectUrl, 302)
   } catch (error: any) {
-    logger.debug({
-      message: '[shopify-app-nuxt] Auth callback error:',
-      error: error.message,
-    })
+    console.debug('[shopify-app-nuxt] Auth callback error:', error)
     throw createError({
       statusCode: 500,
       statusMessage: 'Authentication failed',
