@@ -121,7 +121,7 @@ export interface ShopifyRuntimeConfig {
 export interface AdminContext<T extends object = JwtPayload> {
   /** The authenticated session */
   session: Session
-  /** Admin API client (graphql + rest) */
+  /** Admin API client (graphql) */
   admin: AdminApiContext
   /** The decoded session token (embedded apps only) */
   sessionToken?: T

@@ -44,13 +44,6 @@ export type GraphQLClient<Operations extends AllOperations> = <
 export interface AdminApiContext {
   /** Make a typed GraphQL request to the Shopify Admin API */
   graphql: GraphQLClient<AdminOperations>
-  /** Make a REST request to the Shopify Admin API */
-  rest: {
-    get: (params: { path: string }) => Promise<any>
-    post: (params: { path: string; data?: any }) => Promise<any>
-    put: (params: { path: string; data?: any }) => Promise<any>
-    delete: (params: { path: string }) => Promise<any>
-  }
 }
 
 // ─── Storefront API Context ─────────────────────────────────────────────────
@@ -85,31 +78,8 @@ export function createAdminApiContext(
     }
   }
 
-  const restRequest = async (
-    method: string,
-    params: { path: string; data?: any }
-  ) => {
-    const client = new api.clients.Rest({ session })
-    try {
-      const response = await (client as any)[method.toLowerCase()]({
-        path: params.path,
-        data: params.data
-      })
-      return response
-    } catch (error) {
-      if (onError) onError(error)
-      throw error
-    }
-  }
-
   return {
-    graphql,
-    rest: {
-      get: (params) => restRequest('get', params),
-      post: (params) => restRequest('post', params),
-      put: (params) => restRequest('put', params),
-      delete: (params) => restRequest('delete', params)
-    }
+    graphql
   }
 }
 
