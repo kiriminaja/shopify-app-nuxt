@@ -34,16 +34,7 @@ Build Shopify Apps with Nuxt
   Get started
   :::
 
-  :::u-button
-  ---
-  color: neutral
-  icon: i-lucide-github
-  size: xl
-  target: _blank
-  to: https://github.com/kiriminaja/shopify-app-nuxt
-  variant: subtle
-  ---
-  Give a star
+  :::copy-code-input{source="npx nuxt module add color-mode"}
   :::
 ::
 
