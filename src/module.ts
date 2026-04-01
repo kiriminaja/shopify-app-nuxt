@@ -9,10 +9,10 @@ import {
   extendPages
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
-import { AppDistribution, type ModuleOptions, type PolarisIcon } from './runtime/types'
+import { AppDistribution, type ModuleOptions } from './runtime/types'
 import { ApiVersion } from '@shopify/shopify-api'
 
-export type { ModuleOptions, PolarisIcon }
+export type { ModuleOptions }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
