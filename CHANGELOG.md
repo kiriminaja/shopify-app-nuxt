@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.0.14
+
+[compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.13...v0.0.14)
+
+### 🚀 Enhancements
+
+- Add comprehensive documentation for webhooks, App Bridge, and Polaris components ([8e5bf7e](https://github.com/kiriminaja/shopify-nuxt/commit/8e5bf7e))
+- Add google site verification HTML file for SEO ([10fbd27](https://github.com/kiriminaja/shopify-nuxt/commit/10fbd27))
+
+### 🩹 Fixes
+
+- Remove incorrect module path in nuxt.config.ts ([11f6a46](https://github.com/kiriminaja/shopify-nuxt/commit/11f6a46))
+- Update package name from shopify-nuxt to shopify-app-nuxt in README and module files ([ec2d14f](https://github.com/kiriminaja/shopify-nuxt/commit/ec2d14f))
+
+### 💅 Refactors
+
+- Code structure for improved readability and maintainability and add docs starter from docus ([a1b43ef](https://github.com/kiriminaja/shopify-nuxt/commit/a1b43ef))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.13
 
 [compare changes](https://github.com/kiriminaja/shopify-nuxt/compare/v0.0.12...v0.0.13)
