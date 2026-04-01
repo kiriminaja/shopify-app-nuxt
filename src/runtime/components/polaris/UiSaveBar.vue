@@ -13,7 +13,6 @@
     </button>
     <button
       v-if="secondaryAction"
-      variant="secondary"
       @click="secondaryAction.onClick"
     >
       {{ secondaryAction.label }}
