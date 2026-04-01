@@ -56,6 +56,13 @@ export default defineEventHandler(async (event) => {
     const redirectUrl = `${config.appUrl}?shop=${shop}&host=${host}`
     return sendRedirect(event, redirectUrl, 302)
   } catch (error: any) {
+    // BotActivityDetected is expected when non-browser clients hit the callback
+    if (error.constructor?.name === 'BotActivityDetected') {
+      throw createError({
+        statusCode: 410,
+        statusMessage: 'Gone'
+      })
+    }
     console.debug('[shopify-app-nuxt] Auth callback error:', error)
     throw createError({
       statusCode: 500,

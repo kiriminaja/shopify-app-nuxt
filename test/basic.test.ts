@@ -229,8 +229,7 @@ describe('shopify-app-nuxt module', async () => {
         })
         expect.unreachable('Should have thrown')
       } catch (e: any) {
-        // Invalid JWT → 500 (decode fails)
-        expect([401, 500]).toContain(e.statusCode)
+        expect(e.statusCode).toBe(401)
       }
     })
   })

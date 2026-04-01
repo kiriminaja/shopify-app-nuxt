@@ -100,7 +100,14 @@ export async function useShopifyAdmin<T extends object = JwtPayload>(
   let sessionId: string
 
   if (config.distribution !== AppDistribution.ShopifyAdmin) {
-    payload = await validateSessionToken(sessionToken)
+    try {
+      payload = await validateSessionToken(sessionToken)
+    } catch {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Unauthorized - Invalid session token'
+      })
+    }
     const dest = new URL(payload.dest)
     shop = dest.hostname
 
