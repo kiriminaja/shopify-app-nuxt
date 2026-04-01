@@ -43,5 +43,5 @@ const emit = defineEmits<{
   (e: 'show' | 'hide', event: Event): void
 }>()
 
-const polarisAttrs = usePolarisAttrs(props, ['id', 'discardConfirmation'])
+const polarisAttrs = usePolarisAttrs(props, ['primaryAction', 'secondaryAction'])
 </script>
