@@ -7,6 +7,9 @@
 
 A [Nuxt](https://nuxt.com/) module for building Shopify apps — authentication, webhooks, billing, Polaris components, and App Bridge integration. The Nuxt equivalent of `@shopify/shopify-app-react-router`.
 
+> [!IMPORTANT]
+> This package is not recommended for production use yet. It is in early alpha and the API may change without a major version bump.
+
 ## Quick start
 
 ```bash
