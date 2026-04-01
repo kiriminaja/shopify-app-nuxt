@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.0.15
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.14...v0.0.15)
+
+### 🚀 Enhancements
+
+- Update AppHeaderLogo component and nuxt.config.ts for new branding chore: modify package.json and bun.lock for dependency updates ([53aefa1](https://github.com/kiriminaja/shopify-app-nuxt/commit/53aefa1))
+
+### 🩹 Fixes
+
+- Update npm publish command to include public access ([8d4b5ab](https://github.com/kiriminaja/shopify-app-nuxt/commit/8d4b5ab))
+- Update package.json to remove nuxt-site-config and overrides ([7626d80](https://github.com/kiriminaja/shopify-app-nuxt/commit/7626d80))
+- Update package.json description and add compatibility for Nuxt 3 ([9e4370b](https://github.com/kiriminaja/shopify-app-nuxt/commit/9e4370b))
+- Update Nuxt compatibility version to ^4.0.0 in package.json ([987cebd](https://github.com/kiriminaja/shopify-app-nuxt/commit/987cebd))
+- Remove Nuxt compatibility section from package.json ([f68e36e](https://github.com/kiriminaja/shopify-app-nuxt/commit/f68e36e))
+
+### 💅 Refactors
+
+- Rename module from shopify-nuxt to shopify-app-nuxt ([3a69b35](https://github.com/kiriminaja/shopify-app-nuxt/commit/3a69b35))
+
+### 📖 Documentation
+
+- Update README.md to simplify content and improve clarity ([8512b27](https://github.com/kiriminaja/shopify-app-nuxt/commit/8512b27))
+- Add important note about package status in README.md ([93b98f3](https://github.com/kiriminaja/shopify-app-nuxt/commit/93b98f3))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.14
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.13...v0.0.14)
