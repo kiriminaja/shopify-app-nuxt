@@ -68,7 +68,10 @@ export function createAdminApiContext(
   onError?: (error: any) => void
 ): AdminApiContext {
   const graphql: GraphQLClient<AdminOperations> = async (query, options) => {
-    const client = new api.clients.Graphql({ session })
+    const client = new api.clients.Graphql({
+      session,
+      apiVersion: options?.apiVersion
+    })
     try {
       const response = await client.request(query as string, {
         variables: options?.variables as Record<string, unknown>,
@@ -119,7 +122,10 @@ export function createStorefrontApiContext(
     query,
     options
   ) => {
-    const client = new api.clients.Storefront({ session })
+    const client = new api.clients.Storefront({
+      session,
+      apiVersion: options?.apiVersion
+    })
     try {
       const response = await client.request(query as string, {
         variables: options?.variables as Record<string, unknown>,
