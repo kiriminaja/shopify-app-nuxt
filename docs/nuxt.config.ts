@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   extends: ['docus'],
 
-  modules: ['../src/module', '@nuxt/ui', '@nuxtjs/critters'],
+  modules: ['@nuxt/ui', '@nuxtjs/critters'],
 
   components: {
     dirs: [
