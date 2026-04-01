@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.25
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.24...v0.0.25)
+
+### 🩹 Fixes
+
+- DefineOptions not passed to component usage and usePolarisAttrs returning wrong types ([b7baccf](https://github.com/kiriminaja/shopify-app-nuxt/commit/b7baccf))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.24
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.23...v0.0.24)
