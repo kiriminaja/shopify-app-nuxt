@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.22
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.21...v0.0.22)
+
+### 🚀 Enhancements
+
+- Add types-export for PolarisIcon and update module exports ([39b6fbf](https://github.com/kiriminaja/shopify-app-nuxt/commit/39b6fbf))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.21
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.20...v0.0.21)
