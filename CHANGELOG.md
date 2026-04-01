@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.23
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.22...v0.0.23)
+
+### 🩹 Fixes
+
+- Correct export structure for app-bridge-types in package.json ([15d4e57](https://github.com/kiriminaja/shopify-app-nuxt/commit/15d4e57))
+
+### 💅 Refactors
+
+- Remove types-export for PolarisIcon and update module exports ([0c73189](https://github.com/kiriminaja/shopify-app-nuxt/commit/0c73189))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.22
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.21...v0.0.22)
