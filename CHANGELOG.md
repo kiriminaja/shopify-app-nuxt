@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.21
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.20...v0.0.21)
+
+### 🩹 Fixes
+
+- Augment Vue HTMLAttributes to allow `slot` on custom elements and re-export PolarisIcon ([cd71a86](https://github.com/kiriminaja/shopify-app-nuxt/commit/cd71a86))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.20
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.19...v0.0.20)
