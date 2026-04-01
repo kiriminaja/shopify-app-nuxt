@@ -1,26 +1,34 @@
 ---
 seo:
-  title: Write beautiful docs with Markdown
-  description: Ship fast, flexible, and SEO-optimized documentation with beautiful
+  title: Can we develop Shopify Apps with Nuxt? Yes you can.
+  description:
+    Ship fast, flexible, and SEO-optimized documentation with beautiful
     design out of the box. Docus brings together the best of the Nuxt ecosystem.
     Powered by Nuxt UI.
 ---
 
 ::u-page-hero
 #title
-Write beautiful docs with Markdown
+Build Shopify Apps with Nuxt
 
 #description
-Ship fast, flexible, and SEO-optimized documentation with beautiful design out of the box.
+`shopify-nuxt` is a Nuxt 4 module that provides authentication, webhooks, Polaris components, and App Bridge integration for building Shopify apps with Nuxt. Inspired by `@shopify/shopify-app-react-router`, it brings the same capabilities to the Nuxt ecosystem.
 
-Docus brings the best of the Nuxt ecosystem into one CLI.
+#headline
+  :::u-button
+  ---
+  size: sm
+  to: /getting-started/introduction
+  variant: outline
+  ---
+  A @shopify/shopify-app-react-router for Nuxt
+  :::
 
 #links
   :::u-button
   ---
-  color: neutral
   size: xl
-  to: /getting-started/installation
+  to: /getting-started/introduction
   trailing-icon: i-lucide-arrow-right
   ---
   Get started
@@ -29,18 +37,82 @@ Docus brings the best of the Nuxt ecosystem into one CLI.
   :::u-button
   ---
   color: neutral
-  icon: simple-icons-github
+  icon: i-lucide-github
   size: xl
-  to: https://github.com/nuxt-content/docus
-  variant: outline
+  target: _blank
+  to: https://github.com/kiriminaja/shopify-nuxt
+  variant: subtle
   ---
-  Star on GitHub
+  Give a star
   :::
 ::
 
+
 ::u-page-section
 #title
-Shipped with many features
+Built on proven tools
+
+#description
+Vue for the frontend. Nitro for the server. Shopify for commerce.
+
+#features
+  :::u-page-feature
+  ---
+  icon: i-simple-icons-vuedotjs
+  target: _blank
+  to: https://vuejs.org
+  ---
+  #title
+  Frontend with [Vue.js]{.text-primary}
+
+  #description
+  Built on top of Vue.js and its reactive, component-based architecture — giving you a familiar and productive developer experience.
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-simple-icons-vite
+  target: _blank
+  to: https://vite.dev
+  ---
+  #title
+  Bundled with [Vite]{.text-primary}
+
+  #description
+  Leverages Vite's lightning-fast HMR and build pipeline for an instant feedback loop during development.
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-ph-lightning
+  target: _blank
+  to: https://nitro.build
+  ---
+  #title
+  Server with [Nitro]{.text-primary}
+
+  #description
+  Powered by Nitro for versatile, edge-ready server routes — deploy to any platform with zero configuration.
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-simple-icons-nuxt
+  target: _blank
+  to: https://devtools.nuxt.com
+  ---
+  #title
+  [Nuxt DevTools]{.text-primary} Experience
+
+  #description
+  Inspect components, routes, modules, and state in real time with Nuxt DevTools — making debugging and development a breeze.
+  :::
+::
+
+
+::u-page-section
+#title
+What you get?
 
 #features
   :::u-page-feature
@@ -50,74 +122,69 @@ Shipped with many features
   to: https://nuxt.com
   ---
   #title
-  Built with [Nuxt 4]{.text-primary}
-  
+  Built for [Nuxt]{.text-primary}
+
   #description
-  Optimized by the most famous Vue framework. Docus gives you everything you need to build fast, performant, and SEO-friendly websites.
+  First-class Nuxt module with auto-imported composables, server utilities, and components. Works seamlessly with Nuxt 3 and 4.
   :::
 
   :::u-page-feature
   ---
-  icon: i-simple-icons-nuxt
-  target: _blank
-  to: https://ui.nuxt.com/
+  icon: i-lucide-zap
+  to: /getting-started/introduction
   ---
   #title
-  Powered by [Nuxt UI]{.text-primary}
-  
+  Blazing [Fast]{.text-primary}
+
   #description
-  Beautiful out of the box, minimal by design but highly customizable. Docus leverages Nuxt UI to give you the best docs writing experience with zero boilerplate, just focus on your content.
+  Powered by Vite for instant HMR, Nitro for edge-ready server routes, and the Nuxt module system for zero-config integration.
   :::
 
   :::u-page-feature
   ---
-  icon: i-simple-icons-nuxt
-  target: _blank
-  to: https://content.nuxt.com
+  icon: i-lucide-shield
+  to: /api/server-utilities
   ---
   #title
-  Enhanced Markdown syntax by [Nuxt Content]{.text-primary}
-  
+  Secure [Authentication]{.text-primary}
+
   #description
-  The only thing you need to take care about is writing your content. Write your pages in Markdown and extend with MDC syntax to embed Nuxt UI or custom Vue components. Structure, routing, and rendering are handled for you.
+  OAuth, session token exchange, and HMAC verification built-in. Authenticate admin, webhook, flow, public, and POS requests with a single composable.
   :::
 
   :::u-page-feature
   ---
-  icon: i-simple-icons-nuxt
-  target: _blank
-  to: https://nuxt.com/docs/guide/directory-structure/app-config
+  icon: i-lucide-webhook
+  to: /guides/webhooks
   ---
   #title
-  Customize with [Nuxt App Config]{.text-primary}
-  
+  [Webhooks]{.text-primary} Made Easy
+
   #description
-  Update colors, social links, header logos and component styles globally using the `app.config.ts`, no direct code modifications required.
+  Register and handle Shopify webhooks with automatic HMAC validation. Just define your handlers and the module takes care of the rest.
   :::
 
   :::u-page-feature
   ---
-  icon: i-simple-icons-nuxt
-  target: _blank
-  to: https://content.nuxt.com/studio
+  icon: i-lucide-layout-template
+  to: /guides/polaris-components
   ---
   #title
-  Edit in production with [Nuxt Studio]{.text-primary}
-  
+  [Polaris]{.text-primary} Web Components
+
   #description
-  Edit your content in production with zero Markdown knowledge required. Let your non technical colleagues collaborate on the documentation and integrate Vue components without code skills.
+  Use Shopify's official Polaris Web Components directly in your Vue templates — no wrappers needed. Get the exact same look and feel as the Shopify admin.
   :::
 
   :::u-page-feature
   ---
-  icon: i-simple-icons-nuxt
-  target: _blank
-  to: https://ui.nuxt.com/components/content-search
+  icon: i-lucide-blocks
+  to: /guides/app-bridge
   ---
   #title
-  Built-in navigation and [full-text search]{.text-primary}
-  
+  [App Bridge]{.text-primary} Integration
+
   #description
-  Only focus on ordering your content, Docus handles the search modal and auto-generates the side navigation for you.
+  CDN-based App Bridge setup with typed composables. Navigate, show toasts, and interact with the Shopify admin iframe out of the box.
   :::
 ::

@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme inline {
+  --font-sans: 'Inter', sans-serif;
+
+  --color-primary-50: #f3f8ed;
+  --color-primary-100: #e4f0d7;
+  --color-primary-200: #cbe2b4;
+  --color-primary-300: #a9cf87;
+  --color-primary-400: #8abb60;
+  --color-primary-500: #64943e;
+  --color-primary-600: #527e32;
+  --color-primary-700: #40612a;
+  --color-primary-800: #364e26;
+  --color-primary-900: #2f4423;
+  --color-primary-950: #16240f;
+}

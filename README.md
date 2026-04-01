@@ -464,6 +464,8 @@ Loading: `ShLoadingIndicator`
 
 In addition to the Polaris `Sh*` components (which wrap `s-*` web components rendered **inside** your app's iframe), this module also provides Vue wrappers for [App Bridge UI web components](https://shopify.dev/docs/api/app-bridge-library/web-components) (`ui-*`). These render **outside** the app iframe in the Shopify Admin shell.
 
+These are the **Vue replacements** for [`@shopify/app-bridge-react`](https://www.npmjs.com/package/@shopify/app-bridge-react) components (`Modal`, `TitleBar`, `SaveBar`, `NavMenu`). Since `@shopify/app-bridge-react` is React-only, `shopify-nuxt` provides equivalent Vue components that use the same underlying App Bridge APIs.
+
 #### Polaris (`Sh*`) vs App Bridge (`ShUi*`) — what's the difference?
 
 |                    | Polaris (`Sh*`)                           | App Bridge (`ShUi*`)                                                              |
@@ -471,29 +473,35 @@ In addition to the Polaris `Sh*` components (which wrap `s-*` web components ren
 | **HTML elements**  | `<s-button>`, `<s-modal>`, etc.           | `<ui-modal>`, `<ui-title-bar>`, etc.                                              |
 | **Renders in**     | Your app's iframe                         | Shopify Admin (outside the iframe)                                                |
 | **Use for**        | In-app UI: forms, tables, buttons, layout | Admin-level chrome: page title, modals overlaying the admin, save bar, navigation |
-| **Controlled via** | Props, slots, `command`/`commandFor`      | Props, template refs, `shopify.modal.show(id)`                                    |
+| **Controlled via** | Props, slots, `command`/`commandFor`      | `useAppBridge()` API (`shopify.modal.show(id)`, etc.)                             |
 
 #### `<ShUiModal>`
 
-Wraps [`<ui-modal>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-modal) — renders a full-screen overlay **outside** the iframe, managed by Shopify Admin.
+Wraps [`<ui-modal>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-modal) — renders a full-screen overlay **outside** the iframe. Control via `useAppBridge()` and the [Modal API](https://shopify.dev/docs/api/app-home/apis/user-interface-and-interactions/modal-api).
 
 ```vue
 <script setup>
-const modalRef = ref()
+const shopify = useAppBridge()
+
+function openModal() {
+  shopify.modal.show('my-modal')
+}
+
+function closeModal() {
+  shopify.modal.hide('my-modal')
+}
 </script>
 
 <template>
-  <ShButton @click="modalRef.show()">Open Modal</ShButton>
+  <ShButton @click="openModal">Open Modal</ShButton>
 
-  <ShUiModal ref="modalRef" id="my-modal" variant="large" @hide="onClose">
+  <ShUiModal id="my-modal" variant="large" @hide="onClose">
     <p>This content renders outside the iframe.</p>
 
     <template #title-bar>
       <ShUiTitleBar title="Edit Product">
         <button variant="primary" onclick="handleSave()">Save</button>
-        <button onclick="document.getElementById('my-modal').hide()">
-          Cancel
-        </button>
+        <button @click="closeModal">Cancel</button>
       </ShUiTitleBar>
     </template>
   </ShUiModal>
@@ -511,7 +519,7 @@ const modalRef = ref()
 | `show` | Emitted when the modal opens  |
 | `hide` | Emitted when the modal closes |
 
-Exposed methods via template ref: `show()`, `hide()`, `toggle()`
+App Bridge methods: `shopify.modal.show(id)`, `shopify.modal.hide(id)`, `shopify.modal.toggle(id)`
 
 #### `<ShUiTitleBar>`
 
@@ -534,19 +542,23 @@ Child elements: `<button>` (with optional `variant="primary"` and `tone="critica
 
 #### `<ShUiSaveBar>`
 
-Wraps [`<ui-save-bar>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-save-bar) — shows a contextual save bar at the top of the Admin when there are unsaved changes.
+Wraps [`<ui-save-bar>`](https://shopify.dev/docs/api/app-bridge-library/web-components/ui-save-bar) — shows a contextual save bar at the top of the Admin when there are unsaved changes. Control via `useAppBridge()` and the [Save Bar API](https://shopify.dev/docs/api/app-home/apis/user-interface-and-interactions/save-bar-api).
 
 ```vue
 <script setup>
-const saveBarRef = ref()
+const shopify = useAppBridge()
 
 function onFormChange() {
-  saveBarRef.value.show()
+  shopify.saveBar.show('my-save-bar')
+}
+
+function handleDiscard() {
+  shopify.saveBar.hide('my-save-bar')
 }
 </script>
 
 <template>
-  <ShUiSaveBar ref="saveBarRef" id="my-save-bar" discard-confirmation>
+  <ShUiSaveBar id="my-save-bar" discard-confirmation>
     <button variant="primary" onclick="handleSave()">Save</button>
     <button onclick="handleDiscard()">Discard</button>
   </ShUiSaveBar>
@@ -563,7 +575,7 @@ function onFormChange() {
 | `show` | Emitted when the save bar appears      |
 | `hide` | Emitted when the save bar is dismissed |
 
-Exposed methods via template ref: `show()`, `hide()`, `toggle()`
+App Bridge methods: `shopify.saveBar.show(id)`, `shopify.saveBar.hide(id)`, `shopify.saveBar.toggle(id)`, `shopify.saveBar.leaveConfirmation()`
 
 #### `<ShUiNavMenu>`
 
