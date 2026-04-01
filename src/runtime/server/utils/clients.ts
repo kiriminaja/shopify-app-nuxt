@@ -7,7 +7,6 @@ import type {
   FetchResponseBody,
   ResponseWithType
 } from '@shopify/admin-api-client'
-import type { StorefrontOperations } from '@shopify/storefront-api-client'
 
 // ─── GraphQL Client Types ────────────────────────────────────────────────────
 
@@ -46,13 +45,6 @@ export interface AdminApiContext {
   graphql: GraphQLClient<AdminOperations>
 }
 
-// ─── Storefront API Context ─────────────────────────────────────────────────
-
-export interface StorefrontApiContext {
-  /** Make a typed GraphQL request to the Shopify Storefront API */
-  graphql: GraphQLClient<StorefrontOperations>
-}
-
 // ─── Factories ──────────────────────────────────────────────────────────────
 
 export function createAdminApiContext(
@@ -81,33 +73,4 @@ export function createAdminApiContext(
   return {
     graphql
   }
-}
-
-export function createStorefrontApiContext(
-  api: Shopify,
-  session: Session,
-  onError?: (error: any) => void
-): StorefrontApiContext {
-  const graphql: GraphQLClient<StorefrontOperations> = async (
-    query,
-    options
-  ) => {
-    const client = new api.clients.Storefront({
-      session,
-      apiVersion: options?.apiVersion
-    })
-    try {
-      const response = await client.request(query as string, {
-        variables: options?.variables as Record<string, unknown>,
-        retries: options?.tries,
-        headers: options?.headers
-      })
-      return new Response(JSON.stringify(response)) as any
-    } catch (error) {
-      if (onError) onError(error)
-      throw error
-    }
-  }
-
-  return { graphql }
 }

@@ -39,10 +39,6 @@
     "./admin-api-client": {
       "types": "./dist/runtime/admin-api-client.d.ts",
       "import": "./dist/runtime/admin-api-client.js"
-    },
-    "./storefront-api-client": {
-      "types": "./dist/runtime/storefront-api-client.d.ts",
-      "import": "./dist/runtime/storefront-api-client.js"
     }
   },
   "main": "./dist/module.mjs",
@@ -63,9 +59,6 @@
       ],
       "admin-api-client": [
         "./dist/runtime/admin-api-client.d.ts"
-      ],
-      "storefront-api-client": [
-        "./dist/runtime/storefront-api-client.d.ts"
       ]
     }
   },
@@ -96,7 +89,6 @@
     "@shopify/shopify-api": "^13.0.0",
     "@shopify/shopify-app-session-storage": "^5.0.0",
     "@shopify/shopify-app-session-storage-memory": "^6.0.0",
-    "@shopify/storefront-api-client": "^1.0.10",
     "h3": "^2.0.0",
     "isbot": "^5.1.37"
   },

@@ -6,13 +6,9 @@ export {
   getSessionStorage
 } from './services/shopify'
 export { registerShopifyWebhooks } from './utils/register-webhooks'
-export {
-  createAdminApiContext,
-  createStorefrontApiContext
-} from './utils/clients'
+export { createAdminApiContext } from './utils/clients'
 export type {
   AdminApiContext,
-  StorefrontApiContext,
   GraphQLClient,
   GraphQLQueryOptions,
   GraphQLResponse
