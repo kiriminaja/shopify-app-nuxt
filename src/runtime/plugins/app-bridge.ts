@@ -1,5 +1,6 @@
 import { defineNuxtPlugin } from '#app'
 import type { ShopifyGlobal } from '@shopify/app-bridge-types'
+import { logger } from '../logger'
 
 declare global {
   interface Window {
@@ -14,20 +15,15 @@ export default defineNuxtPlugin(() => {
     return
   }
 
-  console.log(
-    '[shopify-app-nuxt] App Bridge plugin initializing, window.shopify available:',
-    !!window.shopify
-  )
-
   // Use a Proxy so that property access is deferred to call time,
   // avoiding a race condition where window.shopify is not yet set
   // when the plugin initialises.
   const bridge = new Proxy({} as ShopifyGlobal, {
     get(_target, prop, receiver) {
       if (!window.shopify) {
-        console.warn(
-          '[shopify-app-nuxt] window.shopify is not available yet. The CDN script may not have loaded.'
-        )
+        logger.warn({
+          message: 'window.shopify is not available yet. The CDN script may not have loaded.'
+        })
         throw new Error(
           'Shopify App Bridge is not available. Ensure the app is loaded inside the Shopify Admin.'
         )
