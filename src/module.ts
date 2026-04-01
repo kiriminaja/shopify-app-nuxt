@@ -6,14 +6,13 @@ import {
   createResolver,
   addServerImportsDir,
   addRouteMiddleware,
-  addTypeTemplate,
   extendPages
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
-import { AppDistribution, type ModuleOptions } from './runtime/types'
+import { AppDistribution, type ModuleOptions, type PolarisIcon } from './runtime/types'
 import { ApiVersion } from '@shopify/shopify-api'
 
-export type { ModuleOptions }
+export type { ModuleOptions, PolarisIcon }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -115,20 +114,6 @@ export default defineNuxtModule<ModuleOptions>({
         // Match Shopify Polaris (s-*) and App Bridge (ui-*) web component tags
         return tag.startsWith('s-') || tag.startsWith('ui-')
       }
-    })
-
-    // 3. Inject the type declarations into the Nuxt TS environment
-    addTypeTemplate({
-      filename: 'types/polaris.d.ts',
-      getContents: () => `
-declare module 'vue' {
-  interface HTMLAttributes {
-    slot?: string
-  }
-}
-
-export {}
-`
     })
 
     // ─── Client Plugin ─────────────────────────────────────────────────

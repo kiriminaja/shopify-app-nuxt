@@ -10,6 +10,13 @@ import type { AdminApiContext } from '../server/utils/clients'
 // Re-export PolarisIcon from dedicated declaration file
 export type { PolarisIcon } from './icon'
 
+// Augment Vue HTMLAttributes to allow `slot` on custom elements (Polaris web components)
+declare module 'vue' {
+  interface HTMLAttributes {
+    slot?: string
+  }
+}
+
 // ─── Module Options (nuxt.config.ts) ─────────────────────────────────────────
 
 export enum AppDistribution {
