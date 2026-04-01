@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.0.17
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.16...v0.0.17)
+
+### 🚀 Enhancements
+
+- Implement centralized logging for App Bridge and OAuth callback ([72795e5](https://github.com/kiriminaja/shopify-app-nuxt/commit/72795e5))
+- Add middleware and types documentation for Shopify authentication ([39863fc](https://github.com/kiriminaja/shopify-app-nuxt/commit/39863fc))
+- Add CopyCodeInput component for easy code copying ([eb1efb2](https://github.com/kiriminaja/shopify-app-nuxt/commit/eb1efb2))
+- Add component prefix and rename ShopifyAppProvider as ShApp ([2954fee](https://github.com/kiriminaja/shopify-app-nuxt/commit/2954fee))
+
+### 💅 Refactors
+
+- Remove logger usage and replace with console methods in app-bridge and auth-callback ([b4fae65](https://github.com/kiriminaja/shopify-app-nuxt/commit/b4fae65))
+
+### 🏡 Chore
+
+- Update TypeScript version to 5 and remove storefront API client dependency ([807efd4](https://github.com/kiriminaja/shopify-app-nuxt/commit/807efd4))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.16
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.15...v0.0.16)
