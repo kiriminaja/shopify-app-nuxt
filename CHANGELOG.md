@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.0.18
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.17...v0.0.18)
+
+### 🚀 Enhancements
+
+- Enhance ShUiTitleBar and ShUiSaveBar components with typed action props ([7c34ecd](https://github.com/kiriminaja/shopify-app-nuxt/commit/7c34ecd))
+
+### 🩹 Fixes
+
+- Handle BotActivityDetected error in auth callback and improve session token validation ([28c656d](https://github.com/kiriminaja/shopify-app-nuxt/commit/28c656d))
+
+### 💅 Refactors
+
+- Remove Polaris types and introduce PolarisIcon type ([3ad9cdf](https://github.com/kiriminaja/shopify-app-nuxt/commit/3ad9cdf))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.17
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.16...v0.0.17)
