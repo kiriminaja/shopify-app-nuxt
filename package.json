@@ -1,12 +1,18 @@
 {
   "name": "shopify-app-nuxt",
   "version": "0.0.14",
-  "description": "Shopify app integration for Nuxt - authentication, webhooks, billing, and App Bridge",
+  "description": "Nuxt module for building Shopify apps — authentication, webhooks, billing, Polaris components, and App Bridge integration",
   "repository": "kiriminaja/shopify-app-nuxt",
   "homepage": "https://shopify-app-nuxt.vercel.app",
+  "keywords": ["nuxt", "nuxt-module", "shopify", "polaris", "polaris-web-components"],
   "license": "MIT",
   "type": "module",
   "author": "KiriminAja",
+  "nuxt": {
+    "compatibility": {
+      "nuxt": "^3.0.0"
+    }
+  },
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
