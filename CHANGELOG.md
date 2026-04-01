@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.0.16
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.15...v0.0.16)
+
+### 🩹 Fixes
+
+- Pass apiVersion to GraphQL and Storefront clients in context creation ([0ce2173](https://github.com/kiriminaja/shopify-app-nuxt/commit/0ce2173))
+- Update Admin API context to remove REST client references ([d700c03](https://github.com/kiriminaja/shopify-app-nuxt/commit/d700c03))
+- Enhance type safety for admin and flow authentication contexts ([ad209be](https://github.com/kiriminaja/shopify-app-nuxt/commit/ad209be))
+- Remove Storefront API context and related references since it already out-of-context of shopify apps ([3b4a1ff](https://github.com/kiriminaja/shopify-app-nuxt/commit/3b4a1ff))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.15
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.14...v0.0.15)
