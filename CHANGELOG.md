@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.20
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.19...v0.0.20)
+
+### 🩹 Fixes
+
+- Update polarisAttrs to include primaryAction and secondaryAction in UiSaveBar component ([b35351d](https://github.com/kiriminaja/shopify-app-nuxt/commit/b35351d))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.19
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.18...v0.0.19)
