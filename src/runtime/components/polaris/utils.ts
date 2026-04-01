@@ -6,9 +6,9 @@ import { computed, useAttrs } from 'vue'
  * This utility re-adds only the props that were actually passed by the parent,
  * avoiding setting undefined values on custom elements which can alter their behavior.
  */
-export function usePolarisAttrs(
-  props: Record<string, unknown>,
-  exclude?: string[]
+export function usePolarisAttrs<T extends Record<string, unknown>>(
+  props: T,
+  exclude?: (keyof T)[]
 ) {
   const attrs = useAttrs()
   return computed(() => {
