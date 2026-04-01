@@ -89,7 +89,7 @@
     "@shopify/shopify-app-session-storage-memory": "^6.0.0",
     "@shopify/storefront-api-client": "^1.0.10",
     "h3": "^2.0.0",
-    "isbot": "^5.1.36"
+    "isbot": "^5.1.37"
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.2.4",
