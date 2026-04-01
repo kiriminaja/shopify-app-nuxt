@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShLink', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   tone?: 'auto' | 'critical' | 'neutral'

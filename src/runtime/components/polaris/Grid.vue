@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShGrid', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   gridTemplateColumns?: string

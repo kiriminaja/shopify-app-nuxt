@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: 'ShUnorderedList', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 </script>

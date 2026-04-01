@@ -20,7 +20,7 @@
 import { computed } from 'vue'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShMoneyField', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   max?: number

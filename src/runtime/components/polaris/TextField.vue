@@ -21,7 +21,7 @@ import { computed } from 'vue'
 import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShTextField', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   icon?: PolarisIcon

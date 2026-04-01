@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShStack', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   direction?: string

@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: 'ShListItem', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 </script>

@@ -8,7 +8,7 @@
 import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShBadge', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   content?: string

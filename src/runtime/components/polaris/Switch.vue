@@ -18,7 +18,7 @@
 import { computed } from 'vue'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShSwitch', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   labelAccessibilityVisibility?: 'visible' | 'exclusive'

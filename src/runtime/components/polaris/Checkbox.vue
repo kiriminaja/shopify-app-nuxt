@@ -18,7 +18,7 @@
 import { computed } from 'vue'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShCheckbox', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   indeterminate?: boolean

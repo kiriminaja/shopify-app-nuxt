@@ -35,7 +35,7 @@ export interface TitleBarAction {
   onClick: () => void
 }
 
-defineOptions({ name: 'ShUiTitleBar', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   title?: string

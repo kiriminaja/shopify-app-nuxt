@@ -8,7 +8,7 @@
 import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShIcon', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   color?: 'base' | 'subdued'

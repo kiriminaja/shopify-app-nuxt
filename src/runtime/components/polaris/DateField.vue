@@ -22,7 +22,7 @@
 import { computed } from 'vue'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShDateField', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   allow?: string

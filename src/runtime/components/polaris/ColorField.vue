@@ -20,7 +20,7 @@
 import { computed } from 'vue'
 import { usePolarisAttrs } from './utils'
 
-defineOptions({ name: 'ShColorField', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
   alpha?: boolean

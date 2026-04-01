@@ -6,18 +6,21 @@ import { computed, useAttrs } from 'vue'
  * This utility re-adds only the props that were actually passed by the parent,
  * avoiding setting undefined values on custom elements which can alter their behavior.
  */
-export function usePolarisAttrs<T extends Record<string, unknown>>(
+export function usePolarisAttrs<
+  T extends Record<string, unknown>,
+  E extends keyof T = never,
+>(
   props: T,
-  exclude?: (keyof T)[]
+  exclude?: E[]
 ) {
   const attrs = useAttrs()
   return computed(() => {
     const merged: Record<string, unknown> = { ...attrs }
     for (const [key, val] of Object.entries(props)) {
-      if (val !== undefined && !exclude?.includes(key)) {
+      if (val !== undefined && !exclude?.includes(key as E)) {
         merged[key] = val
       }
     }
-    return merged
+    return merged as Omit<T, E> & Record<string, unknown>
   })
 }

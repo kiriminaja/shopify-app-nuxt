@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: 'ShTableHeaderRow', inheritAttrs: false })
+defineOptions({ inheritAttrs: false })
 </script>
