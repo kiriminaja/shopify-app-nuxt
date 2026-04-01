@@ -8,11 +8,6 @@
   "license": "MIT",
   "type": "module",
   "author": "KiriminAja",
-  "nuxt": {
-    "compatibility": {
-      "nuxt": "^4.0.0"
-    }
-  },
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
