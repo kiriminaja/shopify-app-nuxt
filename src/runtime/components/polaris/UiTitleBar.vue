@@ -44,5 +44,5 @@ const props = defineProps<{
   actions?: TitleBarAction[]
 }>()
 
-const polarisAttrs = usePolarisAttrs(props, ['title'])
+const polarisAttrs = usePolarisAttrs(props, ['primaryAction', 'breadcrumb', 'actions'])
 </script>
