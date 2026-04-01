@@ -43,7 +43,7 @@
     "./app-bridge-types": {
       "types": "./dist/runtime/app-bridge-types.d.ts",
       "import": "./dist/runtime/app-bridge-types.js"
-    },
+    }
   },
   "main": "./dist/module.mjs",
   "types": "./dist/types.d.mts",
