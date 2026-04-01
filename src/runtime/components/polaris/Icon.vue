@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShIcon', inheritAttrs: false })
@@ -19,7 +20,7 @@ const props = defineProps<{
     | 'auto'
     | 'neutral'
     | 'caution'
-  type?: string
+  type?: PolarisIcon
   size?: 'small' | 'base'
   interestFor?: string
 }>()

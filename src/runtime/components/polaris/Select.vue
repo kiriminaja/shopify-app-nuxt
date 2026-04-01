@@ -16,12 +16,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShSelect', inheritAttrs: false })
 
 const props = defineProps<{
-  icon?: string
+  icon?: PolarisIcon
   details?: string
   error?: string
   label?: string

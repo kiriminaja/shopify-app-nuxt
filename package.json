@@ -39,6 +39,10 @@
     "./admin-api-client": {
       "types": "./dist/runtime/admin-api-client.d.ts",
       "import": "./dist/runtime/admin-api-client.js"
+    },
+    "./app-bridge-types": {
+      "types": "./dist/runtime/app-bridge-types.d.ts",
+      "import": "./dist/runtime/app-bridge-types.js"
     }
   },
   "main": "./dist/module.mjs",
@@ -59,6 +63,9 @@
       ],
       "admin-api-client": [
         "./dist/runtime/admin-api-client.d.ts"
+      ],
+      "app-bridge-types": [
+        "./dist/runtime/app-bridge-types.d.ts"
       ]
     }
   },
@@ -84,8 +91,6 @@
     "@nuxt/kit": "^4.4.2",
     "@shopify/admin-api-client": "^1.1.2",
     "@shopify/app-bridge-types": "^0.7.0",
-    "@shopify/cli": "^3.92.1",
-    "@shopify/polaris-types": "^1.0.1",
     "@shopify/shopify-api": "^13.0.0",
     "@shopify/shopify-app-session-storage": "^5.0.0",
     "@shopify/shopify-app-session-storage-memory": "^6.0.0",

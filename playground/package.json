@@ -6,11 +6,6 @@
     "dev": "shopify app dev"
   },
   "dependencies": {
-    "@shopify/shopify-app-session-storage-memory": "^6.0.0",
     "nuxt": "^4.4.2"
-  },
-  "devDependencies": {
-    "@shopify/app-bridge-types": "^0.7.0",
-    "@shopify/polaris-types": "^1.0.1"
   }
 }

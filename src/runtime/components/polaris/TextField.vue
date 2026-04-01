@@ -18,12 +18,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShTextField', inheritAttrs: false })
 
 const props = defineProps<{
-  icon?: string
+  icon?: PolarisIcon
   maxLength?: number
   minLength?: number
   prefix?: string

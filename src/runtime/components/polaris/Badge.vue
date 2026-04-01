@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShBadge', inheritAttrs: false })
@@ -13,7 +14,7 @@ const props = defineProps<{
   content?: string
   progress?: string
   tone?: string
-  icon?: string
+  icon?: PolarisIcon
   size?: 'base' | 'large'
 }>()
 

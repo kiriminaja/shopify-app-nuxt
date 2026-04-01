@@ -121,8 +121,6 @@ export default defineNuxtModule<ModuleOptions>({
     addTypeTemplate({
       filename: 'types/polaris.d.ts',
       getContents: () => `
-/// <reference types="@shopify/polaris-types" />
-
 declare module 'vue' {
   interface HTMLAttributes {
     slot?: string
@@ -223,7 +221,7 @@ export {}
     // ─── Type Declarations ─────────────────────────────────────────────
     nuxt.hook('prepare:types', ({ references }) => {
       references.push({
-        path: resolver.resolve('./runtime/types.ts')
+        path: resolver.resolve('./runtime/types/index.ts')
       })
     })
   }

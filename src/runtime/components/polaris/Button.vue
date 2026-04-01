@@ -10,13 +10,14 @@
 </template>
 
 <script setup lang="ts">
+import type { PolarisIcon } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ name: 'ShButton', inheritAttrs: false })
 
 const props = defineProps<{
   disabled?: boolean
-  icon?: string
+  icon?: PolarisIcon
   loading?: boolean
   variant?: 'auto' | 'primary' | 'secondary' | 'tertiary'
   tone?: 'auto' | 'critical' | 'neutral'
