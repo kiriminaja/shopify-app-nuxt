@@ -34,7 +34,7 @@ Build Shopify Apps with Nuxt
   Get started
   :::
 
-  :::copy-code-input{source="npx nuxt module add color-mode"}
+  :::copy-code-input{source="npx nuxt module add shopify-app-nuxt"}
   :::
 ::
 
