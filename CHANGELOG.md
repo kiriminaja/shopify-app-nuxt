@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.0.26
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.25...v0.0.26)
+
+### 🚀 Enhancements
+
+- Implement shopify-guest middleware and enhance shopify-auth middleware for redirect handling ([c3fe2da](https://github.com/kiriminaja/shopify-app-nuxt/commit/c3fe2da))
+
+### 🩹 Fixes
+
+- Downgrade h3 to 1.15.11 and update dependencies ([91f1f95](https://github.com/kiriminaja/shopify-app-nuxt/commit/91f1f95))
+
+### 💅 Refactors
+
+- Update Polaris components documentation and remove obsolete components guide ([d57c1de](https://github.com/kiriminaja/shopify-app-nuxt/commit/d57c1de))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.25
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.24...v0.0.25)
