@@ -797,9 +797,7 @@ export interface ResolvedConfig {
 
 export type MaybeAllValuesShorthandProperty<T extends string> =
   | T
-  | `${T} ${T}`
-  | `${T} ${T} ${T}`
-  | `${T} ${T} ${T} ${T}`
+  | (string & {})
 export type MaybeTwoValuesShorthandProperty<T extends string> = T | `${T} ${T}`
 export type MaybeResponsive<T> = T | `@container${string}`
 
@@ -910,3 +908,15 @@ export type ToneKeyword =
   | 'critical'
   | 'accent'
   | 'custom'
+
+type PaddingKeyword = SizeKeyword | 'none'
+
+export type PaddingShorthand = MaybeResponsive<
+  MaybeAllValuesShorthandProperty<PaddingKeyword>
+>
+
+export type PaddingBlockOrInlineShorthand = MaybeResponsive<
+  MaybeTwoValuesShorthandProperty<PaddingKeyword> | ''
+>
+
+export type PaddingStartOrEndShorthand = MaybeResponsive<PaddingKeyword | ''>

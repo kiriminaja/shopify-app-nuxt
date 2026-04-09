@@ -8,11 +8,8 @@ import { computed, useAttrs } from 'vue'
  */
 export function usePolarisAttrs<
   T extends Record<string, unknown>,
-  E extends keyof T = never,
->(
-  props: T,
-  exclude?: E[]
-) {
+  E extends keyof T = never
+>(props: T, exclude?: E[]) {
   const attrs = useAttrs()
   return computed(() => {
     const merged: Record<string, unknown> = { ...attrs }

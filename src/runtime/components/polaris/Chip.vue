@@ -5,12 +5,13 @@
 </template>
 
 <script setup lang="ts">
+import type { ColorKeyword } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
-  color?: string
+  color?: ColorKeyword
   accessibilityLabel?: string
 }>()
 

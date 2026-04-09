@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PolarisIcon } from '../../types'
+import type { PolarisIcon, ToneKeyword } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ inheritAttrs: false })
@@ -20,7 +20,7 @@ const props = defineProps<{
   icon?: PolarisIcon
   loading?: boolean
   variant?: 'auto' | 'primary' | 'secondary' | 'tertiary'
-  tone?: 'auto' | 'critical' | 'neutral'
+  tone?: Extract<ToneKeyword, 'neutral' | 'critical' | 'auto'>
   target?: 'auto' | '_blank' | '_self' | '_parent' | '_top' | (string & {})
   href?: string
   download?: string
