@@ -17,6 +17,7 @@ import type {
   ColorKeyword,
   InlineSizeShorthand,
   JustifyContentKeyword,
+  JustifyItemsKeyword,
   MaxBlockSizeShorthand,
   MaxInlineSizeShorthand,
   MaybeResponsive,
@@ -33,14 +34,18 @@ import { usePolarisAttrs } from './utils'
 defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
-  gridTemplateColumns?: string
-  gridTemplateRows?: string
-  justifyItems?: string
+  gridTemplateColumns?: MaybeResponsive<string>
+  gridTemplateRows?: MaybeResponsive<string>
+  justifyItems?: MaybeResponsive<JustifyItemsKeyword | ''>
   justifyContent?: JustifyContentKeyword
   alignItems?: AlignItemsKeyword
   alignContent?: AlignContentKeyword
-  placeItems?: string
-  placeContent?: string
+  placeItems?: MaybeResponsive<
+    `${AlignItemsKeyword} ${JustifyItemsKeyword}` | AlignItemsKeyword
+  >
+  placeContent?:
+    | `${AlignContentKeyword} ${JustifyContentKeyword}`
+    | AlignContentKeyword
   gap?: MaybeResponsive<MaybeTwoValuesShorthandProperty<SpacingKeyword>>
   rowGap?: MaybeResponsive<SpacingKeyword | ''>
   columnGap?: MaybeResponsive<SpacingKeyword | ''>

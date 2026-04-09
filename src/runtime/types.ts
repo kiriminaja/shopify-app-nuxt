@@ -931,3 +931,15 @@ export type ListSlotShorthand =
   | 'labeled'
 
 export type TableFormat = 'base' | 'currency' | 'numeric'
+
+/**
+ * Justify items defines the default justify-self for all items of the box, giving them all a default way of justifying each box along the appropriate axis.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-items
+ */
+export type JustifyItemsKeyword =
+  | 'normal'
+  | 'stretch'
+  | BaselinePosition
+  | OverflowPosition
+  | ContentPosition
