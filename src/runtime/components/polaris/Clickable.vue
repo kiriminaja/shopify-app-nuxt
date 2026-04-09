@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import type {
+  BackgroundColorKeyword,
   BlockSizeShorthand,
   BorderRadiusShorthand,
   BorderShorthand,
@@ -30,7 +31,10 @@ const props = defineProps<{
   download?: string
   type?: 'button' | 'reset' | 'submit'
   accessibilityRole?: string
-  background?: string
+  background?: Extract<
+    BackgroundColorKeyword,
+    'transparent' | 'base' | 'subdued' | 'strong'
+  >
   blockSize?: BlockSizeShorthand
   minBlockSize?: MinBlockSizeShorthand
   maxBlockSize?: MaxBlockSizeShorthand

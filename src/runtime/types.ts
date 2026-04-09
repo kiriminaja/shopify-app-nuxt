@@ -853,3 +853,60 @@ export type MaxBlockSizeShorthand = MaybeResponsive<SizeUnitsOrNone>
 export type InlineSizeShorthand = MaybeResponsive<SizeUnitsOrAuto>
 export type MinInlineSizeShorthand = MaybeResponsive<SizeUnits>
 export type MaxInlineSizeShorthand = MaybeResponsive<SizeUnitsOrNone>
+
+type BaselinePosition = 'baseline' | 'first baseline' | 'last baseline'
+type ContentDistribution =
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | 'stretch'
+type ContentPosition = 'center' | 'start' | 'end'
+type OverflowPosition = `unsafe ${ContentPosition}` | `safe ${ContentPosition}`
+
+/**
+ * Justify content defines how the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
+ */
+export type JustifyContentKeyword =
+  | 'normal'
+  | ContentDistribution
+  | OverflowPosition
+  | ContentPosition
+
+/**
+ *Align content sets the distribution of space between and around content items along a flexbox's cross axis, or a grid or block-level element's block axis.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-content
+ */
+export type AlignContentKeyword =
+  | 'normal'
+  | BaselinePosition
+  | ContentDistribution
+  | OverflowPosition
+  | ContentPosition
+
+/**
+ * Align items sets the align-self value on all direct children as a group.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
+ */
+export type AlignItemsKeyword =
+  | 'normal'
+  | 'stretch'
+  | BaselinePosition
+  | OverflowPosition
+  | ContentPosition
+
+export type BackgroundColorKeyword = 'transparent' | ColorKeyword
+
+export type ToneKeyword =
+  | 'auto'
+  | 'neutral'
+  | 'info'
+  | 'success'
+  | 'caution'
+  | 'warning'
+  | 'critical'
+  | 'accent'
+  | 'custom'

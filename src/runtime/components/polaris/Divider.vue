@@ -5,12 +5,13 @@
 </template>
 
 <script setup lang="ts">
+import type { MaybeResponsive } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
-  direction?: 'inline' | 'block'
+  direction?: MaybeResponsive<'block' | 'inline'>
   color?: 'base' | 'strong'
 }>()
 

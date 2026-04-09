@@ -5,17 +5,24 @@
 </template>
 
 <script setup lang="ts">
-import type { PolarisIcon } from '../../types'
+import type {
+  ColorKeyword,
+  PolarisIcon,
+  SizeKeyword,
+  ToneKeyword
+} from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
-  content?: string
-  progress?: string
-  tone?: string
+  tone?: Extract<
+    ToneKeyword,
+    'auto' | 'neutral' | 'info' | 'success' | 'caution' | 'warning' | 'critical'
+  >
+  color: Extract<ColorKeyword, 'base' | 'strong'>
   icon?: PolarisIcon
-  size?: 'base' | 'large'
+  size?: Extract<SizeKeyword, 'base' | 'large' | 'large-100'>
 }>()
 
 const polarisAttrs = usePolarisAttrs(props)

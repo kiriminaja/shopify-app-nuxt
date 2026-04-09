@@ -6,6 +6,9 @@
 
 <script setup lang="ts">
 import type {
+  AlignContentKeyword,
+  AlignItemsKeyword,
+  BackgroundColorKeyword,
   BlockSizeShorthand,
   BorderRadiusShorthand,
   BorderShorthand,
@@ -13,6 +16,7 @@ import type {
   BorderWidthShorthand,
   ColorKeyword,
   InlineSizeShorthand,
+  JustifyContentKeyword,
   MaxBlockSizeShorthand,
   MaxInlineSizeShorthand,
   MinBlockSizeShorthand,
@@ -26,16 +30,19 @@ const props = defineProps<{
   gridTemplateColumns?: string
   gridTemplateRows?: string
   justifyItems?: string
-  alignItems?: string
+  justifyContent?: JustifyContentKeyword
+  alignItems?: AlignItemsKeyword
+  alignContent?: AlignContentKeyword
   placeItems?: string
-  justifyContent?: string
-  alignContent?: string
   placeContent?: string
   gap?: string
   rowGap?: string
   columnGap?: string
   accessibilityRole?: string
-  background?: string
+  background?: Extract<
+    BackgroundColorKeyword,
+    'transparent' | 'base' | 'subdued' | 'strong'
+  >
   blockSize?: BlockSizeShorthand
   minBlockSize?: MinBlockSizeShorthand
   maxBlockSize?: MaxBlockSizeShorthand

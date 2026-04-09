@@ -6,13 +6,18 @@
 
 <script setup lang="ts">
 import type {
+  AlignContentKeyword,
+  AlignItemsKeyword,
+  BackgroundColorKeyword,
   BorderRadiusShorthand,
   BorderShorthand,
   BorderStyleShorthand,
   BorderWidthShorthand,
   ColorKeyword,
   InlineSizeShorthand,
+  JustifyContentKeyword,
   MaxInlineSizeShorthand,
+  MaybeResponsive,
   MinInlineSizeShorthand
 } from '../../types'
 import { usePolarisAttrs } from './utils'
@@ -20,15 +25,18 @@ import { usePolarisAttrs } from './utils'
 defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
-  direction?: string
-  justifyContent?: string
-  alignItems?: string
-  alignContent?: string
+  direction?: MaybeResponsive<'block' | 'inline'>
+  justifyContent?: JustifyContentKeyword
+  alignItems?: AlignItemsKeyword
+  alignContent?: AlignContentKeyword
   gap?: string
   rowGap?: string
   columnGap?: string
   accessibilityRole?: string
-  background?: string
+  background?: Extract<
+    BackgroundColorKeyword,
+    'transparent' | 'base' | 'subdued' | 'strong'
+  >
   blockSize?: string
   minBlockSize?: string
   maxBlockSize?: string

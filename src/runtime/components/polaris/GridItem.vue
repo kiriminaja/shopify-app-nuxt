@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import type {
+  BackgroundColorKeyword,
   BlockSizeShorthand,
   BorderRadiusShorthand,
   BorderShorthand,
@@ -26,7 +27,10 @@ const props = defineProps<{
   gridColumn?: string
   gridRow?: string
   accessibilityRole?: string
-  background?: string
+  background?: Extract<
+    BackgroundColorKeyword,
+    'transparent' | 'base' | 'subdued' | 'strong'
+  >
   blockSize?: BlockSizeShorthand
   minBlockSize?: MinBlockSizeShorthand
   maxBlockSize?: MaxBlockSizeShorthand
