@@ -6,7 +6,8 @@ import {
   createResolver,
   addServerImportsDir,
   addRouteMiddleware,
-  extendPages
+  extendPages,
+  addServerPlugin
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import {
@@ -185,18 +186,13 @@ export default defineNuxtModule<ModuleOptions>({
       })
     }
 
-    // ─── Built-in Nitro Plugin (default session storage) ───────────────
-    // Provides MemorySessionStorage out of the box. Users can override
-    // by calling configureShopify() in their own server plugin.
-    nuxt.hook('nitro:config', (nitroConfig) => {
-      nitroConfig.plugins = nitroConfig.plugins || []
-      nitroConfig.plugins.push(
-        resolver.resolve('./runtime/server/plugins/shopify-defaults')
-      )
-      nitroConfig.plugins.push(
-        resolver.resolve('./runtime/server/plugins/add-response-headers')
-      )
-    })
+    // ─── Server Plugins ───
+    addServerPlugin(
+      resolver.resolve('./runtime/server/plugins/shopify-defaults')
+    )
+    addServerPlugin(
+      resolver.resolve('./runtime/server/plugins/add-response-headers')
+    )
 
     // ─── Transpile ─────────────────────────────────────────────────────
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
