@@ -9,7 +9,8 @@ import {
   extendPages,
   addServerPlugin,
   useNitro,
-  useLogger
+  useLogger,
+  extendViteConfig
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import {
@@ -64,9 +65,10 @@ export default defineNuxtModule<ModuleOptions>({
     // ─── Vite: Allow Tunnel Hosts ──────────────────────────────────────
     // Shopify dev uses Cloudflare tunnels with random subdomains — allow all hosts
     if (nuxt.options.dev) {
-      nuxt.options.vite = nuxt.options.vite || {}
-      nuxt.options.vite.server = nuxt.options.vite.server || {}
-      nuxt.options.vite.server.allowedHosts = true
+      extendViteConfig((config) => {
+        config.server = config.server || {}
+        config.server.allowedHosts = true
+      })
     }
 
     // ─── Aliases ───────────────────────────────────────────────────────
