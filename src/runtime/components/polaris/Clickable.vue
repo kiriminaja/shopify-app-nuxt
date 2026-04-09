@@ -17,7 +17,10 @@ import type {
   MaxBlockSizeShorthand,
   MaxInlineSizeShorthand,
   MinBlockSizeShorthand,
-  MinInlineSizeShorthand
+  MinInlineSizeShorthand,
+  PaddingBlockOrInlineShorthand,
+  PaddingShorthand,
+  PaddingStartOrEndShorthand
 } from '../../types'
 import { usePolarisAttrs } from './utils'
 
@@ -42,13 +45,13 @@ const props = defineProps<{
   minInlineSize?: MinInlineSizeShorthand
   maxInlineSize?: MaxInlineSizeShorthand
   overflow?: 'visible' | 'hidden'
-  padding?: string
-  paddingBlock?: string
-  paddingBlockStart?: string
-  paddingBlockEnd?: string
-  paddingInline?: string
-  paddingInlineStart?: string
-  paddingInlineEnd?: string
+  padding?: PaddingShorthand
+  paddingBlock?: PaddingBlockOrInlineShorthand
+  paddingBlockStart?: PaddingStartOrEndShorthand
+  paddingBlockEnd?: PaddingStartOrEndShorthand
+  paddingInline?: PaddingBlockOrInlineShorthand
+  paddingInlineStart?: PaddingStartOrEndShorthand
+  paddingInlineEnd?: PaddingStartOrEndShorthand
   border?: BorderShorthand
   borderWidth?: BorderWidthShorthand
   borderStyle?: BorderStyleShorthand

@@ -5,13 +5,14 @@
 </template>
 
 <script setup lang="ts">
+import type { ListSlotShorthand, TableFormat } from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ inheritAttrs: false })
 
 const props = defineProps<{
-  listSlot?: string
-  format?: string
+  listSlot?: ListSlotShorthand
+  format?: TableFormat
 }>()
 
 const polarisAttrs = usePolarisAttrs(props)

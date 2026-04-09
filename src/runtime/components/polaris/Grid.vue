@@ -19,8 +19,14 @@ import type {
   JustifyContentKeyword,
   MaxBlockSizeShorthand,
   MaxInlineSizeShorthand,
+  MaybeResponsive,
+  MaybeTwoValuesShorthandProperty,
   MinBlockSizeShorthand,
-  MinInlineSizeShorthand
+  MinInlineSizeShorthand,
+  PaddingBlockOrInlineShorthand,
+  PaddingShorthand,
+  PaddingStartOrEndShorthand,
+  SpacingKeyword
 } from '../../types'
 import { usePolarisAttrs } from './utils'
 
@@ -35,9 +41,9 @@ const props = defineProps<{
   alignContent?: AlignContentKeyword
   placeItems?: string
   placeContent?: string
-  gap?: string
-  rowGap?: string
-  columnGap?: string
+  gap?: MaybeResponsive<MaybeTwoValuesShorthandProperty<SpacingKeyword>>
+  rowGap?: MaybeResponsive<SpacingKeyword | ''>
+  columnGap?: MaybeResponsive<SpacingKeyword | ''>
   accessibilityRole?: string
   background?: Extract<
     BackgroundColorKeyword,
@@ -50,13 +56,13 @@ const props = defineProps<{
   minInlineSize?: MinInlineSizeShorthand
   maxInlineSize?: MaxInlineSizeShorthand
   overflow?: 'visible' | 'hidden'
-  padding?: string
-  paddingBlock?: string
-  paddingBlockStart?: string
-  paddingBlockEnd?: string
-  paddingInline?: string
-  paddingInlineStart?: string
-  paddingInlineEnd?: string
+  padding?: PaddingShorthand
+  paddingBlock?: PaddingBlockOrInlineShorthand
+  paddingBlockStart?: PaddingStartOrEndShorthand
+  paddingBlockEnd?: PaddingStartOrEndShorthand
+  paddingInline?: PaddingBlockOrInlineShorthand
+  paddingInlineStart?: PaddingStartOrEndShorthand
+  paddingInlineEnd?: PaddingStartOrEndShorthand
   border?: BorderShorthand
   borderWidth?: BorderWidthShorthand
   borderStyle?: BorderStyleShorthand

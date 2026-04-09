@@ -9,6 +9,7 @@ import type {
   AlignContentKeyword,
   AlignItemsKeyword,
   BackgroundColorKeyword,
+  BlockSizeShorthand,
   BorderRadiusShorthand,
   BorderShorthand,
   BorderStyleShorthand,
@@ -16,9 +17,16 @@ import type {
   ColorKeyword,
   InlineSizeShorthand,
   JustifyContentKeyword,
+  MaxBlockSizeShorthand,
   MaxInlineSizeShorthand,
   MaybeResponsive,
-  MinInlineSizeShorthand
+  MaybeTwoValuesShorthandProperty,
+  MinBlockSizeShorthand,
+  MinInlineSizeShorthand,
+  PaddingBlockOrInlineShorthand,
+  PaddingShorthand,
+  PaddingStartOrEndShorthand,
+  SpacingKeyword
 } from '../../types'
 import { usePolarisAttrs } from './utils'
 
@@ -29,28 +37,28 @@ const props = defineProps<{
   justifyContent?: JustifyContentKeyword
   alignItems?: AlignItemsKeyword
   alignContent?: AlignContentKeyword
-  gap?: string
-  rowGap?: string
-  columnGap?: string
+  gap?: MaybeResponsive<MaybeTwoValuesShorthandProperty<SpacingKeyword>>
+  rowGap?: MaybeResponsive<SpacingKeyword | ''>
+  columnGap?: MaybeResponsive<SpacingKeyword | ''>
   accessibilityRole?: string
   background?: Extract<
     BackgroundColorKeyword,
     'transparent' | 'base' | 'subdued' | 'strong'
   >
-  blockSize?: string
-  minBlockSize?: string
-  maxBlockSize?: string
+  blockSize?: BlockSizeShorthand
+  minBlockSize?: MinBlockSizeShorthand
+  maxBlockSize?: MaxBlockSizeShorthand
   inlineSize?: InlineSizeShorthand
   minInlineSize?: MinInlineSizeShorthand
   maxInlineSize?: MaxInlineSizeShorthand
   overflow?: 'visible' | 'hidden'
-  padding?: string
-  paddingBlock?: string
-  paddingBlockStart?: string
-  paddingBlockEnd?: string
-  paddingInline?: string
-  paddingInlineStart?: string
-  paddingInlineEnd?: string
+  padding?: PaddingShorthand
+  paddingBlock?: PaddingBlockOrInlineShorthand
+  paddingBlockStart?: PaddingStartOrEndShorthand
+  paddingBlockEnd?: PaddingStartOrEndShorthand
+  paddingInline?: PaddingBlockOrInlineShorthand
+  paddingInlineStart?: PaddingStartOrEndShorthand
+  paddingInlineEnd?: PaddingStartOrEndShorthand
   border?: BorderShorthand
   borderWidth?: BorderWidthShorthand
   borderStyle?: BorderStyleShorthand

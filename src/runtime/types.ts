@@ -920,3 +920,14 @@ export type PaddingBlockOrInlineShorthand = MaybeResponsive<
 >
 
 export type PaddingStartOrEndShorthand = MaybeResponsive<PaddingKeyword | ''>
+
+export type SpacingKeyword = SizeKeyword | 'none'
+
+export type ListSlotShorthand =
+  | 'primary'
+  | 'secondary'
+  | 'kicker'
+  | 'inline'
+  | 'labeled'
+
+export type TableFormat = 'base' | 'currency' | 'numeric'
