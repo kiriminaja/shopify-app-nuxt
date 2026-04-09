@@ -6,11 +6,17 @@
 
 <script setup lang="ts">
 import type {
+  BlockSizeShorthand,
   BorderRadiusShorthand,
   BorderShorthand,
   BorderStyleShorthand,
   BorderWidthShorthand,
-  ColorKeyword
+  ColorKeyword,
+  InlineSizeShorthand,
+  MaxBlockSizeShorthand,
+  MaxInlineSizeShorthand,
+  MinBlockSizeShorthand,
+  MinInlineSizeShorthand
 } from '../../types'
 import { usePolarisAttrs } from './utils'
 
@@ -21,12 +27,12 @@ const props = defineProps<{
   gridRow?: string
   accessibilityRole?: string
   background?: string
-  blockSize?: string
-  minBlockSize?: string
-  maxBlockSize?: string
-  inlineSize?: string
-  minInlineSize?: string
-  maxInlineSize?: string
+  blockSize?: BlockSizeShorthand
+  minBlockSize?: MinBlockSizeShorthand
+  maxBlockSize?: MaxBlockSizeShorthand
+  inlineSize?: InlineSizeShorthand
+  minInlineSize?: MinInlineSizeShorthand
+  maxInlineSize?: MaxInlineSizeShorthand
   overflow?: 'visible' | 'hidden'
   padding?: string
   paddingBlock?: string

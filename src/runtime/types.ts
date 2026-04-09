@@ -804,7 +804,7 @@ export type MaybeTwoValuesShorthandProperty<T extends string> = T | `${T} ${T}`
 export type MaybeResponsive<T> = T | `@container${string}`
 
 // Size
-type SizeKeyword =
+export type SizeKeyword =
   | 'small-500'
   | 'small-400'
   | 'small-300'
@@ -842,3 +842,14 @@ export type BorderStyleShorthand =
 
 export type BorderRadiusShorthand =
   MaybeAllValuesShorthandProperty<BorderRadiusKeyword>
+
+type SizeUnits = `${number}px` | `${number}%` | `0`
+type SizeUnitsOrAuto = SizeUnits | 'auto'
+type SizeUnitsOrNone = SizeUnits | 'none'
+
+export type BlockSizeShorthand = MaybeResponsive<SizeUnitsOrAuto>
+export type MinBlockSizeShorthand = MaybeResponsive<SizeUnits>
+export type MaxBlockSizeShorthand = MaybeResponsive<SizeUnitsOrNone>
+export type InlineSizeShorthand = MaybeResponsive<SizeUnitsOrAuto>
+export type MinInlineSizeShorthand = MaybeResponsive<SizeUnits>
+export type MaxInlineSizeShorthand = MaybeResponsive<SizeUnitsOrNone>

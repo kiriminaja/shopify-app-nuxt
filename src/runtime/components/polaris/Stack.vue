@@ -10,7 +10,10 @@ import type {
   BorderShorthand,
   BorderStyleShorthand,
   BorderWidthShorthand,
-  ColorKeyword
+  ColorKeyword,
+  InlineSizeShorthand,
+  MaxInlineSizeShorthand,
+  MinInlineSizeShorthand
 } from '../../types'
 import { usePolarisAttrs } from './utils'
 
@@ -29,9 +32,9 @@ const props = defineProps<{
   blockSize?: string
   minBlockSize?: string
   maxBlockSize?: string
-  inlineSize?: string
-  minInlineSize?: string
-  maxInlineSize?: string
+  inlineSize?: InlineSizeShorthand
+  minInlineSize?: MinInlineSizeShorthand
+  maxInlineSize?: MaxInlineSizeShorthand
   overflow?: 'visible' | 'hidden'
   padding?: string
   paddingBlock?: string

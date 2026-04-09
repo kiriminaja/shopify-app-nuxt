@@ -7,11 +7,17 @@
 <script setup lang="ts">
 import { usePolarisAttrs } from './utils'
 import type {
+  BlockSizeShorthand,
   BorderRadiusShorthand,
   BorderShorthand,
   BorderStyleShorthand,
   BorderWidthShorthand,
-  ColorKeyword
+  ColorKeyword,
+  InlineSizeShorthand,
+  MaxBlockSizeShorthand,
+  MaxInlineSizeShorthand,
+  MinBlockSizeShorthand,
+  MinInlineSizeShorthand
 } from '../../types'
 
 defineOptions({ inheritAttrs: false })
@@ -19,12 +25,12 @@ defineOptions({ inheritAttrs: false })
 const props = defineProps<{
   accessibilityRole?: string
   background?: string
-  blockSize?: string
-  minBlockSize?: string
-  maxBlockSize?: string
-  inlineSize?: string
-  minInlineSize?: string
-  maxInlineSize?: string
+  blockSize?: BlockSizeShorthand
+  minBlockSize?: MinBlockSizeShorthand
+  maxBlockSize?: MaxBlockSizeShorthand
+  inlineSize?: InlineSizeShorthand
+  minInlineSize?: MinInlineSizeShorthand
+  maxInlineSize?: MaxInlineSizeShorthand
   overflow?: 'visible' | 'hidden'
   padding?: string
   paddingBlock?: string
