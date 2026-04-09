@@ -11,7 +11,7 @@
     "
     @focus="emit('focus', $event)"
     @input="emit('input', $event)"
-    @viewchange="emit('viewchange', $event)"
+    @view-change="emit('viewChange', $event)"
   >
     <slot />
   </s-date-picker>
@@ -37,8 +37,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void
-  (e: 'blur' | 'change' | 'focus' | 'input' | 'viewchange', event: Event): void
+  (e: 'update:modelValue' | 'viewChange', v: string): void
+  (e: 'blur' | 'change' | 'focus' | 'input', event: Event): void
 }>()
 
 const value = computed({
