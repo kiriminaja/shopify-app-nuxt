@@ -1,14 +1,35 @@
 <script setup lang="ts">
-import { navigateTo, useRuntimeConfig } from '#app'
-import { definePageMeta, ref } from '#imports'
+import { navigateTo, useRuntimeConfig, useCookie } from '#app'
+import { definePageMeta, onMounted, onUnmounted, ref } from '#imports'
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'shopify-guest'
 })
 
 const shop = ref('')
 const error = ref('')
 const loading = ref(false)
+
+let pollTimer: ReturnType<typeof setInterval> | undefined
+
+onMounted(() => {
+  const redirectTo = useCookie('shopify-redirect-to')
+
+  pollTimer = setInterval(() => {
+    const shopDomain = window.shopify?.config?.shop
+    if (shopDomain) {
+      clearInterval(pollTimer)
+      const target = redirectTo.value || '/'
+      redirectTo.value = null
+      navigateTo(target)
+    }
+  }, 1000)
+})
+
+onUnmounted(() => {
+  if (pollTimer) clearInterval(pollTimer)
+})
 
 async function handleSubmit() {
   error.value = ''
