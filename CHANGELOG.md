@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.0.27
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.26...v0.0.27)
+
+### 🚀 Enhancements
+
+- Add updated state to auth-login for redirect handling optimization ([e6a1c10](https://github.com/kiriminaja/shopify-app-nuxt/commit/e6a1c10))
+- Enhance border properties in Polaris components and add type definitions ([0bcf411](https://github.com/kiriminaja/shopify-app-nuxt/commit/0bcf411))
+- Update type definitions for size and block properties in Polaris components ([74cea09](https://github.com/kiriminaja/shopify-app-nuxt/commit/74cea09))
+- Enhance type definitions for background, alignment, and sizing properties across multiple components ([d688ca1](https://github.com/kiriminaja/shopify-app-nuxt/commit/d688ca1))
+- Improve Avatar component by enhancing event handling and updating size type definition ([2c5d283](https://github.com/kiriminaja/shopify-app-nuxt/commit/2c5d283))
+- Refactor Banner component to improve event handling and update tone type definition ([54e3803](https://github.com/kiriminaja/shopify-app-nuxt/commit/54e3803))
+- Enhance type definitions for padding properties and improve event handling in components ([fd2e55d](https://github.com/kiriminaja/shopify-app-nuxt/commit/fd2e55d))
+- Enhance type definitions for padding, spacing, and table properties across multiple components ([962770b](https://github.com/kiriminaja/shopify-app-nuxt/commit/962770b))
+- Enhance type definitions for grid component properties and add JustifyItemsKeyword type ([c28a435](https://github.com/kiriminaja/shopify-app-nuxt/commit/c28a435))
+
+### 🩹 Fixes
+
+- Correct event name casing for view-change in DatePicker component ([14eaace](https://github.com/kiriminaja/shopify-app-nuxt/commit/14eaace))
+
+### 💅 Refactors
+
+- Format watch function for loading state in LoadingIndicator component ([571878b](https://github.com/kiriminaja/shopify-app-nuxt/commit/571878b))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.26
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.25...v0.0.26)
