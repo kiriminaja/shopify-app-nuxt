@@ -5,6 +5,13 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  BorderRadiusShorthand,
+  BorderShorthand,
+  BorderStyleShorthand,
+  BorderWidthShorthand,
+  ColorKeyword
+} from '../../types'
 import { usePolarisAttrs } from './utils'
 
 defineOptions({ inheritAttrs: false })
@@ -28,11 +35,11 @@ const props = defineProps<{
   paddingInline?: string
   paddingInlineStart?: string
   paddingInlineEnd?: string
-  border?: string
-  borderWidth?: string
-  borderStyle?: string
-  borderColor?: string
-  borderRadius?: string
+  border?: BorderShorthand
+  borderWidth?: BorderWidthShorthand
+  borderStyle?: BorderStyleShorthand
+  borderColor?: ColorKeyword
+  borderRadius?: BorderRadiusShorthand
   accessibilityLabel?: string
   accessibilityVisibility?: 'visible' | 'hidden' | 'exclusive'
   display?: string
