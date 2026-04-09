@@ -25,7 +25,10 @@ export type { ModuleOptions, PolarisIcon }
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'shopify-app-nuxt',
-    configKey: 'shopify'
+    configKey: 'shopify',
+    compatibility: {
+      nuxt: '^4.4.2'
+    }
   },
   defaults: {
     apiKey: '',
@@ -36,6 +39,14 @@ export default defineNuxtModule<ModuleOptions>({
     distribution: AppDistribution.AppStore,
     useOnlineTokens: false,
     componentPrefix: 'Sh'
+  },
+  onInstall() {
+    console.log('🛍️ Shopify App Module installed!')
+  },
+  onUpgrade() {
+    console.log(
+      `🛍️ Shopify App Module upgraded! Please always read the docs https://github.com/kiriminaja/shopify-app-nuxt`
+    )
   },
   setup(options, nuxt: Nuxt) {
     const { resolve } = createResolver(import.meta.url)
