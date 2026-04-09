@@ -10,6 +10,7 @@ definePageMeta({
 const shop = ref('')
 const error = ref('')
 const loading = ref(false)
+const updated = ref(false)
 
 let pollTimer: ReturnType<typeof setInterval> | undefined
 
@@ -17,14 +18,18 @@ onMounted(() => {
   const redirectTo = useCookie('shopify-redirect-to')
 
   pollTimer = setInterval(() => {
+    if (updated.value) return
+
     const shopDomain = window.shopify?.config?.shop
     if (shopDomain) {
       clearInterval(pollTimer)
+      updated.value = true
+
       const target = redirectTo.value || '/'
       redirectTo.value = null
       navigateTo(target)
     }
-  }, 1000)
+  }, 200)
 })
 
 onUnmounted(() => {
