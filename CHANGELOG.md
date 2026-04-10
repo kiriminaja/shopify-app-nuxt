@@ -1,10 +1,6 @@
 # Changelog
 
-## v1.0.1
-
-[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v1.0.0...v1.0.1)
-
-## v1.0.0
+## v1.0.1-rc.1
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.27...v1.0.0)
 
@@ -439,7 +435,7 @@
 ### 🩹 Fixes
 
 - Update repository field in package.json to correct owner ([ac03fcb](https://github.com/kiriminaja/shopify-app-nuxt/commit/ac03fcb))
-- Correct variable name from 'payload' to '_payload' in webhook handler ([b66c4f8](https://github.com/kiriminaja/shopify-app-nuxt/commit/b66c4f8))
+- Correct variable name from 'payload' to '\_payload' in webhook handler ([b66c4f8](https://github.com/kiriminaja/shopify-app-nuxt/commit/b66c4f8))
 
 ### 💅 Refactors
 
