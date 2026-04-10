@@ -1,11 +1,11 @@
 import type { Session, Shopify, ApiVersion } from '@shopify/shopify-api'
-import type {
-  AdminOperations,
-  AllOperations,
-  ApiClientRequestOptions,
-  ReturnData,
-  FetchResponseBody,
-  ResponseWithType
+import {
+  createAdminApiClient,
+  type AdminOperations,
+  type AllOperations,
+  type ApiClientRequestOptions,
+  type ReturnData,
+  type ClientResponse
 } from '@shopify/admin-api-client'
 
 // ─── GraphQL Client Types ────────────────────────────────────────────────────
@@ -27,16 +27,20 @@ export interface GraphQLQueryOptions<
 }
 
 export type GraphQLResponse<
-  Operation extends keyof Operations,
-  Operations extends AllOperations
-> = ResponseWithType<FetchResponseBody<ReturnData<Operation, Operations>>>
+  TData = undefined,
+  Operation extends keyof Operations = string,
+  Operations extends AllOperations = AllOperations
+> = ClientResponse<
+  TData extends undefined ? ReturnData<Operation, Operations> : TData
+>
 
 export type GraphQLClient<Operations extends AllOperations> = <
-  Operation extends keyof Operations
+  TData = undefined,
+  Operation extends keyof Operations = string
 >(
   query: Operation,
   options?: GraphQLQueryOptions<Operation, Operations>
-) => Promise<GraphQLResponse<Operation, Operations>>
+) => Promise<GraphQLResponse<TData, Operation, Operations>>
 
 // ─── Admin API Context ───────────────────────────────────────────────────────
 
@@ -52,18 +56,21 @@ export function createAdminApiContext(
   session: Session,
   onError?: (error: any) => void
 ): AdminApiContext {
+  const client = createAdminApiClient({
+    storeDomain: session.shop,
+    apiVersion: api.config.apiVersion,
+    accessToken: session.accessToken!
+  })
+
   const graphql: GraphQLClient<AdminOperations> = async (query, options) => {
-    const client = new api.clients.Graphql({
-      session,
-      apiVersion: options?.apiVersion
-    })
     try {
-      const response = await client.request(query as string, {
-        variables: options?.variables as Record<string, unknown>,
+      return await client.request(query as string, {
+        variables: options?.variables as Record<string, any>,
         retries: options?.tries,
-        headers: options?.headers
+        headers: options?.headers,
+        apiVersion: options?.apiVersion,
+        signal: options?.signal
       })
-      return new Response(JSON.stringify(response)) as any
     } catch (error) {
       if (onError) onError(error)
       throw error

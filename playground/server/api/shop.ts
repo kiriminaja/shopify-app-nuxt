@@ -7,7 +7,9 @@ interface ShopData {
 
 export default defineEventHandler(async (event) => {
   const { admin } = await useShopifyAdmin(event)
-  const response = await admin.graphql(`{ shop { name currencyCode } }`)
-  const { data } = (await response.json()) as { data: ShopData }
+  const { data } = await admin.graphql<{
+    data: ShopData
+  }>(`#graphql { shop { name currencyCode } }`)
+
   return data
 })
