@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v1.0.0...v1.0.1)
+
 ## v1.0.0
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.27...v1.0.0)
