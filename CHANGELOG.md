@@ -1,5 +1,32 @@
 # Changelog
 
+## v1.0.0
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.27...v1.0.0)
+
+### 🩹 Fixes
+
+- Update vitest to version 4.1.4 in package.json and bun.lock ([8364900](https://github.com/kiriminaja/shopify-app-nuxt/commit/8364900))
+- Add compatibility section for Nuxt version in module metadata ([5a5cd94](https://github.com/kiriminaja/shopify-app-nuxt/commit/5a5cd94))
+- Update copyright holder in LICENSE file ([8be3b78](https://github.com/kiriminaja/shopify-app-nuxt/commit/8be3b78))
+- Update copyright holder in LICENSE file to include additional contributors ([5abe351](https://github.com/kiriminaja/shopify-app-nuxt/commit/5abe351))
+
+### 💅 Refactors
+
+- Replace nitro hook with addServerPlugin for improved server plugin registration ([34850f6](https://github.com/kiriminaja/shopify-app-nuxt/commit/34850f6))
+- Streamline resolver usage and enhance logging in Nuxt module setup ([52d3950](https://github.com/kiriminaja/shopify-app-nuxt/commit/52d3950))
+- Enhance Vite configuration for allowed hosts in development mode ([194f47d](https://github.com/kiriminaja/shopify-app-nuxt/commit/194f47d))
+- Improve GraphQL client type definitions and enhance admin API client creation ([394b024](https://github.com/kiriminaja/shopify-app-nuxt/commit/394b024))
+- Enhance useShopifyFetch documentation and improve error handling ([280d711](https://github.com/kiriminaja/shopify-app-nuxt/commit/280d711))
+
+### 🏡 Chore
+
+- Update package version to 1.0.0-rc.0 and revise documentation to reflect release candidate status ([a981e46](https://github.com/kiriminaja/shopify-app-nuxt/commit/a981e46))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+
 ## v0.0.27
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.26...v0.0.27)
