@@ -101,8 +101,9 @@ export async function useShopifyFetch(
   })
 
   if (!fetchResponse.ok) {
+    const errorBody = await fetchResponse.text().catch(() => '')
     throw new Error(
-      `Shopify fetch failed: ${fetchResponse.status} ${fetchResponse.statusText}`
+      `Shopify fetch failed: ${fetchResponse.status} ${fetchResponse.statusText} ${errorBody}`.trim()
     )
   }
 

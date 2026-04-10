@@ -1,8 +1,7 @@
 <script setup lang="ts">
-const shopifyFetch = useShopifyFetch()
 const { data, error } = await useAsyncData(
   'settings',
-  () => shopifyFetch('/api/shop'),
+  () => useShopifyFetch('/api/shop'),
   { server: false }
 )
 
@@ -13,6 +12,8 @@ definePageMeta({
 </script>
 
 <template>
-  <pre v-if="error">Error: {{ error }}</pre>
-  <pre v-else>{{ JSON.stringify(data, null, 2) }}</pre>
+  <ShPage heading="Settings">
+    <pre v-if="error">Error: {{ error }}</pre>
+    <pre v-else>{{ JSON.stringify(data, null, 2) }}</pre>
+  </ShPage>
 </template>

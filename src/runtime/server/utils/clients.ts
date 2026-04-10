@@ -1,11 +1,10 @@
 import type { Session, Shopify, ApiVersion } from '@shopify/shopify-api'
-import {
-  createAdminApiClient,
-  type AdminOperations,
-  type AllOperations,
-  type ApiClientRequestOptions,
-  type ReturnData,
-  type ClientResponse
+import type {
+  AdminOperations,
+  AllOperations,
+  ApiClientRequestOptions,
+  ReturnData,
+  ClientResponse
 } from '@shopify/admin-api-client'
 
 // ─── GraphQL Client Types ────────────────────────────────────────────────────
@@ -56,21 +55,18 @@ export function createAdminApiContext(
   session: Session,
   onError?: (error: any) => void
 ): AdminApiContext {
-  const client = createAdminApiClient({
-    storeDomain: session.shop,
-    apiVersion: api.config.apiVersion,
-    accessToken: session.accessToken!
-  })
-
   const graphql: GraphQLClient<AdminOperations> = async (query, options) => {
+    const client = new api.clients.Graphql({
+      session,
+      apiVersion: options?.apiVersion
+    })
     try {
-      return await client.request(query as string, {
-        variables: options?.variables as Record<string, any>,
+      const response = await client.request(query as string, {
+        variables: options?.variables as Record<string, unknown>,
         retries: options?.tries,
-        headers: options?.headers,
-        apiVersion: options?.apiVersion,
-        signal: options?.signal
+        headers: options?.headers
       })
+      return response as GraphQLResponse
     } catch (error) {
       if (onError) onError(error)
       throw error
