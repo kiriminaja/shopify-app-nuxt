@@ -1,18 +1,23 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
-@theme inline {
-  --font-sans: 'Inter', sans-serif;
+@theme static {
+  --container-8xl: 90rem;
+  --font-sans: 'Product Sans', sans-serif;
 
-  --color-primary-50: #f3f8ed;
-  --color-primary-100: #e4f0d7;
-  --color-primary-200: #cbe2b4;
-  --color-primary-300: #a9cf87;
-  --color-primary-400: #8abb60;
-  --color-primary-500: #64943e;
-  --color-primary-600: #527e32;
-  --color-primary-700: #40612a;
-  --color-primary-800: #364e26;
-  --color-primary-900: #2f4423;
-  --color-primary-950: #16240f;
+  --color-primary-50: #fff0fd;
+  --color-primary-100: #ffe4fd;
+  --color-primary-200: #ffc9fa;
+  --color-primary-300: #ff9cf4;
+  --color-primary-400: #ff5fea;
+  --color-primary-500: #ff30dd;
+  --color-primary-600: #f50dc4;
+  --color-primary-700: #e800b0;
+  --color-primary-800: #b00484;
+  --color-primary-900: #92096f;
+  --color-primary-950: #5b0043;
+}
+
+:root {
+  --ui-container: var(--container-8xl);
 }

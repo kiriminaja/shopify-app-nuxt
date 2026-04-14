@@ -11,11 +11,20 @@ export default defineAppConfig({
     nuxt: 'https://nuxt.com'
   },
 
-  colors: {
-    primary: 'primary'
-  },
-
   github: {
     rootDir: 'docs'
+  },
+
+  ui: {
+    colors: {
+      primary: 'primary',
+      neutral: 'zinc'
+    },
+    pageHero: {
+      slots: {
+        title:
+          'text-5xl sm:text-5xl text-pretty tracking-tight font-bold text-highlighted'
+      }
+    }
   }
 })
