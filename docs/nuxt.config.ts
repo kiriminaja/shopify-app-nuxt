@@ -1,3 +1,5 @@
+import pkg from '../package.json'
+
 export default defineNuxtConfig({
   extends: ['docus'],
 
@@ -32,16 +34,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    shopify: {
-      name: 'nuxt-shopify-docs',
-
-      clients: {
-        storefront: {
-          apiVersion: '',
-          proxy: false,
-          mock: true
-        }
-      }
+    public: {
+      version: pkg.version
     }
   },
 
