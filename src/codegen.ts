@@ -57,31 +57,14 @@ async function fetchSchema(
 }
 
 /**
- * Run codegen for all versions and generate typed .d.ts files.
- * Returns a map of version -> output file path for alias registration.
+ * Build the codegen config and run generation for a set of schema files.
  */
-export async function runCodegen(
-  options: CodegenOptions
+async function generate(
+  schemaPaths: Map<string, string>,
+  rootDir: string,
+  outputDir: string,
+  logger: ConsolaInstance
 ): Promise<Map<string, string>> {
-  const { versions, rootDir, logger } = options
-
-  const domain =
-    process.env.SHOPIFY_CODEGEN_STORE_DOMAIN || process.env.SHOPIFY_STORE_DOMAIN
-  const token =
-    process.env.SHOPIFY_CODEGEN_ADMIN_ACCESS_TOKEN ||
-    process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
-
-  if (!domain || !token) {
-    logger.warn(
-      'Codegen requires store credentials. Set one of these env var pairs:\n' +
-        '  SHOPIFY_CODEGEN_STORE_DOMAIN + SHOPIFY_CODEGEN_ADMIN_ACCESS_TOKEN\n' +
-        '  SHOPIFY_STORE_DOMAIN + SHOPIFY_ADMIN_ACCESS_TOKEN\n' +
-        'Skipping.'
-    )
-    return new Map()
-  }
-
-  // Check peer dependencies
   let codegen: typeof import('@graphql-codegen/cli')
   let shopifyCodegen: typeof import('@shopify/graphql-codegen')
   try {
@@ -96,36 +79,10 @@ export async function runCodegen(
     return new Map()
   }
 
-  const cacheDir = resolve(rootDir, '.nuxt/shopify-schema')
-  const outputDir = resolve(rootDir, '.nuxt/types/shopify')
-
-  if (!existsSync(cacheDir)) await mkdir(cacheDir, { recursive: true })
   if (!existsSync(outputDir)) await mkdir(outputDir, { recursive: true })
 
-  // Fetch schemas
-  const schemaPaths = new Map<string, string>()
-  for (const version of versions) {
-    try {
-      const schemaPath = await fetchSchema(
-        version,
-        domain,
-        token,
-        cacheDir,
-        logger
-      )
-      schemaPaths.set(version, schemaPath)
-    } catch (error) {
-      logger.error(`Failed to fetch schema for ${version}:`, error)
-    }
-  }
-
-  if (schemaPaths.size === 0) {
-    logger.warn('No schemas fetched. Skipping codegen.')
-    return new Map()
-  }
-
-  // Build codegen config
   const { preset, pluckConfig } = shopifyCodegen
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const generates: Record<string, any> = {}
   const outputPaths = new Map<string, string>()
 
@@ -149,93 +106,7 @@ export async function runCodegen(
   logger.start(`Generating types for ${schemaPaths.size} API version(s)...`)
 
   try {
-    await codegen.generate(
-      {
-        overwrite: true,
-        pluckConfig: pluckConfig as any,
-        ignoreNoDocuments: true,
-        generates
-      },
-      true
-    )
-    logger.success(`Types generated in ${outputDir}`)
-  } catch (error) {
-    logger.error('Code generation failed:', error)
-    return new Map()
-  }
-
-  // Write barrel index for each version
-  for (const [version] of outputPaths) {
-    const indexPath = resolve(outputDir, version, 'admin.d.ts')
-    const indexDir = resolve(outputDir, version)
-    if (!existsSync(indexDir)) await mkdir(indexDir, { recursive: true })
-
-    const relativePath = `../admin-${version}`
-    await writeFile(indexPath, `export * from '${relativePath}'\n`)
-  }
-
-  return outputPaths
-}
-
-/**
- * Check if a cached schema exists and generate types from it without fetching.
- * Used for quick rebuilds when schemas are already cached.
- */
-export async function runCodegenFromCache(
-  options: CodegenOptions
-): Promise<Map<string, string>> {
-  const { versions, rootDir, logger } = options
-  const cacheDir = resolve(rootDir, '.nuxt/shopify-schema')
-
-  // Check if all schemas are cached
-  const allCached = versions.every((v) =>
-    existsSync(resolve(cacheDir, `${v}.json`))
-  )
-  if (!allCached) {
-    logger.debug('Not all schemas cached, running full codegen with fetch...')
-    return runCodegen(options)
-  }
-
-  // All cached — run codegen without fetching
-  let codegen: typeof import('@graphql-codegen/cli')
-  let shopifyCodegen: typeof import('@shopify/graphql-codegen')
-  try {
-    codegen = await import('@graphql-codegen/cli')
-    shopifyCodegen = await import('@shopify/graphql-codegen')
-  } catch {
-    return new Map()
-  }
-
-  const outputDir = resolve(rootDir, '.nuxt/types/shopify')
-  if (!existsSync(outputDir)) await mkdir(outputDir, { recursive: true })
-
-  const { preset, pluckConfig } = shopifyCodegen
-  const generates: Record<string, any> = {}
-  const outputPaths = new Map<string, string>()
-
-  for (const version of versions) {
-    const schemaPath = resolve(cacheDir, `${version}.json`)
-    const outputPath = resolve(outputDir, `admin-${version}.d.ts`)
-    outputPaths.set(version, outputPath)
-
-    generates[outputPath] = {
-      preset,
-      schema: schemaPath,
-      documents: [
-        resolve(rootDir, 'server/**/*.{ts,tsx,js,jsx}'),
-        resolve(rootDir, 'app/**/*.{ts,tsx,js,jsx}')
-      ],
-      presetConfig: {
-        skipTypenameInOperations: true
-      }
-    }
-  }
-
-  logger.start(
-    `Generating types for ${versions.length} API version(s) from cache...`
-  )
-
-  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await codegen.generate(
       {
         overwrite: true,
@@ -262,4 +133,88 @@ export async function runCodegenFromCache(
   }
 
   return outputPaths
+}
+
+/**
+ * Run codegen for all versions and generate typed .d.ts files.
+ * Returns a map of version -> output file path for alias registration.
+ */
+export async function runCodegen(
+  options: CodegenOptions
+): Promise<Map<string, string>> {
+  const { versions, rootDir, logger } = options
+
+  const domain =
+    process.env.SHOPIFY_CODEGEN_STORE_DOMAIN || process.env.SHOPIFY_STORE_DOMAIN
+  const token =
+    process.env.SHOPIFY_CODEGEN_ADMIN_ACCESS_TOKEN ||
+    process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
+
+  if (!domain || !token) {
+    logger.warn(
+      'Codegen requires store credentials. Set one of these env var pairs:\n' +
+        '  SHOPIFY_CODEGEN_STORE_DOMAIN + SHOPIFY_CODEGEN_ADMIN_ACCESS_TOKEN\n' +
+        '  SHOPIFY_STORE_DOMAIN + SHOPIFY_ADMIN_ACCESS_TOKEN\n' +
+        'Skipping.'
+    )
+    return new Map()
+  }
+
+  const cacheDir = resolve(rootDir, '.nuxt/shopify-schema')
+  const outputDir = resolve(rootDir, '.nuxt/types/shopify')
+
+  if (!existsSync(cacheDir)) await mkdir(cacheDir, { recursive: true })
+
+  // Fetch schemas
+  const schemaPaths = new Map<string, string>()
+  for (const version of versions) {
+    try {
+      const schemaPath = await fetchSchema(
+        version,
+        domain,
+        token,
+        cacheDir,
+        logger
+      )
+      schemaPaths.set(version, schemaPath)
+    } catch (error) {
+      logger.error(`Failed to fetch schema for ${version}:`, error)
+    }
+  }
+
+  if (schemaPaths.size === 0) {
+    logger.warn('No schemas fetched. Skipping codegen.')
+    return new Map()
+  }
+
+  return generate(schemaPaths, rootDir, outputDir, logger)
+}
+
+/**
+ * Check if a cached schema exists and generate types from it without fetching.
+ * Used for quick rebuilds when schemas are already cached.
+ */
+export async function runCodegenFromCache(
+  options: CodegenOptions
+): Promise<Map<string, string>> {
+  const { versions, rootDir, logger } = options
+  const cacheDir = resolve(rootDir, '.nuxt/shopify-schema')
+  const outputDir = resolve(rootDir, '.nuxt/types/shopify')
+
+  // Check if all schemas are cached
+  const allCached = versions.every((v) =>
+    existsSync(resolve(cacheDir, `${v}.json`))
+  )
+  if (!allCached) {
+    logger.debug('Not all schemas cached, running full codegen with fetch...')
+    return runCodegen(options)
+  }
+
+  // All cached — build schema paths from cache and generate
+  const schemaPaths = new Map<string, string>()
+  for (const version of versions) {
+    schemaPaths.set(version, resolve(cacheDir, `${version}.json`))
+  }
+
+  return generate(schemaPaths, rootDir, outputDir, logger)
 }
