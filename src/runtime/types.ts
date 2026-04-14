@@ -642,6 +642,23 @@ export interface ModuleOptions {
    * @default 'Sh'
    */
   componentPrefix?: string
+
+  /**
+   * Enable GraphQL codegen for typed Admin API queries.
+   *
+   * - `true` — generate types for the `apiVersion` (default version)
+   * - `string[]` — generate types for specific API versions (e.g., `['2025-10', '2026-01']`)
+   * - `false` or omitted — disabled
+   *
+   * Requires peer dependencies: `@graphql-codegen/cli`, `@shopify/graphql-codegen`, `graphql`
+   *
+   * Generated types are importable via `#shopify/types/<version>/admin`.
+   *
+   * Uses `SHOPIFY_STORE_DOMAIN` and `SHOPIFY_ADMIN_ACCESS_TOKEN` env vars for schema introspection.
+   *
+   * @default false
+   */
+  codegen?: boolean | string[]
 }
 
 export interface NavLink {

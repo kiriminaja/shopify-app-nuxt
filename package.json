@@ -115,5 +115,21 @@
   },
   "overrides": {
     "vitest-environment-nuxt": "1.0.1"
+  },
+  "peerDependencies": {
+    "@graphql-codegen/cli": "",
+    "@shopify/graphql-codegen": "",
+    "graphql": ""
+  },
+  "peerDependenciesMeta": {
+    "@graphql-codegen/cli": {
+      "optional": true
+    },
+    "@shopify/graphql-codegen": {
+      "optional": true
+    },
+    "graphql": {
+      "optional": true
+    }
   }
 }

@@ -228,5 +228,33 @@ export default defineNuxtModule<ModuleOptions>({
         path: resolve('./runtime/types/index.ts')
       })
     })
+
+    // ─── GraphQL Codegen ───────────────────────────────────────────────
+    if (options.codegen) {
+      const codegenVersions: string[] = Array.isArray(options.codegen)
+        ? options.codegen
+        : [options.apiVersion || ApiVersion.January26]
+
+      logger.info(
+        `Codegen enabled for API version(s): ${codegenVersions.join(', ')}`
+      )
+
+      // Register aliases so users can import from #shopify/types/<version>/admin
+      for (const version of codegenVersions) {
+        const outputPath = `${nuxt.options.buildDir}/types/shopify/${version}`
+        nuxt.options.alias[`#shopify/types/${version}/admin`] =
+          outputPath + '/admin'
+      }
+
+      // Run codegen during prepare (dev:prepare / nuxt prepare)
+      nuxt.hook('prepare:types', async () => {
+        const { runCodegen } = await import('./codegen')
+        await runCodegen({
+          versions: codegenVersions,
+          rootDir: nuxt.options.rootDir,
+          logger
+        })
+      })
+    }
   }
 })

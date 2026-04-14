@@ -7,5 +7,10 @@
   },
   "dependencies": {
     "nuxt": "^4.4.2"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^6.0.0",
+    "@shopify/graphql-codegen": "^0.1.0",
+    "graphql": "^16.0.0"
   }
 }
