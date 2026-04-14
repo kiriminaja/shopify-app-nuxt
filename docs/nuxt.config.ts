@@ -28,7 +28,7 @@ export default defineNuxtConfig({
 
   site: {
     name: 'Shopify App Nuxt',
-    url: 'https://shopify-app-nuxt.vercel.app',
+    url: 'https://shopify-app-nuxt.vercel.app'
   },
 
   runtimeConfig: {
@@ -75,7 +75,7 @@ export default defineNuxtConfig({
 
   ogImage: {
     defaults: {
-      url: '/logo-readme.jpg'
+      url: '/share-card.webp'
     }
   }
 })
