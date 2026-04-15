@@ -21,6 +21,7 @@ export default defineNuxtConfig({
       { label: 'Home', href: '/', rel: 'home' },
       { label: 'Products', href: '/products' },
       { label: 'Settings', href: '/settings' }
-    ]
+    ],
+    codegen: true
   }
 })
