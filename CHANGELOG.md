@@ -1,5 +1,35 @@
 # Changelog
 
+## v1.1.0
+
+[compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v1.0.1...v1.1.0)
+
+### 🚀 Enhancements
+
+- Update docs brand ([65ab3f5](https://github.com/kiriminaja/shopify-app-nuxt/commit/65ab3f5))
+- Add version display in AppHeaderLogo and update runtime config ([cb29595](https://github.com/kiriminaja/shopify-app-nuxt/commit/cb29595))
+- Update modules comparison ([6d8584f](https://github.com/kiriminaja/shopify-app-nuxt/commit/6d8584f))
+- Add codegen feature (opt-in) ([4801d3c](https://github.com/kiriminaja/shopify-app-nuxt/commit/4801d3c))
+- Refactor codegen functions for improved schema handling and generation ([9be7429](https://github.com/kiriminaja/shopify-app-nuxt/commit/9be7429))
+
+### 📖 Documentation
+
+- Update GraphQL response handling to return data directly ([dca7aa7](https://github.com/kiriminaja/shopify-app-nuxt/commit/dca7aa7))
+- Beautify installation step ([79c1154](https://github.com/kiriminaja/shopify-app-nuxt/commit/79c1154))
+- Prettify project-structure information ([e0a35db](https://github.com/kiriminaja/shopify-app-nuxt/commit/e0a35db))
+- Add page index for polaris web component page and add navigation icon ([ff8034d](https://github.com/kiriminaja/shopify-app-nuxt/commit/ff8034d))
+
+### 🏡 Chore
+
+- Revert package version to 1.0.0-rc.1 ([bdd1d6e](https://github.com/kiriminaja/shopify-app-nuxt/commit/bdd1d6e))
+- Update package version to 1.0.0 and fix repository field format ([e53a50b](https://github.com/kiriminaja/shopify-app-nuxt/commit/e53a50b))
+- Update dependencies in package.json ([8843a7d](https://github.com/kiriminaja/shopify-app-nuxt/commit/8843a7d))
+
+### ❤️ Contributors
+
+- Yanuar Aditia ([@ngalor](https://github.com/ngalor))
+- Yusuf Ali Tangöz <tangozyusufali@gmail.com>
+
 ## v1.0.1-rc.1
 
 [compare changes](https://github.com/kiriminaja/shopify-app-nuxt/compare/v0.0.27...v1.0.0)
